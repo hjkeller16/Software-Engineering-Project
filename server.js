@@ -1,5 +1,4 @@
 const express = require('express');
-let http = require('http');
 
 const app = express();
 
@@ -10,9 +9,7 @@ app.use((req, res, next) => {
 
 app.use('/', express.static(`${__dirname}/public`));
 
-app.listen(3000, () => console.log(`Server started.`));
-
-app.use('/GetInfo', (req, res) => {
+app.use('/GetInfo', async(req, res) => {
       try {
         // Generate answer in natural language
         const infoText = "Info: Today it is sunny.";
@@ -27,3 +24,5 @@ app.use('/GetInfo', (req, res) => {
         console.error(err.stack);
     }
 });
+
+app.listen(3000, () => console.log(`Server started.`));
