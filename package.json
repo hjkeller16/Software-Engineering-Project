@@ -5,12 +5,13 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "supervisor ./bin/www"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
-    "http": "0.0.0"
+    "http": "0.0.0",
+    "pg": "^6.1.0"
   }
 }
