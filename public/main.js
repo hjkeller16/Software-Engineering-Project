@@ -1,12 +1,59 @@
-window.onload = async() => {
-    document.getElementById('start').innerHTML = 'Frontend is running';
-    button = document.getElementById('button');
-    button.onclick = async() => {
-        const infoResponse = await fetch('/GetInfo');
-        if (infoResponse.status >= 400) {
-          throw new Error(`Could not get an information (${await infoResponse.text()})`);
-        }
-        text = (await infoResponse.json()).info;
-        document.getElementById('info').innerHTML = text;
-    }
+window.onload = intialize;
+
+async function intialize() {
+  const token = localStorage.getItem('token');
+  let payload;
+  let isValid = true;
+  try {
+    const response = await fetch('/auth/payload', {
+      headers: {
+        'Authorization': 'Bearer ' + token,
+      }
+    });
+    payload = (await response.json()).payload;
+  } catch (err) {
+    isValid = false;
   }
+
+  if (!token || !isValid || !payload) {
+    document.getElementById('login-container').style.display = 'block';
+    document.getElementById('content-container').style.display = 'none';
+  } else {
+    document.getElementById('greeting').innerHTML = `Hello ${payload.username}`;
+    document.getElementById('login-container').style.display = 'none';
+    document.getElementById('content-container').style.display = 'block';
+  }
+}
+
+async function onFormPress(method) {
+  try {
+    const credentials = {
+      username: document.getElementById('login-form').username.value,
+      password: document.getElementById('login-form').password.value
+    }
+
+    const response = await fetch('/auth/' + method, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    });
+
+    const responseObject = await response.json();
+    if (responseObject.token) {
+      localStorage.setItem('token', responseObject.token);
+    }
+    else {
+      window.alert(responseObject.error);
+    }
+  } catch (err) {
+    window.alert(method + ' failed');
+  }
+  intialize();
+}
+
+function onLogoutPress() {
+  localStorage.clear();
+  intialize();
+}
