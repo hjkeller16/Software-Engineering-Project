@@ -1,0 +1,21 @@
+{
+  "short_name": "Maps",
+  "name": "Maps",
+  "icons": [
+    {
+      "src": "/images/map-marker-icon-64.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "/images/map-marker-icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "display": "standalone",
+  "background_color": "#304ffe",
+  "theme_color": "#304ffe",
+  "scope": "/",
+  "start_url": "/"
+}
