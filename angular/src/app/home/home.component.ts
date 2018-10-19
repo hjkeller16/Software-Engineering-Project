@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+declare const L;
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -10,7 +12,6 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    const L = window.L;
     navigator.geolocation.getCurrentPosition(function (location) {
       let latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
       let mymap = L.map('map').setView(latlng, 13);
@@ -26,5 +27,4 @@ export class HomeComponent implements OnInit {
       L.marker(latlng).addTo(mymap);
     });
   }
-
 }

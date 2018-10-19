@@ -7,8 +7,9 @@
     "start": "npm run start-debug",
     "start-prod": "node server.js",
     "start-debug": "node server.js debug",
-    "build": "cd angular && npm install && npx ng build --prod && cd ..",
-    "serve-angular": "cd angular && npm install && npx ng serve"
+    "build": "cd angular && npx ng build --prod && cd ..",
+    "serve-angular": "cd angular && npx ng serve",
+    "postinstall": "cd angular && npm install"
   },
   "author": "",
   "license": "ISC",
