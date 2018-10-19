@@ -41,7 +41,7 @@ if (process.argv[2] === 'debug') {
         res.send(302);
     });
 } else {
-    app.use('/', express.static(`${__dirname}/public`));
+    app.use('/', express.static(`${__dirname}/angular/dist`));
 }
 
 app.listen(3000, () => console.log(`Server started.`));

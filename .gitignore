@@ -84,6 +84,3 @@ typings/
 
 # configuration file
 config.json
-
-# Generated files
-public/*
