@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const proxy = require('express-http-proxy');
 const cors = require('cors');
 const auth = require('./auth');
 
@@ -13,13 +12,6 @@ app.use((req, res, next) => {
     console.log(`Incoming Request: ${req.url}`);
     next();
 });
-
-if (process.argv[2] === 'debug') {
-    app.use('/', proxy('http://localhost:4200'));
-} else {
-    app.use('/', express.static(`${__dirname}/public`));
-}
-
 
 app.use('/auth', auth.router);
 
@@ -42,5 +34,14 @@ app.use('/data', async (req, res) => {
         console.error(err.stack);
     }
 });
+
+if (process.argv[2] === 'debug') {
+    app.use('/', (req, res) => {
+        res.header('Location', 'http://localhost:4200');
+        res.send(302);
+    });
+} else {
+    app.use('/', express.static(`${__dirname}/public`));
+}
 
 app.listen(3000, () => console.log(`Server started.`));

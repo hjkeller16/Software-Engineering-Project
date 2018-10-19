@@ -4,6 +4,7 @@ import { TokenResponse } from './token-response';
 import { User } from './user';
 import { Observable } from 'rxjs';
 import { TokenPayload } from './token-payload';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class AuthService extends EventEmitter<TokenPayload> {
   }
 
   private getApiUrl(): string {
-    return 'http://localhost:3000/auth';
+    return environment.production ? `${location.protocol}//${location.host}/auth` : 'http://localhost:3000/auth';
   }
 
   private setToken(token: string): void {
