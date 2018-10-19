@@ -1,17 +1,25 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const proxy = require('express-http-proxy');
+const cors = require('cors');
 const auth = require('./auth');
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.use((req, res, next) => {
     console.log(`Incoming Request: ${req.url}`);
     next();
 });
 
-app.use('/', express.static(`${__dirname}/public`));
+if (process.argv[2] === 'debug') {
+    app.use('/', proxy('http://localhost:4200'));
+} else {
+    app.use('/', express.static(`${__dirname}/public`));
+}
+
 
 app.use('/auth', auth.router);
 

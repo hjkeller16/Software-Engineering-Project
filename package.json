@@ -1,17 +1,23 @@
 {
-  "name": "software-project",
+  "name": "software-engineering-project",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "npm run start-debug",
+    "start-prod": "node server.js",
+    "start-debug": "node server.js debug",
+    "build": "cd angular && npm install && npx ng build --prod && cd ..",
+    "serve-angular": "cd angular && npm install && npx ng serve"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
+    "express-http-proxy": "^1.4.0",
     "http": "0.0.0",
     "jsonwebtoken": "^8.3.0",
     "pg": "^6.1.0",

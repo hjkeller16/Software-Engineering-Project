@@ -28,6 +28,9 @@ const User = sequelize.define('user', {
         hooks: {
             beforeCreate: (user, options) => {
                 return new Promise((resolve, reject) => {
+                    if ((!user.username && user.username !== 0) || (!user.password && user.password !== 0)) {
+                        return reject(new Error('No empty values possible'));
+                    }
                     bcrypt.genSalt(8, (err, result) => {
                         if (err) {
                             return reject(err);

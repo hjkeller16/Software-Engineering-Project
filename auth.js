@@ -8,59 +8,68 @@ const router = express.Router();
 const secret = uniqid();
 
 router.post('/register', async (req, res) => {
-    await databaseConnector.sequelize.sync();
-    const user = await databaseConnector.User.findByPrimary(req.body.username);
+    try {
+        await databaseConnector.sequelize.sync();
+        const user = await databaseConnector.User.findByPrimary(req.body.username);
 
-    if (user) {
-        res.status(409).send({ error: 'Username already exists' });
+        if (user) {
+            res.status(409).send({ error: 'Username already exists' });
+            return;
+        }
+
+        await databaseConnector.User.create({
+            username: req.body.username,
+            password: req.body.password
+        });
+        const token = jwt.sign({
+            username: req.body.username
+        }, secret, {
+                expiresIn: '2 days'
+            }
+        );
+
+        res.send({
+            token
+        });
+    } catch (err) {
+        res.status(400).send({ error: err.message });
         return;
     }
-
-    databaseConnector.User.create({
-        username: req.body.username,
-        password: req.body.password
-    });
-
-    const token = jwt.sign({
-        username: req.body.username
-    }, secret, {
-            expiresIn: '2 days'
-        }
-    );
-
-    res.send(JSON.stringify({
-        token
-    }, null, 2));
 });
 
 
 router.post('/login', async (req, res) => {
-    await databaseConnector.sequelize.sync();
+    try {
+        await databaseConnector.sequelize.sync();
 
-    const user = await databaseConnector.User.findByPrimary(req.body.username);
-    const valid = user && await user.verifyPassword(req.body.password);
+        const user = await databaseConnector.User.findByPrimary(req.body.username);
+        const valid = user && await user.verifyPassword(req.body.password);
 
-    if (!valid) {
-        res.status(401).send({ error: 'Login unsuccessful' });
+        if (!valid) {
+            res.status(401).send({ error: 'Login unsuccessful' });
+            return;
+        }
+
+        const token = jwt.sign({
+            username: req.body.username
+        }, secret, {
+                expiresIn: '2 days'
+            }
+        );
+
+        res.send({
+            token
+        });
+    } catch (err) {
+        res.status(400).send({ error: err.message });
         return;
     }
-
-    const token = jwt.sign({
-        username: req.body.username
-    }, secret, {
-            expiresIn: '2 days'
-        }
-    );
-
-    res.send(JSON.stringify({
-        token
-    }, null, 2));
 });
 
 router.get('/payload', async (req, res) => {
     try {
         const payload = await decodeToken(req);
-        res.send({ payload });
+        res.send(payload);
     } catch (err) {
         res.status(401).send({ error: err.message });
     }

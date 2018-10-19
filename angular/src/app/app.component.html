@@ -1,0 +1,7 @@
+<app-login *ngIf="!tokenPayload"></app-login>
+
+<ng-container *ngIf="!!tokenPayload">
+  <p>Hello {{tokenPayload.username}}</p>
+  <button (click)="onLogout()">Logout</button>
+  <router-outlet></router-outlet>
+</ng-container>
