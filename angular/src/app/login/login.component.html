@@ -1,17 +1,19 @@
-<form (ngSubmit)="onLogin()">
-  <div class="form-group">
-    <label for="username">Username</label>
+<div class="login-container">
+  <form (ngSubmit)="onLogin()">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <br>
+      <input type="text" class="form-control" required [(ngModel)]="user.username" name="username">
+    </div>
     <br>
-    <input type="text" class="form-control" required [(ngModel)]="user.username" name="username">
-  </div>
-  <br>
-  <div class="form-group">
-    <label for="password">Password</label>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <br>
+      <input type="password" class="form-control" required [(ngModel)]="user.password" name="password">
+    </div>
     <br>
-    <input type="password" class="form-control" required [(ngModel)]="user.password" name="password">
-  </div>
-  <br>
-  <button type="button" (click)="onRegister()" class="gray-button">Register</button>
-  &nbsp;
-  <button type="submit" class="black-button">Login</button>
-</form>
+    <button type="button" (click)="onRegister()" class="gray-button">Register</button>
+    &nbsp;
+    <button type="submit" class="black-button">Login</button>
+  </form>
+</div>
