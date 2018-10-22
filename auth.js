@@ -12,22 +12,24 @@ router.post('/register', async (req, res) => {
         await databaseConnector.sequelize.sync();
         const user = await databaseConnector.User.findByPrimary(req.body.username);
 
+        // Check if user already exists
         if (user) {
             res.status(409).send({ error: 'Username already exists' });
             return;
         }
 
+        // Create user
         await databaseConnector.User.create({
             username: req.body.username,
             password: req.body.password
         });
+        // Assign token to user
         const token = jwt.sign({
             username: req.body.username
         }, secret, {
                 expiresIn: '2 days'
             }
         );
-
         res.send({
             token
         });
@@ -42,6 +44,7 @@ router.post('/login', async (req, res) => {
     try {
         await databaseConnector.sequelize.sync();
 
+        // Verify user input
         const user = await databaseConnector.User.findByPrimary(req.body.username);
         const valid = user && await user.verifyPassword(req.body.password);
 
@@ -49,7 +52,7 @@ router.post('/login', async (req, res) => {
             res.status(401).send({ error: 'Login unsuccessful' });
             return;
         }
-
+        // Assign token to user
         const token = jwt.sign({
             username: req.body.username
         }, secret, {
@@ -75,9 +78,13 @@ router.get('/payload', async (req, res) => {
     }
 });
 
+/**
+ * Get and verify current token
+ * @param {Request} request 
+ * @returns {Promise<Object>}
+ */
 async function decodeToken(request) {
     return new Promise(async (resolve, reject) => {
-
         let token;
         try {
             token = request.header('Authorization').split('Bearer ').reduce((acc, cur) => cur);

@@ -3,7 +3,7 @@
 <div id="content-container" *ngIf="!!tokenPayload">
   <p id="greeting">Hello {{tokenPayload.username}}</p>
   <div id="logout-button-container">
-    <button (click)="onLogout()">Logout</button>
+    <button (click)="onLogout()" class="gray-button">Logout</button>
   </div>
   <div id="router-container">
     <router-outlet></router-outlet>

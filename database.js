@@ -6,7 +6,6 @@ const config = require('./config');
 const sequelize = new Sequelize(config.postgres.database, config.postgres.username, config.postgres.password, {
     host: config.postgres.host,
     dialect: 'postgres',
-
     pool: {
         max: 5,
         min: 0,
@@ -18,6 +17,7 @@ const sequelize = new Sequelize(config.postgres.database, config.postgres.userna
     operatorsAliases: false
 });
 
+// Create entity
 const User = sequelize.define('user', {
     username: {
         type: Sequelize.STRING,
@@ -28,13 +28,16 @@ const User = sequelize.define('user', {
         hooks: {
             beforeCreate: (user, options) => {
                 return new Promise((resolve, reject) => {
+                    // Prevent empty username and password
                     if ((!user.username && user.username !== 0) || (!user.password && user.password !== 0)) {
                         return reject(new Error('No empty values possible'));
                     }
+                    // Salt password
                     bcrypt.genSalt(8, (err, result) => {
                         if (err) {
                             return reject(err);
                         }
+                        // Hash password
                         bcrypt.hash(user.password, result, null, (err, result) => {
                             if (err) {
                                 return reject(err);
@@ -48,6 +51,7 @@ const User = sequelize.define('user', {
         }
     });
 
+// Compare hashed passwords
 User.prototype.verifyPassword = function (password) {
     return new Promise((resolve, reject) => {
         return bcrypt.compare(password, this.password, (err, result) => {
@@ -59,6 +63,7 @@ User.prototype.verifyPassword = function (password) {
     });
 };
 
+// Export entities
 module.exports = {
     sequelize,
     User

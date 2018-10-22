@@ -13,11 +13,13 @@ app.use((req, res, next) => {
     next();
 });
 
+// Handle request to /auth/* 
 app.use('/auth', auth.router);
 
 app.use('/data', async (req, res) => {
     let tokenPayload;
     try {
+        // Get data encapsulated in token
         tokenPayload = await auth.decodeToken(req);
     } catch (err) {
         res.status(401).send({ error: err.message });
@@ -36,12 +38,15 @@ app.use('/data', async (req, res) => {
 });
 
 if (process.argv[2] === 'debug') {
+    // When in debug mode redirect to angulat development server
     app.use('/', (req, res) => {
         res.header('Location', 'http://localhost:4200');
         res.send(302);
     });
 } else {
-    app.use('/', express.static(`${__dirname}/angular/dist`));
+    // When in productive mode run built angular
+    app.use(
+        '/', express.static(`${__dirname}/angular/dist`));
 }
 
 app.listen(3000, () => console.log(`Server started.`));
