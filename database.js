@@ -17,7 +17,7 @@ const sequelize = new Sequelize(config.postgres.database, config.postgres.userna
     operatorsAliases: false
 });
 
-// Create entity
+// Create entity user
 const User = sequelize.define('user', {
     username: {
         type: Sequelize.STRING,
@@ -63,8 +63,26 @@ User.prototype.verifyPassword = function (password) {
     });
 };
 
+// Create entity location
+const Location = sequelize.define('location', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    category: Sequelize.STRING,
+    name: Sequelize.STRING,
+    description: Sequelize.STRING,
+    address: Sequelize.STRING,
+    city: Sequelize.STRING,
+    lat: Sequelize.FLOAT,
+    long: Sequelize.FLOAT
+});
+Location.belongsTo(User);
+
 // Export entities
 module.exports = {
     sequelize,
-    User
+    User,
+    Location
 };

@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const auth = require('./auth');
+const location = require('./location');
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use((req, res, next) => {
 
 // Handle request to /auth/* 
 app.use('/auth', auth.router);
+// Handle request to /location/*
+app.use('/location', location.router);
 
 app.use('/data', async (req, res) => {
     let tokenPayload;
