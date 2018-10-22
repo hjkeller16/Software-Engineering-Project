@@ -48,6 +48,7 @@ const User = sequelize.define('user', {
         }
     });
 
+
 User.prototype.verifyPassword = function (password) {
     return new Promise((resolve, reject) => {
         return bcrypt.compare(password, this.password, (err, result) => {
@@ -59,7 +60,27 @@ User.prototype.verifyPassword = function (password) {
     });
 };
 
+
+
+
+const Location = sequelize.define('location', {
+    id: { 
+        type: Sequelize.INTEGER, 
+        primaryKey: true,
+        autoIncrement: true
+    },
+    category: Sequelize.STRING,
+    name: Sequelize.STRING,
+    description: Sequelize.STRING,
+    address: Sequelize.STRING,
+    city: Sequelize.STRING,
+    lat: Sequelize.FLOAT,
+    long: Sequelize.FLOAT
+});
+
+
 module.exports = {
     sequelize,
-    User
+    User,
+    Location
 };

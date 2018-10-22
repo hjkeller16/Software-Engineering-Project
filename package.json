@@ -22,5 +22,9 @@
     "pg": "^6.1.0",
     "sequelize": "^4.39.1",
     "uniqid": "^5.0.3"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^0.10.2",
+    "@angular/cli": "^7.0.2"
   }
 }
