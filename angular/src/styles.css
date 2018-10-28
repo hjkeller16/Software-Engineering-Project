@@ -1,3 +1,22 @@
+body
+{
+    margin:0em;
+    font-family:arial;
+}
+.black-button
+{
+    letter-spacing: 2px;
+    font-size: 14px;
+    box-shadow: none!important;
+    background: none;
+    border: 1.5px solid black!important;
+}
+.black-button:hover{
+    background:black; 
+	color:white;
+	cursor:pointer;
+}
+/* anna
 p, label {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
@@ -13,7 +32,6 @@ p, label {
 }
 
 .black-button:hover, .gray-button:hover {
-    /* border: 2px solid blue; */
     opacity: 0.7;
 }
 
@@ -24,3 +42,4 @@ p, label {
 .gray-button {
     background-color: gray;
 }
+*/

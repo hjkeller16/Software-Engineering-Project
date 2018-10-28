@@ -1,15 +1,63 @@
-.login-container {
-    height: 100%;
+body {
+    font-size: 14px;
+    font-family: arial;
+    margin: 0em;
+}
+section
+{
+	width:100%; 
+	position:absolute;
+	top:3em;
+	-background:black;
+
+}
+.image
+{
+    margin-top:4em;
+	width:60%;
+	margin-left:20%;
+	margin-bottom:2em;
+}
+header
+{
+    height: 3em;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: white;
+	border-bottom:1px solid black;
+    margin-top: 0em;
+    line-height: 3em;
+    position: fixed;
+    text-align: center;
+    font-family:arial;
+    font-size:18px;
+	
+}
+form
+{
+	width:90%;
+	margin-left:5%;
+}
+input {
+display: block;
+    width: 100%;
+    margin-top: 1em;
+    border: none!important;
+    border-bottom: 1px solid black!important;
+    height: 2em;
+    margin-bottom: 2em;
 }
 
 button {
-    width: 100px;
+    margin-left: 10%;
+    width: 80%;
+    letter-spacing: 2px;
+    font-size: 14px;
+    padding: 1em;
 }
 
-input {
-    width: 205px;
+a {
+    margin-top:2em;
+    display:block;
+    margin-left:15%;
+    width:70%;
 }
