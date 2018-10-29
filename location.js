@@ -31,6 +31,21 @@ router.post('/addpoi', async (req, res) => {
     }
 });
 
+
+router.get('/getpoi', async (req, res) => {
+    try {
+        await databaseConnector.sequelize.sync();
+        const poi = await databaseConnector.Location.findAll({
+            attributes: { exclude: ['userUsername'] },
+            raw: true,
+        });
+        
+        res.send(poi);
+    } catch (err) {
+        res.status(401).send({ error: err.message });
+    }
+});
+
 module.exports = {
     router
 };
