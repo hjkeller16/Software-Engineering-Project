@@ -9,7 +9,7 @@ const secret = uniqid();
 
 router.post('/register', async (req, res) => {
     try {
-        
+
         await databaseConnector.sequelize.sync();
 
         const user = await databaseConnector.User.findByPrimary(req.body.username);

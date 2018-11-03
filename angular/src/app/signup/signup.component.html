@@ -3,16 +3,17 @@
 -->
 <header>Registrieren</header>
 <section>
-  <form (ngSubmit)="onLogin()">
-      <input type="text" class="form-control" placeholder="Vorname" required [(ngModel)]="bearbeiten" name="bearbeiten">
-      <input type="text" class="form-control" placeholder="Nachname" required [(ngModel)]="bearbeiten" name="bearbeiten">
-      <input type="text" class="form-control" placeholder="E-Mail" required [(ngModel)]="user.username" name="username">
-      <input type="text" class="form-control" placeholder="E-Mail wiederholen" required [(ngModel)]="user.username" name="username">
-      <input type="password" class="form-control"  placeholder="Passwort" required [(ngModel)]="user.password" name="password">
-      <input type="password" class="form-control"  placeholder="Passwort wiederholen" required [(ngModel)]="user.password" name="password">
-      <br>
-      <label id="datenschutz">Indem du auf „Registrieren“ klickst, stimmst du zu, dass deine personenbezognen Daten erfasst und gespeichert werden dürfen.</label>
-      <br><br><br>
-      <button type="submit" class="black-button" (click)="onRegister()">Registrieren</button>
+  <form (ngSubmit)="onRegister()">
+    <input type="text" class="form-control" placeholder="Vorname" required [(ngModel)]="bearbeiten" name="firstname">
+    <input type="text" class="form-control" placeholder="Nachname" name="lastname">
+    <input type="text" class="form-control" placeholder="E-Mail" required [(ngModel)]="user.username" name="email">
+    <input type="text" class="form-control" placeholder="E-Mail wiederholen" name="email-wdh">
+    <input type="password" class="form-control" placeholder="Passwort" required [(ngModel)]="user.password" name="password">
+    <input type="password" class="form-control" placeholder="Passwort wiederholen" name="password-wdh">
+    <br>
+    <label id="privacy-statement">Indem du auf &quot;Registrieren&quot; klickst, stimmst du zu, dass deine
+      personenbezognen Daten erfasst und gespeichert werden dürfen.</label>
+    <br><br><br>
+    <button type="submit" class="black-button">Registrieren</button>
   </form>
 </section>

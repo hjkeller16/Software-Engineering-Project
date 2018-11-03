@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
+import { TokenPayload } from '../token-payload';
+import { Router } from '@angular/router';
 
 declare const L;
 
@@ -9,10 +12,29 @@ declare const L;
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private readonly authService: AuthService, public router: Router) { }
+  tokenPayload: TokenPayload = {
+    username: '',
+    iat: '',
+    exp: ''
+  };
 
-  ngOnInit() {
-    navigator.geolocation.getCurrentPosition(function (location) {
+  async ngOnInit() {
+    this.authService.subscribe((tokenPayload: TokenPayload) => {
+      this.tokenPayload = tokenPayload;
+    });
+
+    try {
+      const tokenPayload: TokenPayload = await this.authService.payload();
+
+      this.tokenPayload = tokenPayload;
+
+    } catch (err) {
+      console.log(err);
+      this.tokenPayload = null;
+    }
+
+    await navigator.geolocation.getCurrentPosition(function (location) {
       let latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
       let mymap = L.map('map').setView(latlng, 13);
       mymap.on('load', () => {
@@ -26,5 +48,10 @@ export class HomeComponent implements OnInit {
       }).addTo(mymap);
       L.marker(latlng).addTo(mymap);
     });
+  }
+
+  onLogout() {
+    this.authService.logout();
+    this.router.navigate(['login']);
   }
 }

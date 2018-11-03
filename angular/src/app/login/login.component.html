@@ -3,11 +3,11 @@
 <section>
   <img class="image" src="assets/sports.png">
   <form (ngSubmit)="onLogin()">
-      <input type="text" class="form-control" placeholder="E-Mail" required [(ngModel)]="user.username" name="username">
-      <input type="password" class="form-control"  placeholder="Passwort" required [(ngModel)]="user.password" name="password">
+    <input type="text" class="form-control" placeholder="E-Mail" required [(ngModel)]="user.username" name="username">
+    <input type="password" class="form-control" placeholder="Passwort" required [(ngModel)]="user.password" name="password">
     &nbsp;
     <button type="submit" class="black-button">Login</button>
     <!-- @todo create another screen-->
-    <a (click)="onRegister()">Sign Up</a>
+    <a (click)="onSignUp()">Sign Up</a>
   </form>
 </section>

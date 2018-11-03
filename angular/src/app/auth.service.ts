@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, EventEmitter } from '@angular/core';
 import { TokenResponse } from './token-response';
 import { User } from './user';
-import { Observable } from 'rxjs';
 import { TokenPayload } from './token-payload';
 import { environment } from 'src/environments/environment';
 
@@ -35,6 +34,13 @@ export class AuthService extends EventEmitter<TokenPayload> {
     } catch (err) {
       this.emit(null);
     }
+  }
+
+  public async isAuthenticated(): Promise<boolean> {
+    const token = localStorage.getItem('token');
+    // Check whether the token is expired and return
+    // true or false
+    return !!await this.payload();
   }
 
   public logout(): void {

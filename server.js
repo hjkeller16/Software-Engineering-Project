@@ -41,7 +41,7 @@ app.use('/data', async (req, res) => {
 });
 
 if (process.argv[2] === 'debug') {
-    // When in debug mode redirect to angulat development server
+    // When in debug mode redirect to angular development server
     app.use('/', (req, res) => {
         res.header('Location', 'http://localhost:4200');
         res.send(302);
