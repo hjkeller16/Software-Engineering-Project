@@ -6,6 +6,7 @@
   <form (ngSubmit)="onLogin()">
       <input type="text" class="form-control" placeholder="Vorname" required [(ngModel)]="bearbeiten" name="bearbeiten">
       <input type="text" class="form-control" placeholder="Nachname" required [(ngModel)]="bearbeiten" name="bearbeiten">
+      <input type="text" class="form-control" placeholder="Username" required [(ngModel)]="bearbeiten" name="bearbeiten">
       <input type="text" class="form-control" placeholder="E-Mail" required [(ngModel)]="user.username" name="username">
       <input type="text" class="form-control" placeholder="E-Mail wiederholen" required [(ngModel)]="user.username" name="username">
       <input type="password" class="form-control"  placeholder="Passwort" required [(ngModel)]="user.password" name="password">
