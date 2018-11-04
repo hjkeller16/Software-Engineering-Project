@@ -23,6 +23,9 @@ router.post('/register', async (req, res) => {
         // Create user
         await databaseConnector.User.create({
             username: req.body.username,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            email: req.body.email,
             password: req.body.password
         });
         // Assign token to user

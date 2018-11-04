@@ -4,9 +4,10 @@
 <header>Registrieren</header>
 <section>
   <form (ngSubmit)="onRegister()">
-    <input type="text" class="form-control" placeholder="Vorname" required [(ngModel)]="bearbeiten" name="firstname">
-    <input type="text" class="form-control" placeholder="Nachname" name="lastname">
-    <input type="text" class="form-control" placeholder="E-Mail" required [(ngModel)]="user.username" name="email">
+    <input type="text" class="form-control" placeholder="Vorname" required [(ngModel)]="user.firstname" name="firstname">
+    <input type="text" class="form-control" placeholder="Nachname" required [(ngModel)]="user.lastname" name="lastname">
+    <input type="text" class="form-control" placeholder="Username" required [(ngModel)]="user.username" name="username">
+    <input type="text" class="form-control" placeholder="E-Mail" required [(ngModel)]="user.email" name="email">
     <input type="text" class="form-control" placeholder="E-Mail wiederholen" name="email-wdh">
     <input type="password" class="form-control" placeholder="Passwort" required [(ngModel)]="user.password" name="password">
     <input type="password" class="form-control" placeholder="Passwort wiederholen" name="password-wdh">
