@@ -86,7 +86,7 @@ const Location = sequelize.define('location', {
     address: Sequelize.STRING,
     city: Sequelize.STRING,
     lat: Sequelize.FLOAT,
-    long: Sequelize.FLOAT
+    lng: Sequelize.FLOAT
 });
 Location.belongsTo(User);
 

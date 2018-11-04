@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { AddPlaceComponent } from './add-place/add-place.component';
+import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,10 @@ import { AddPlaceComponent } from './add-place/add-place.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{
+    provide: API_BASE_URL,
+    useFactory: apiBaseUrlFactory
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

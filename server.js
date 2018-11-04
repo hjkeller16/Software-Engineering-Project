@@ -47,7 +47,7 @@ if (process.argv[2] === 'debug') {
         res.send(302);
     });
 } else {
-    // When in productive mode run built angular
+    // When in productive mode run build angular
     app.use(
         '/', express.static(`${__dirname}/angular/dist`));
 }

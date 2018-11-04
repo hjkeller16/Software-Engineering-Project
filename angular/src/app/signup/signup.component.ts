@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent implements OnInit {
 
-  constructor(private readonly authService: AuthService, public router: Router) { }
+  constructor(private readonly authService: AuthService, private readonly router: Router) { }
 
   user: User;
 
