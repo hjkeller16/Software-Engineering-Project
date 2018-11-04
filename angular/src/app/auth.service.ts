@@ -40,7 +40,11 @@ export class AuthService extends EventEmitter<TokenPayload> {
     const token = localStorage.getItem('token');
     // Check whether the token is expired and return
     // true or false
-    return !!await this.payload();
+    try {
+      return !!await this.payload();
+    } catch (err) {
+      return false;
+    }
   }
 
   public logout(): void {

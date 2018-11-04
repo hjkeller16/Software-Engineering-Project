@@ -8,21 +8,21 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
-import { JwtModule } from '@auth0/angular-jwt';
+import { AddPlaceComponent } from './add-place/add-place.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    SignupComponent
+    SignupComponent,
+    AddPlaceComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
-    JwtModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
