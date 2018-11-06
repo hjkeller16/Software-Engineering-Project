@@ -9,6 +9,9 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { AddPlaceComponent } from './add-place/add-place.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatInputModule} from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { AddPlaceComponent } from './add-place/add-place.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatInputModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
