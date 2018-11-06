@@ -93,7 +93,6 @@ export class HomeComponent {
 
   async addAllLocations() {
     const locations = await this.locationRepositoryService.getAll();
-    debugger;
     locations.forEach((location) => {
       L.marker([location.lat, location.lng], {
         icon: this.createIcon(),

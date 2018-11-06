@@ -12,7 +12,6 @@ import { AddPlaceComponent } from './add-place/add-place.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material';
 import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
-import { MatchValidatorDirective } from './match-validator.directive';
 
 @NgModule({
   declarations: [
@@ -20,14 +19,13 @@ import { MatchValidatorDirective } from './match-validator.directive';
     LoginComponent,
     HomeComponent,
     SignupComponent,
-    AddPlaceComponent,
-    MatchValidatorDirective
+    AddPlaceComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
     HttpClientModule,
+    FormsModule,
     BrowserAnimationsModule,
     MatInputModule,
     ReactiveFormsModule

@@ -3,20 +3,25 @@
 -->
 <header>Registrieren</header>
 <section>
-  <form (ngSubmit)="onRegister()" [formGroup]="registerForm">
+  <form (ngSubmit)="onRegister()">
     <input type="text" class="form-control" placeholder="Vorname" required [(ngModel)]="user.firstname" name="firstname">
+    <br>
     <input type="text" class="form-control" placeholder="Nachname" required [(ngModel)]="user.lastname" name="lastname">
+    <br>
     <input type="text" class="form-control" placeholder="Username" required [(ngModel)]="user.username" name="username">
-    <input type="text" placeholder="E-Mail" required [(ngModel)]="user.email" formControlName="email">
-    <input *ngIf="registerForm.errors?.noMatch" type="text" placeholder="E-Mail wiederholen" formControlName="emailWdh">
-    <input type="password" class="form-control" placeholder="Passwort" required [(ngModel)]="user.password"
-      formControlName="password">
-    <input *ngIf="registerForm.errors?.noMatch" type="password" class="form-control" placeholder="Passwort wiederholen"
-      formControlName="passwordWdh">
+    <br>
+    <input type="text" class="form-control" placeholder="E-Mail" required [(ngModel)]="user.email" name="email">
+    <br>
+    <input type="text" class="form-control" placeholder="E-Mail wiederholen" name="emailWdh">
+    <br>
+    <input type="password" class="form-control" placeholder="Passwort" required [(ngModel)]="user.password" name="password">
+    <br>
+    <input type="password" class="form-control" placeholder="Passwort wiederholen" name="passwordWdh">
+    <br>
     <br>
     <label id="privacy-statement">Indem du auf &quot;Registrieren&quot; klickst, stimmst du zu, dass deine
       personenbezognen Daten erfasst und gespeichert werden dürfen.</label>
     <br><br><br>
-    <button type="submit" [disabled]="!registerForm.valid" class="black-button">Registrieren</button>
+    <button type="submit" class="black-button">Registrieren</button>
   </form>
 </section>
