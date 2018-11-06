@@ -3,6 +3,8 @@ import { Location } from '../location';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationRepositoryService } from '../location-repository.service';
 
+declare const google;
+
 @Component({
   selector: 'app-add-place',
   templateUrl: './add-place.component.html',
@@ -22,14 +24,36 @@ export class AddPlaceComponent {
         lat: 0,
         lng: 0
       }
-      debugger;
       const [, lat, lng] = /LatLng\((.*), (.*)\)/.exec(params.latlng);
       this.location.lat = Number(lat) || 0;
       this.location.lng = Number(lng) || 0;
+      google.maps.event.addDomListener(window, 'load', this.initialize);
     })
   }
 
   location: Location;
+  private geocoder;
+
+  codeLatLng(lat, lng) {
+    let latlng = new google.maps.LatLng(lat, lng);
+    this.geocoder.geocode({
+      'latLng': latlng
+    }, function (results, status) {
+      if (status === google.maps.GeocoderStatus.OK) {
+        if (results[1]) {
+          console.log(results[1]);
+        } else {
+          alert('No results found');
+        }
+      } else {
+        alert('Geocoder failed due to: ' + status);
+      }
+    });
+  }
+
+  initialize() {
+    this.geocoder = new google.maps.Geocoder();
+  }
 
   async onAddPlace() {
     await this.locationRepositoryService.add(this.location);

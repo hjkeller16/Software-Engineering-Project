@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { AddPlaceComponent } from './add-place/add-place.component';
 import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
+import { MatchValidatorDirective } from './match-validator.directive';
 
 @NgModule({
   declarations: [
@@ -17,13 +18,15 @@ import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
     LoginComponent,
     HomeComponent,
     SignupComponent,
-    AddPlaceComponent
+    AddPlaceComponent,
+    MatchValidatorDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [{
     provide: API_BASE_URL,
