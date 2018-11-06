@@ -1,8 +1,1 @@
-<app-login *ngIf="!tokenPayload"></app-login>
-<div id="content-container" *ngIf="!!tokenPayload">
-  <p id="greeting">Hello {{tokenPayload.username}}</p>
-  <button (click)="onLogout()" class="black-button button-logout">Logout</button>
-  <div id="router-container">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+<router-outlet></router-outlet>

@@ -1,3 +1,9 @@
-<div id="map">
-    <div class="loading-indicator"></div>
+<div id="content-container">
+    <p id="greeting">Hallo {{tokenPayload.username}}</p>
+    <button (click)="onLogout()" class="black-button button-logout">Logout</button>
+    <div id="router-container">
+        <div id="map">
+            <div class="loading-indicator"></div>
+        </div>
+    </div>
 </div>

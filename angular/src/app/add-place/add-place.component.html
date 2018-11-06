@@ -1,16 +1,15 @@
 <header>Ort erfassen</header>
-	<section>
-		<form action="signIn.html" method="post">
-			<input name="name" placeholder="Name">
-			<input name="address" placeholder="Adresse">
-			<textarea name="description" placeholder="Bitte füge eine Beschreibung ein"></textarea>
-			<Label style="float:left; width:100%;">Kategorie:</Label>
-			<input type="checkbox" class="checkbox" name="sport1" value="football"> Fußball
-			<input type="checkbox" class="checkbox" name="sport2" value="basketball"> Basketball<br>
-			<input type="checkbox" class="checkbox" name="sport3" value="tennis"> Tennis<br>
-			<input type="checkbox" class="checkbox" name="sport4" value="tabletennis"> Tischtennis<br><br>
-			<input type="text" name="sportsonstiges" placeholder="sonstiges, bitte einfügen">
-			<input name="image" accept="image/*" multiple type="file" value="Bild hinzufügen">
-			<!--insert js to make sure pwd is secure-->
-			<button class="black-button">Erfassen</button>
+<section>
+	<form (ngSubmit)="onAddPlace()">
+		<input name="name" [(ngModel)]=location.name placeholder="Name">
+		<input name="address" [(ngModel)]=location.address placeholder="Adresse">
+		<textarea name="description" [(ngModel)]=location.description placeholder="Bitte füge eine Beschreibung ein"></textarea>
+		<Label style="float:left; width:100%;">Kategorie:</Label>
+		<input type="checkbox" class="checkbox" name="sport1" value="football"> Fußball
+		<input type="checkbox" class="checkbox" name="sport2" value="basketball"> Basketball<br>
+		<input type="checkbox" class="checkbox" name="sport3" value="tennis"> Tennis<br>
+		<input type="checkbox" class="checkbox" name="sport4" value="tabletennis"> Tischtennis<br><br>
+		<input type="text" name="sportsonstiges" placeholder="sonstiges, bitte einfügen">
+		<input name="image" accept="image/*" multiple type="file" value="Bild hinzufügen">
+		<button type="submit" class="black-button">Erfassen</button>
 	</form>

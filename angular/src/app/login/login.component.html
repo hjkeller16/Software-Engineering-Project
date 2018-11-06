@@ -1,26 +1,23 @@
 <header class="header-shadow">FavPlace</header>
 
 <section>
-  <img class="image" src="assets/sports.png">
-  <form (ngSubmit)="onLogin()" class="example-form">
-      <mat-form-field class="example-full-width">
-          <input matInput placeholder="E-Mail" value=""  required [(ngModel)]="user.username" name="username">
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-          <input matInput placeholder="Passwort" type="password" required [(ngModel)]="user.password" name="password" value="Sushi">
-      </mat-form-field>
-    
-  
-    &nbsp;
-    <button type="submit" class="black-button">Login</button>
-    <!-- @todo create another screen-->
-    <a (click)="onRegister()">Sign Up</a>
-  </form>
+    <img class="image" src="assets/sports.png">
+    <form (ngSubmit)="onLogin()" class="example-form">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="E-Mail" value="" required [(ngModel)]="user.username" name="username">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Passwort" type="password" required [(ngModel)]="user.password" name="password"
+                value="Sushi">
+        </mat-form-field>
+
+        &nbsp;
+        <button type="submit" class="black-button">Login</button>
+        <a (click)="onSignUp()">Sign Up</a>
+    </form>
 </section>
 
 <!-- 
-
-
     <mat-form-field class="example-full-width">
           <input matInput type="text" class="form-control" placeholder="E-Mail" required [(ngModel)]="user.username" name="username">
       </mat-form-field>

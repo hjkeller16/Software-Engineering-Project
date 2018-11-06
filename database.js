@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt-nodejs');
-
+const validator = require("email-validator");
 const config = require('./config');
 
 const sequelize = new Sequelize(config.postgres.database, config.postgres.username, config.postgres.password, {
@@ -23,6 +23,12 @@ const User = sequelize.define('user', {
         type: Sequelize.STRING,
         primaryKey: true
     },
+    firstname: Sequelize.STRING,
+    lastname: Sequelize.STRING,
+    email: {
+        type: Sequelize.STRING,
+        unique: true
+    },
     password: Sequelize.STRING
 }, {
         hooks: {
@@ -31,6 +37,10 @@ const User = sequelize.define('user', {
                     // Prevent empty username and password
                     if ((!user.username && user.username !== 0) || (!user.password && user.password !== 0)) {
                         return reject(new Error('No empty values possible'));
+                    }
+                    // Check if email is valid
+                    if (!validator.validate(user.email)) {
+                        return reject(new Error('Email is invalid'));
                     }
                     // Salt password
                     bcrypt.genSalt(8, (err, result) => {
@@ -76,7 +86,7 @@ const Location = sequelize.define('location', {
     address: Sequelize.STRING,
     city: Sequelize.STRING,
     lat: Sequelize.FLOAT,
-    long: Sequelize.FLOAT
+    lng: Sequelize.FLOAT
 });
 Location.belongsTo(User);
 

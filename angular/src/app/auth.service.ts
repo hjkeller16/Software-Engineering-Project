@@ -1,30 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter, Inject } from '@angular/core';
 import { TokenResponse } from './token-response';
 import { User } from './user';
-import { Observable } from 'rxjs';
 import { TokenPayload } from './token-payload';
-import { environment } from 'src/environments/environment';
+import { API_BASE_URL } from './api-base-url';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends EventEmitter<TokenPayload> {
 
-  constructor(private readonly httpClient: HttpClient) {
+  constructor(private readonly httpClient: HttpClient, @Inject(API_BASE_URL) private readonly apiBaseUrl: string) {
     super();
-  }
-
-  private getApiUrl(): string {
-    return environment.production ? `${location.protocol}//${location.host}/auth` : 'http://localhost:3000/auth';
   }
 
   private setToken(token: string): void {
     localStorage.setItem('token', token);
-  }
-
-  private getToken(): string {
-    return localStorage.getItem('token');
   }
 
   private async emitPayload(): Promise<void> {
@@ -37,19 +28,34 @@ export class AuthService extends EventEmitter<TokenPayload> {
     }
   }
 
+  public getToken(): string {
+    return localStorage.getItem('token');
+  }
+
+  public async isAuthenticated(): Promise<boolean> {
+    const token = localStorage.getItem('token');
+    // Check whether the token is expired and return
+    // true or false
+    try {
+      return !!await this.payload();
+    } catch (err) {
+      return false;
+    }
+  }
+
   public logout(): void {
     localStorage.clear();
     this.emitPayload();
   }
 
   public async register(user: User): Promise<void> {
-    const response = await this.httpClient.post<TokenResponse>(this.getApiUrl() + '/register', user).toPromise();
+    const response = await this.httpClient.post<TokenResponse>(this.apiBaseUrl + '/auth/register', user).toPromise();
     this.setToken(response.token);
     this.emitPayload();
   }
 
   public async login(user: User): Promise<void> {
-    const response = await this.httpClient.post<TokenResponse>(this.getApiUrl() + '/login', user).toPromise();
+    const response = await this.httpClient.post<TokenResponse>(this.apiBaseUrl + '/auth/login', user).toPromise();
     this.setToken(response.token);
     this.emitPayload();
   }
@@ -59,7 +65,7 @@ export class AuthService extends EventEmitter<TokenPayload> {
       return null;
     }
 
-    return this.httpClient.get<TokenPayload>(this.getApiUrl() + '/payload', {
+    return this.httpClient.get<TokenPayload>(this.apiBaseUrl + '/auth/payload', {
       headers: {
         Authorization: 'Bearer ' + this.getToken()
       }

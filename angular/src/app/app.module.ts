@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,8 +10,9 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { AddPlaceComponent } from './add-place/add-place.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatInputModule} from '@angular/material';
-
+import { MatInputModule } from '@angular/material';
+import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
+import { MatchValidatorDirective } from './match-validator.directive';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {MatInputModule} from '@angular/material';
     LoginComponent,
     HomeComponent,
     SignupComponent,
-    AddPlaceComponent
+    AddPlaceComponent,
+    MatchValidatorDirective
   ],
   imports: [
     BrowserModule,
@@ -27,10 +29,13 @@ import {MatInputModule} from '@angular/material';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatInputModule
-
+    MatInputModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [{
+    provide: API_BASE_URL,
+    useFactory: apiBaseUrlFactory
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
