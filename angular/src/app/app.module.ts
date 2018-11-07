@@ -9,7 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { AddPlaceComponent } from './add-place/add-place.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatDialogModule, MatCheckboxModule } from '@angular/material';
+import { MatInputModule, MatDialogModule, MatCheckboxModule, MatBadgeModule, MatButtonModule, MatFormFieldModule } from '@angular/material';
 import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
 
 @NgModule({
@@ -30,7 +30,11 @@ import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
     ReactiveFormsModule,
     MatDialogModule,
     ReactiveFormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatFormFieldModule
+
   ],
   providers: [{
     provide: API_BASE_URL,

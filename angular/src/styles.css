@@ -12,7 +12,8 @@ header
     height: 3em;
     width: 100%;
     background: #673AB7;
-	-border-bottom:1px solid black;
+    -border-bottom:1px solid black;
+    color:white;
     margin-top: 0em;
     line-height: 3em;
     position: fixed;
