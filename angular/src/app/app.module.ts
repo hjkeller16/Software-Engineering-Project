@@ -11,6 +11,9 @@ import { SignupComponent } from './signup/signup.component';
 import { AddPlaceComponent } from './add-place/add-place.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 @NgModule({
@@ -27,7 +30,10 @@ import {MatInputModule} from '@angular/material';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatInputModule
+    MatInputModule,
+    MatBadgeModule,
+    MatButtonModule, 
+    MatFormFieldModule
 
   ],
   providers: [],

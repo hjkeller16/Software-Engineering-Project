@@ -9,22 +9,18 @@
       <mat-form-field class="example-full-width">
           <input matInput placeholder="Passwort" type="password" required [(ngModel)]="user.password" name="password" value="Sushi">
       </mat-form-field>
-    
-  
-    &nbsp;
-    <button type="submit" class="black-button">Login</button>
+      <button mat-raised-button color="primary" type="submit" class="black-button">
+          Einloggen
+        </button>
     <!-- @todo create another screen-->
     <a (click)="onRegister()">Sign Up</a>
   </form>
+ 
+  
+  
 </section>
 
-<!-- 
 
 
-    <mat-form-field class="example-full-width">
-          <input matInput type="text" class="form-control" placeholder="E-Mail" required [(ngModel)]="user.username" name="username">
-      </mat-form-field>
-      <mat-form field class="example-full-width">
-          <input matInput type="password" class="form-control"  placeholder="Passwort" required [(ngModel)]="user.password" name="password">
-      </mat-form>
--->
+
+ 
