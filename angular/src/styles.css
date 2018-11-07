@@ -45,7 +45,7 @@ form
 	margin-left:5%;
 }
 
-
+/*
 button {
     margin-left: 10%;
     width: 80%;
@@ -55,7 +55,7 @@ button {
     border-color: #9b59b6;
     color:#9b59b6;
 }
-
+*/
 a {
     margin-top:2em;
     display:block;
@@ -109,3 +109,12 @@ p, label {
 */
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.add-place-dialog-panel .mat-dialog-container {
+    width: 75vh;
+}
+
+
+.add-place-dialog-panel .mat-dialog-container .mat-form-field {
+    width: 100%;
+}

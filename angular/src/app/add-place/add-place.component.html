@@ -1,15 +1,36 @@
-<header>Ort erfassen</header>
-<section>
-	<form (ngSubmit)="onAddPlace()">
-		<input name="name" [(ngModel)]=location.name placeholder="Name">
-		<input name="address" [(ngModel)]=location.address placeholder="Adresse">
-		<textarea name="description" [(ngModel)]=location.description placeholder="Bitte füge eine Beschreibung ein"></textarea>
-		<Label style="float:left; width:100%;">Kategorie:</Label>
-		<input type="checkbox" class="checkbox" name="sport1" value="football"> Fußball
-		<input type="checkbox" class="checkbox" name="sport2" value="basketball"> Basketball<br>
-		<input type="checkbox" class="checkbox" name="sport3" value="tennis"> Tennis<br>
-		<input type="checkbox" class="checkbox" name="sport4" value="tabletennis"> Tischtennis<br><br>
-		<input type="text" name="sportsonstiges" placeholder="sonstiges, bitte einfügen">
-		<input name="image" accept="image/*" multiple type="file" value="Bild hinzufügen">
-		<button type="submit" class="black-button">Erfassen</button>
-	</form>
+<h2 mat-dialog-title>Ort erfassen</h2>
+
+<mat-dialog-content [formGroup]="form">
+	<mat-form-field>
+		<input matInput placeholder="Name" formControlName="name">
+	</mat-form-field>
+	<br /><br />
+	<mat-form-field>
+		<input matInput placeholder="Adresse" formControlName="address">
+	</mat-form-field>
+	<br /><br />
+	<mat-form-field>
+		<input matInput placeholder="Beschreibung" formControlName="description">
+	</mat-form-field>
+	<br /><br />
+	<mat-checkbox color="primary">
+		Fußball
+	</mat-checkbox>
+	<br /><br />
+	<mat-checkbox color="primary">
+		Tischtennis
+	</mat-checkbox>
+	<br /><br />
+	<mat-checkbox color="primary">
+		Basketball
+	</mat-checkbox>
+	<br /><br />
+	<mat-form-field>
+		<input matInput placeholder="Andere Kategorie">
+	</mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+	<button class="mat-raised-button mat-primary" (click)="onAddPlace()">Erfassen</button>
+	<button class="mat-raised-button" mat-button [mat-dialog-close]="true">Schließen</button>
+</mat-dialog-actions>

@@ -4,6 +4,9 @@ import { TokenPayload } from '../token-payload';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '../location';
 import { LocationRepositoryService } from '../location-repository.service';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { AddPlaceComponent } from '../add-place/add-place.component';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 declare const L;
 
@@ -18,40 +21,47 @@ export class HomeComponent {
   public tokenPayload: TokenPayload;
   private map;
 
-  constructor(private readonly authService: AuthService, private readonly locationRepositoryService: LocationRepositoryService, private readonly router: Router, private readonly activatedRoute: ActivatedRoute) {
-    this.activatedRoute.params.subscribe(async (params) => {
-      //Initialize location
-      this.location = {
-        id: '',
-        category: '',
-        name: '',
-        description: '',
-        address: '',
-        city: '',
-        lat: 0,
-        lng: 0
-      }
+  constructor(private readonly authService: AuthService,
+    private readonly locationRepositoryService: LocationRepositoryService,
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly dialog: MatDialog
+  ) {
+    this.activatedRoute.params.subscribe(this.initializeComponent.bind(this));
+  }
 
-      //Initialize token payload
-      this.tokenPayload = {
-        username: '',
-        iat: '',
-        exp: ''
-      };
+  async initializeComponent() {
+    //Initialize location
+    this.location = {
+      id: '',
+      category: '',
+      name: '',
+      description: '',
+      address: '',
+      city: '',
+      lat: 0,
+      lng: 0
+    }
 
-      //Get token payload information
-      await this.getTokenPayload();
+    //Initialize token payload
+    this.tokenPayload = {
+      username: '',
+      iat: '',
+      exp: ''
+    };
 
-      // Get current location
-      const location: any = await new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject));
-      let latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
+    //Get token payload information
+    await this.getTokenPayload();
 
-      // Initialize map
-      await this.initializeMap(latlng, 13);
+    // Get current location
+    const location: any = await new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject));
+    let latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
-      // Add all locations
-      this.addAllLocations();
-    })
+    // Initialize map
+    await this.initializeMap(latlng, 13);
+
+    // Add all locations
+    this.addAllLocations();
   }
 
   onLogout() {
@@ -70,6 +80,10 @@ export class HomeComponent {
   }
 
   async initializeMap(latlng: string, viewHeight: number): Promise<any> {
+    if (this.map) {
+      this.map.remove();
+    }
+
     this.map = L.map('map').setView(latlng, viewHeight);
 
     // On load event
@@ -87,16 +101,32 @@ export class HomeComponent {
 
     // Add new location with mouse click
     this.map.on('click', (e) => {
-      this.router.navigate(['addPlace', { latlng: e.latlng }]);
+      this.dialog
+        .open(AddPlaceComponent, {
+          autoFocus: true,
+          data: {
+            latlng: e.latlng
+          },
+          panelClass: 'add-place-dialog-panel'
+        })
+        .afterClosed()
+        .subscribe(result => {
+          this.initializeComponent();
+        });
     })
   }
+
 
   async addAllLocations() {
     const locations = await this.locationRepositoryService.getAll();
     locations.forEach((location) => {
-      L.marker([location.lat, location.lng], {
+      let marker = L.marker([location.lat, location.lng], {
         icon: this.createIcon(),
       }).addTo(this.map);
+      marker.on('click', (e) => {
+        console.log(location);
+        console.log('Hello');
+      })
     });
   }
 
