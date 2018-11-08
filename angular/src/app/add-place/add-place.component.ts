@@ -33,9 +33,8 @@ export class AddPlaceComponent {
 
   constructor(private readonly locationRepositoryService: LocationRepositoryService, public readonly dialogRef: MatDialogRef<AddPlaceComponent>, @Inject(MAT_DIALOG_DATA) data: any) {
     console.log()
-    const [, lat, lng] = /LatLng\((.*), (.*)\)/.exec(data.latlng);
-    this.location.lat = Number(lat) || 0;
-    this.location.lng = Number(lng) || 0;
+    this.location.lat = data.lat;
+    this.location.lng = data.lng;
   }
 
   async onAddPlace() {

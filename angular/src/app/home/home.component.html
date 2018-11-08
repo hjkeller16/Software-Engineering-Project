@@ -1,14 +1,11 @@
-<div id="content-container">
-    <p id="greeting">Hallo {{tokenPayload.username}}</p>
-    <div align="right">
-        <button mat-raised-button color="primary" (click)="onLogout()">
-            Ausloggen
-        </button>
-    </div>
-    <div id="router-container">
-        <div id="map">
-            <mat-progress-spinner color="primary" mode="indeterminate">
-            </mat-progress-spinner>
-        </div>
-    </div>
-</div>
+<mat-toolbar color="primary">
+    <h1 id="greeting">Hallo {{tokenPayload.username}}</h1>
+    <span class="fill-space"></span>
+    <button mat-raised-button color="secondary" (click)=" onLogout()">
+        Ausloggen
+    </button>
+</mat-toolbar>
+<agm-map [zoom]="17" [latitude]="currentLatLng.lat" [longitude]="currentLatLng.lng" (mapClick)="onMapClick($event)">
+    <agm-marker iconUrl="./assets/blue-dot.png" [latitude]="currentLatLng.lat" [longitude]="currentLatLng.lng"></agm-marker>
+    <agm-marker *ngFor="let location of locations" [latitude]="location.lat" [longitude]="location.lng" (markerClick)="onMarkerClick(location)"></agm-marker>
+</agm-map>
