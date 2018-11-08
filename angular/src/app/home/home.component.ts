@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { TokenPayload } from '../token-payload';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '../location';
 import { LocationRepositoryService } from '../location-repository.service';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { AddPlaceComponent } from '../add-place/add-place.component';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 declare const L;
 

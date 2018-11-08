@@ -1,8 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Location } from '../location';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Inject } from '@angular/core';
 import { LocationRepositoryService } from '../location-repository.service';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
