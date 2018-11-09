@@ -1,6 +1,7 @@
 const express = require('express');
 const uniqid = require('uniqid');
 const databaseConnector = require('./database');
+const auth = require('./auth');
 
 const router = express.Router();
 
@@ -8,6 +9,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
+        auth.decodeToken(req);
         await databaseConnector.sequelize.sync();
         const locations = await databaseConnector.Location.findAll({
             attributes: { exclude: ['userUsername'] },
@@ -22,9 +24,33 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
+        let currentuser = await auth.decodeToken(req);
+        console.log("the username is " + currentuser.username);
+        //console.log("use: is " + use + "user id: " + use.username);
+        /*
+        if (req.header('Authorization')) {
+            console.log("auth is" + req.header('Authorization'));
+            var authorization = req.header('Authorization').split('Bearer ').reduce((acc, cur) => cur),
+
+                decoded;
+            try {
+                decoded = jwt.verify(authorization, secret, function (err, decoded) {
+                    if (err) {
+                        reject(new Error('Auth token is invalid'));
+                    } else {
+                        resolve(decoded);
+                    }
+                });
+                 console.log("decoded is "+decoded);
+            } catch (e) {
+                return res.status(401).send('unauthorized');
+            }
+            var userId = decoded.id;
+            console.log("userId = " + userId);
+        }*/
+        
         await databaseConnector.sequelize.sync();
-        //const latitude = await databaseConnector.Location.findByPrimary(req.body.lat);
-        //const longitude = await databaseConnector.Location.findByPrimary(req.body.lng);
+
 
         await databaseConnector.Location.create({
             category: req.body.category,
@@ -33,7 +59,8 @@ router.post('/', async (req, res) => {
             address: req.body.address,
             city: req.body.city,
             lat: req.body.lat,
-            lng: req.body.lng
+            lng: req.body.long,
+            user_id: currentuser.username
             // TODO: User has to added as foreign key
         });
 
