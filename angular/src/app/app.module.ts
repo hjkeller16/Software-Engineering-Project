@@ -9,8 +9,10 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { AddPlaceComponent } from './add-place/add-place.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatDialogModule, MatCheckboxModule, MatBadgeModule, MatButtonModule, MatFormFieldModule } from '@angular/material';
+import { MatInputModule, MatDialogModule, MatCheckboxModule, MatBadgeModule, MatButtonModule, MatFormFieldModule, MatProgressSpinnerModule, MatGridListModule, MatToolbar, MatToolbarModule } from '@angular/material';
 import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
+
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -33,8 +35,13 @@ import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
     MatCheckboxModule,
     MatBadgeModule,
     MatButtonModule,
-    MatFormFieldModule
-
+    MatFormFieldModule,
+    MatProgressSpinnerModule,
+    MatGridListModule,
+    MatToolbarModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAPN8BwmAlGH29eT-u1UHYcE7sj4tJFSg4'
+    })
   ],
   providers: [{
     provide: API_BASE_URL,

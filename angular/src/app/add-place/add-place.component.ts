@@ -1,8 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Location } from '../location';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Inject } from '@angular/core';
 import { LocationRepositoryService } from '../location-repository.service';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
@@ -35,9 +33,8 @@ export class AddPlaceComponent {
 
   constructor(private readonly locationRepositoryService: LocationRepositoryService, public readonly dialogRef: MatDialogRef<AddPlaceComponent>, @Inject(MAT_DIALOG_DATA) data: any) {
     console.log()
-    const [, lat, lng] = /LatLng\((.*), (.*)\)/.exec(data.latlng);
-    this.location.lat = Number(lat) || 0;
-    this.location.lng = Number(lng) || 0;
+    this.location.lat = data.lat;
+    this.location.lng = data.lng;
   }
 
   async onAddPlace() {

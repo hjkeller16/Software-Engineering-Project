@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { TokenPayload } from '../token-payload';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '../location';
 import { LocationRepositoryService } from '../location-repository.service';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { AddPlaceComponent } from '../add-place/add-place.component';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { LatLng } from '@agm/core';
 
 declare const L;
 
@@ -17,7 +17,11 @@ declare const L;
 })
 export class HomeComponent {
 
-  public location: Location;
+  public currentLatLng = {
+    lat: 0,
+    lng: 0
+  };
+  public locations: Location[] = [];
   public tokenPayload: TokenPayload;
   private map;
 
@@ -31,18 +35,6 @@ export class HomeComponent {
   }
 
   async initializeComponent() {
-    //Initialize location
-    this.location = {
-      id: '',
-      category: '',
-      name: '',
-      description: '',
-      address: '',
-      city: '',
-      lat: 0,
-      lng: 0
-    }
-
     //Initialize token payload
     this.tokenPayload = {
       username: '',
@@ -55,13 +47,13 @@ export class HomeComponent {
 
     // Get current location
     const location: any = await new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject));
-    let latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
-    // Initialize map
-    await this.initializeMap(latlng, 13);
+    this.currentLatLng = {
+      lat: location.coords.latitude,
+      lng: location.coords.longitude
+    };
 
-    // Add all locations
-    this.addAllLocations();
+    this.locations = await this.locationRepositoryService.getAll();
   }
 
   onLogout() {
@@ -79,62 +71,23 @@ export class HomeComponent {
     }
   }
 
-  async initializeMap(latlng: string, viewHeight: number): Promise<any> {
-    if (this.map) {
-      this.map.remove();
-    }
-
-    this.map = L.map('map').setView(latlng, viewHeight);
-
-    // On load event
-    this.map.on('load', () => {
-      document.getElementById('map-loading-indicator').style.display = 'none';
-    });
-    // Add title layer to map
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      maxZoom: 18,
-      id: 'mapbox.streets',
-      accessToken: 'sk.eyJ1IjoiYW5uYWJhaWVyIiwiYSI6ImNqbmZ5OGczazA0dGczcHFubjh2MzhlNjcifQ.fgI9fzYtKDB3ZNNogLOyRA'
-    }).addTo(this.map);
-    L.marker(latlng).addTo(this.map);
-
-    // Add new location with mouse click
-    this.map.on('click', (e) => {
-      this.dialog
-        .open(AddPlaceComponent, {
-          autoFocus: true,
-          data: {
-            latlng: e.latlng
-          },
-          panelClass: 'add-place-dialog-panel'
-        })
-        .afterClosed()
-        .subscribe(result => {
-          this.initializeComponent();
-        });
-    })
-  }
-
-
-  async addAllLocations() {
-    const locations = await this.locationRepositoryService.getAll();
-    locations.forEach((location) => {
-      let marker = L.marker([location.lat, location.lng], {
-        icon: this.createIcon(),
-      }).addTo(this.map);
-      marker.on('click', (e) => {
-        console.log(location);
-        console.log('Hello');
+  onMapClick(e) {
+    this.dialog
+      .open(AddPlaceComponent, {
+        autoFocus: true,
+        data: {
+          lat: e.coords.lat,
+          lng: e.coords.lng
+        },
+        panelClass: 'add-place-dialog-panel'
       })
-    });
+      .afterClosed()
+      .subscribe(result => {
+        this.initializeComponent();
+      });
   }
 
-  createIcon() {
-    return L.icon({
-      iconUrl: './assets/map-marker-icon-64.png',
-      iconSize: [32, 32], // size of the icon
-      iconAnchor: [16, 32], // point of the icon which will correspond to marker's location
-    });
+  onMarkerClick(location) {
+    console.log(location);
   }
 }
