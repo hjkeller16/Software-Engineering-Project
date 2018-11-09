@@ -88,7 +88,9 @@ const Location = sequelize.define('location', {
     lat: Sequelize.FLOAT,
     lng: Sequelize.FLOAT
 });
-Location.belongsTo(User);
+Location.belongsTo(User, { foreignKey: 'user_id' });
+
+
 
 // Export entities
 module.exports = {
