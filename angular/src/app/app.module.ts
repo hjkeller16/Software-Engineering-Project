@@ -14,6 +14,7 @@ import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
 import { AgmCoreModule } from '@agm/core';
 import { MarkPlaceComponent } from './mark-place/mark-place.component';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
+import { SelectMarkerComponent } from './select-marker/select-marker.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
     HomeComponent,
     SignupComponent,
     AddPlaceComponent,
-    MarkPlaceComponent
+    MarkPlaceComponent,
+    SelectMarkerComponent
   ],
   imports: [
     BrowserModule,
