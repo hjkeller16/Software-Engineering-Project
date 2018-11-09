@@ -9,10 +9,11 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { AddPlaceComponent } from './add-place/add-place.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatDialogModule, MatCheckboxModule, MatBadgeModule, MatButtonModule, MatFormFieldModule, MatProgressSpinnerModule, MatGridListModule, MatToolbar, MatToolbarModule } from '@angular/material';
+import { MatInputModule, MatDialogModule, MatCheckboxModule, MatBadgeModule, MatButtonModule, MatFormFieldModule, MatProgressSpinnerModule, MatGridListModule, MatToolbar, MatToolbarModule, MatBottomSheetModule, MatDialogRef } from '@angular/material';
 import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
-
 import { AgmCoreModule } from '@agm/core';
+import { MarkPlaceComponent } from './mark-place/mark-place.component';
+import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AgmCoreModule } from '@agm/core';
     LoginComponent,
     HomeComponent,
     SignupComponent,
-    AddPlaceComponent
+    AddPlaceComponent,
+    MarkPlaceComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,7 @@ import { AgmCoreModule } from '@agm/core';
     FormsModule,
     BrowserAnimationsModule,
     MatInputModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     MatDialogModule,
     ReactiveFormsModule,
     MatCheckboxModule,
@@ -39,15 +41,20 @@ import { AgmCoreModule } from '@agm/core';
     MatProgressSpinnerModule,
     MatGridListModule,
     MatToolbarModule,
+    MatBottomSheetModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAPN8BwmAlGH29eT-u1UHYcE7sj4tJFSg4'
-    })
+    }),
+    AgmJsMarkerClustererModule
   ],
   providers: [{
     provide: API_BASE_URL,
     useFactory: apiBaseUrlFactory
   }],
   bootstrap: [AppComponent],
-  entryComponents: [AddPlaceComponent]
+  entryComponents: [
+    AddPlaceComponent,
+    MarkPlaceComponent
+  ]
 })
 export class AppModule { }

@@ -1,14 +1,14 @@
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { TokenPayload } from '../token-payload';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '../location';
 import { LocationRepositoryService } from '../location-repository.service';
-import { MatDialog } from '@angular/material';
-import { AddPlaceComponent } from '../add-place/add-place.component';
-import { LatLng } from '@agm/core';
+import { MatBottomSheet, MatDialogRef } from '@angular/material';
+import { MarkPlaceComponent } from '../mark-place/mark-place.component';
+import { MapsAPILoader } from '@agm/core';
 
-declare const L;
+declare var google: any;
 
 @Component({
   selector: 'app-home',
@@ -23,15 +23,21 @@ export class HomeComponent {
   };
   public locations: Location[] = [];
   public tokenPayload: TokenPayload;
-  private map;
+  geocoder: any;
+  public selectedLatLng = null;
 
-  constructor(private readonly authService: AuthService,
+  constructor(
+    public mapsApiLoader: MapsAPILoader,
+    private readonly authService: AuthService,
     private readonly locationRepositoryService: LocationRepositoryService,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly dialog: MatDialog
+    private readonly bottomSheet: MatBottomSheet,
   ) {
     this.activatedRoute.params.subscribe(this.initializeComponent.bind(this));
+    this.mapsApiLoader.load().then(() => {
+      this.geocoder = new google.maps.Geocoder();
+    });
   }
 
   async initializeComponent() {
@@ -71,20 +77,51 @@ export class HomeComponent {
     }
   }
 
-  onMapClick(e) {
-    this.dialog
-      .open(AddPlaceComponent, {
-        autoFocus: true,
-        data: {
-          lat: e.coords.lat,
-          lng: e.coords.lng
-        },
-        panelClass: 'add-place-dialog-panel'
+
+  async onMapClick(e) {
+    // Set market at selected location
+    this.selectedLatLng = {
+      lat: e.coords.lat,
+      lng: e.coords.lng
+    };
+
+    // Get address from coordinates
+    const address = await this.getAddressFromCoordinates(e.coords.lat, e.coords.lng);
+
+    const dialogWrapper = {
+      ref: null
+    };
+
+    await this.bottomSheet.open(MarkPlaceComponent, {
+      data: {
+        lat: e.coords.lat,
+        lng: e.coords.lng,
+        address: address,
+        dialogWrapper
+      },
+    }).afterDismissed().toPromise();
+
+    if (dialogWrapper.ref) {
+      await dialogWrapper.ref.afterClosed().toPromise();
+      this.initializeComponent();
+    }
+
+    this.selectedLatLng = null;
+  }
+
+  async getAddressFromCoordinates(lat, lng) {
+    return new Promise((resolve, reject) => {
+      let currAddress;
+      this.geocoder.geocode({
+        'location': {
+          lat: lat,
+          lng: lng
+        }
+      }, (results) => {
+        currAddress = results[0].formatted_address
+        resolve(currAddress);
       })
-      .afterClosed()
-      .subscribe(result => {
-        this.initializeComponent();
-      });
+    })
   }
 
   onMarkerClick(location) {

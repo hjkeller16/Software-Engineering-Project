@@ -7,5 +7,9 @@
 </mat-toolbar>
 <agm-map [zoom]="17" [latitude]="currentLatLng.lat" [longitude]="currentLatLng.lng" (mapClick)="onMapClick($event)">
     <agm-marker iconUrl="./assets/blue-dot.png" [latitude]="currentLatLng.lat" [longitude]="currentLatLng.lng"></agm-marker>
-    <agm-marker *ngFor="let location of locations" [latitude]="location.lat" [longitude]="location.lng" (markerClick)="onMarkerClick(location)"></agm-marker>
+    <agm-marker iconUrl="./assets/blue-marker.png" *ngIf="selectedLatLng" [latitude]="selectedLatLng.lat" [longitude]="selectedLatLng.lng"></agm-marker>
+    <agm-marker-cluster [maxZoom]="15" [imagePath]="'https://googlemaps.github.io/js-marker-clusterer/images/m'">
+        <agm-marker iconUrl="./assets/red-marker.png" *ngFor="let location of locations" [latitude]="location.lat"
+            [longitude]="location.lng" (markerClick)="onMarkerClick(location)"></agm-marker>
+    </agm-marker-cluster>
 </agm-map>
