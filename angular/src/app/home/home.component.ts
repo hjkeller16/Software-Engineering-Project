@@ -6,6 +6,7 @@ import { Location } from '../location';
 import { LocationRepositoryService } from '../location-repository.service';
 import { MatDialog } from '@angular/material';
 import { AddPlaceComponent } from '../add-place/add-place.component';
+import { SelectMarkerComponent } from '../select-marker/select-marker.component';
 import { LatLng } from '@agm/core';
 
 declare const L;
@@ -89,5 +90,17 @@ export class HomeComponent {
 
   onMarkerClick(location) {
     console.log(location);
+    this.dialog
+    .open(SelectMarkerComponent, {
+      autoFocus: true,
+      data: {
+        location:location
+      },
+      panelClass: 'add-place-dialog-panel'
+    })
+    .afterClosed()
+    .subscribe(result => {
+      this.initializeComponent();
+    });
   }
 }
