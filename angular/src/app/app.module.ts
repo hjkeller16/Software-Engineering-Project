@@ -13,6 +13,7 @@ import { MatInputModule, MatDialogModule, MatCheckboxModule, MatBadgeModule, Mat
 import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
 
 import { AgmCoreModule } from '@agm/core';
+import { SelectMarkerComponent } from './select-marker/select-marker.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AgmCoreModule } from '@agm/core';
     LoginComponent,
     HomeComponent,
     SignupComponent,
-    AddPlaceComponent
+    AddPlaceComponent,
+    SelectMarkerComponent
   ],
   imports: [
     BrowserModule,
