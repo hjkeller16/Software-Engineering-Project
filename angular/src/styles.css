@@ -118,3 +118,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .add-place-dialog-panel .mat-dialog-container .mat-form-field {
     width: 100%;
 }
+
+.fill-space {
+    flex: 1 1 auto;
+}

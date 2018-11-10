@@ -150,7 +150,16 @@ export class HomeComponent {
   }
 
   showRoute(location: Location) {
-    this.origin = { lat: this.currentLatLng.lat, lng: this.currentLatLng.lng }
-    this.destination = { lat: location.lat, lng: location.lng }
+    this.origin = { lat: this.currentLatLng.lat, lng: this.currentLatLng.lng };
+    this.destination = { lat: location.lat, lng: location.lng };
+  }
+
+  onMapReady(e) {
+    (window.document.querySelector('agm-map > div') as any).style.height = '100%';
+  }
+
+  onEndRoute() {
+    this.origin = null;
+    this.destination = null;
   }
 }
