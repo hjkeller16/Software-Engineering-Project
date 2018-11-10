@@ -1,10 +1,9 @@
 <h3>{{ data.location.address }}</h3>
 <h6>{{ data.location.category }}</h6>
 <p>{{ data.location.description }}</p>
-<button mat-raised-button color="primary" type="submit">
-  Route amzeigen
+<button mat-raised-button color="primary" (click)="onShowRoute()">
+  Route anzeigen
 </button>
-&nbsp;
-<button mat-raised-button color="primary" type="submit">
+<button mat-raised-button color="primary">
   Kommentieren
 </button>

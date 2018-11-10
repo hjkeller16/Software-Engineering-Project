@@ -18,6 +18,7 @@ declare var google: any;
 })
 export class HomeComponent {
 
+  // Variables
   public currentLatLng = {
     lat: 0,
     lng: 0
@@ -26,6 +27,8 @@ export class HomeComponent {
   public tokenPayload: TokenPayload;
   geocoder: any;
   public selectedLatLng = null;
+  public origin: any;
+  public destination: any;
 
   constructor(
     public mapsApiLoader: MapsAPILoader,
@@ -68,6 +71,7 @@ export class HomeComponent {
     this.router.navigate(['login']);
   }
 
+  // Get user information through token
   async getTokenPayload() {
     try {
       const tokenPayload: TokenPayload = await this.authService.payload();
@@ -78,7 +82,7 @@ export class HomeComponent {
     }
   }
 
-
+  // On click on map
   async onMapClick(e) {
     // Set market at selected location
     this.selectedLatLng = {
@@ -102,6 +106,7 @@ export class HomeComponent {
       },
     }).afterDismissed().toPromise();
 
+    // If add-place component was closed the home component will be initilized to display added marker
     if (dialogWrapper.ref) {
       await dialogWrapper.ref.afterClosed().toPromise();
       this.initializeComponent();
@@ -110,6 +115,7 @@ export class HomeComponent {
     this.selectedLatLng = null;
   }
 
+  // Transfer coordinates into an address
   async getAddressFromCoordinates(lat, lng) {
     return new Promise((resolve, reject) => {
       let currAddress;
@@ -125,12 +131,26 @@ export class HomeComponent {
     })
   }
 
-  onMarkerClick(location) {
+  // On click on marker display details
+  async onMarkerClick(location) {
     console.log(location);
-    this.bottomSheet.open(SelectMarkerComponent, {
+    let events = {
+      showRouteClicked: false
+    };
+    await this.bottomSheet.open(SelectMarkerComponent, {
       data: {
-        location: location
+        location: location,
+        events
       },
-    })
+    }).afterDismissed().toPromise();
+
+    if (events.showRouteClicked) {
+      this.showRoute(location);
+    }
+  }
+
+  showRoute(location: Location) {
+    this.origin = { lat: this.currentLatLng.lat, lng: this.currentLatLng.lng }
+    this.destination = { lat: location.lat, lng: location.lng }
   }
 }

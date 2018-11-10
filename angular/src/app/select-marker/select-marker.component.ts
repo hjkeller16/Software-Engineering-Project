@@ -1,5 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Location } from '../location';
+import { Component, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 
 @Component({
@@ -10,8 +9,12 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 export class SelectMarkerComponent {
 
   constructor(
-    private bottomDialogRef: MatBottomSheetRef<SelectMarkerComponent>,
+    private readonly bottomDialogRef: MatBottomSheetRef<SelectMarkerComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any
   ) { console.log(data); }
 
+  onShowRoute() {
+    this.bottomDialogRef.dismiss();
+    this.data.events.showRouteClicked = true;
+  }
 }

@@ -15,6 +15,8 @@ import { AgmCoreModule } from '@agm/core';
 import { MarkPlaceComponent } from './mark-place/mark-place.component';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 import { SelectMarkerComponent } from './select-marker/select-marker.component';
+import { AgmDirectionModule } from 'agm-direction'
+import { CdkVirtualScrollViewport, ScrollDispatchModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { SelectMarkerComponent } from './select-marker/select-marker.component';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAPN8BwmAlGH29eT-u1UHYcE7sj4tJFSg4'
     }),
-    AgmJsMarkerClustererModule
+    AgmJsMarkerClustererModule,
+    AgmDirectionModule,
+    ScrollDispatchModule
   ],
   providers: [{
     provide: API_BASE_URL,

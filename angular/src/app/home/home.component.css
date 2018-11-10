@@ -1,12 +1,18 @@
 agm-map {
-  height: 92%;
+  height: 100%;
   width: 100%;
 }
 
 mat-grid-list {
-  height: 100%;
+  height: 92%;
 }
 
 .fill-space {
   flex: 1 1 auto;
+}
+
+#navigationPanelContainer {
+  overflow: scroll;
+  width: 97%;
+  height: 100%;
 }
