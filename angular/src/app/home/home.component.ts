@@ -4,9 +4,10 @@ import { TokenPayload } from '../token-payload';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '../location';
 import { LocationRepositoryService } from '../location-repository.service';
-import { MatBottomSheet, MatDialogRef } from '@angular/material';
+import { MatBottomSheet } from '@angular/material';
 import { MarkPlaceComponent } from '../mark-place/mark-place.component';
 import { MapsAPILoader } from '@agm/core';
+import { SelectMarkerComponent } from '../select-marker/select-marker.component';
 
 declare var google: any;
 
@@ -126,5 +127,10 @@ export class HomeComponent {
 
   onMarkerClick(location) {
     console.log(location);
+    this.bottomSheet.open(SelectMarkerComponent, {
+      data: {
+        location: location
+      },
+    })
   }
 }

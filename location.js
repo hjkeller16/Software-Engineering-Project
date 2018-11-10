@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
             var userId = decoded.id;
             console.log("userId = " + userId);
         }*/
-        
+
         await databaseConnector.sequelize.sync();
 
 
@@ -59,7 +59,7 @@ router.post('/', async (req, res) => {
             address: req.body.address,
             city: req.body.city,
             lat: req.body.lat,
-            lng: req.body.long,
+            lng: req.body.lng,
             user_id: currentuser.username
             // TODO: User has to added as foreign key
         });

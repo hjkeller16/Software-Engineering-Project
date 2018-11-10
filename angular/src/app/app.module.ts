@@ -56,7 +56,8 @@ import { SelectMarkerComponent } from './select-marker/select-marker.component';
   bootstrap: [AppComponent],
   entryComponents: [
     AddPlaceComponent,
-    MarkPlaceComponent
+    MarkPlaceComponent,
+    SelectMarkerComponent
   ]
 })
 export class AppModule { }
