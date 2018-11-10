@@ -86,7 +86,9 @@ const Location = sequelize.define('location', {
     address: Sequelize.STRING,
     city: Sequelize.STRING,
     lat: Sequelize.FLOAT,
-    lng: Sequelize.FLOAT
+    lng: Sequelize.FLOAT,
+    image: Sequelize.BLOB('tiny')
+    //productImage is a string
 });
 Location.belongsTo(User, { foreignKey: 'user_id' });
 
