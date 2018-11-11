@@ -1,7 +1,7 @@
-<!-- TODO: 
-     Das HTML & DESIGN stimmt soweit,[(ngModel)]="" name=" " sollte noch angepasst werden.
--->
-<header>Registrieren</header>
+<mat-toolbar class="mat-elevation-z5" color="primary">
+  <h1>Registrieren</h1>
+</mat-toolbar>
+
 <section>
   <form (ngSubmit)="onRegister()">
     <input type="text" class="form-control" placeholder="Vorname" required [(ngModel)]="user.firstname" name="firstname">
