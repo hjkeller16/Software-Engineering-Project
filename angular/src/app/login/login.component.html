@@ -4,11 +4,11 @@
 
 <section>
     <img class="image" src="assets/sports.png">
-    <form (ngSubmit)="onLogin()" class="example-form">
-        <mat-form-field class="example-full-width">
+    <form (ngSubmit)="onLogin()" class="userDetails-form">
+        <mat-form-field class="full-width">
             <input matInput placeholder="Username oder E-mail" value="" required [(ngModel)]="user.username" name="username">
         </mat-form-field>
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="full-width">
             <input matInput placeholder="Passwort" type="password" required [(ngModel)]="user.password" name="password">
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit">

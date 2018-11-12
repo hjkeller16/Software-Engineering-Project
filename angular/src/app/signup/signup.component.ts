@@ -32,5 +32,8 @@ export class SignupComponent implements OnInit {
       window.alert(err.error.error);
     }
   }
+  async back() {
+    this.router.navigate(['login']);
+  }
 
 }

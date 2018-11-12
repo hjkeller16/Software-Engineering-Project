@@ -1,9 +1,41 @@
 <mat-toolbar class="mat-elevation-z5" color="primary">
+    <i class="material-icons" (click)="back()" style="cursor: pointer; padding:1em; padding-left:0em; position:absolute;">
+        keyboard_backspace
+        </i>
   <h1>Registrieren</h1>
 </mat-toolbar>
 
 <section>
-  <form (ngSubmit)="onRegister()">
+    <form (ngSubmit)="onRegister()" class="userDetails-form">
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Vorname" value="" required [(ngModel)]="user.firstname" name="firstname">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Nachname" value="" required [(ngModel)]="user.lastname" name="lastname">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Username" value="" required [(ngModel)]="user.username" name="username">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="E-mail" value="" required [(ngModel)]="user.email" name="email">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="E-mail wiederholen" value="" name="emailWdh">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Passwort" type="password" required [(ngModel)]="user.password" name="password">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Passwort wiederholen" type="password" name="passwordWdh">
+        </mat-form-field>
+        <label id="privacy-statement">Indem du auf &quot;Registrieren&quot; klickst, stimmst du zu, dass deine
+            personenbezogenen Daten erfasst und gespeichert werden dürfen.</label>
+          <br>
+        <button mat-raised-button color="primary" type="submit">
+            Registrieren
+        </button>
+    </form>
+  <!--<form (ngSubmit)="onRegister()">
     <input type="text" class="form-control" placeholder="Vorname" required [(ngModel)]="user.firstname" name="firstname">
     <br>
     <input type="text" class="form-control" placeholder="Nachname" required [(ngModel)]="user.lastname" name="lastname">
@@ -21,7 +53,6 @@
     <br>
     <label id="privacy-statement">Indem du auf &quot;Registrieren&quot; klickst, stimmst du zu, dass deine
       personenbezogenen Daten erfasst und gespeichert werden dürfen.</label>
-    <br><br><br>
-    <button type="submit" class="black-button">Registrieren</button>
-  </form>
+    <br>
+  </form>-->
 </section>
