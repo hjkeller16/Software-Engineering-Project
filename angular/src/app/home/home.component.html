@@ -5,9 +5,7 @@
         Ausloggen
     </button>
 </mat-toolbar>
-
 <main>
-    
     <agm-map [style.height]="origin && destination ? '66%' : '100%'" [zoom]="17" [latitude]="currentLatLng.lat"
         [longitude]="currentLatLng.lng" (mapClick)="onMapClick($event)" (mapReady)="onMapReady($event)">
         <agm-marker iconUrl="./assets/blue-dot.png" [latitude]="currentLatLng.lat" [longitude]="currentLatLng.lng"></agm-marker>
@@ -21,19 +19,16 @@
         </agm-direction>
     </agm-map>
     <div id="navigationPanelContainer">
-           <!--<a target="_blank" href="https://www.google.com/maps/dir/Amerikanerstra%C3%9Fe+13,+D-68165+Mannheim,+Deutschland/logop%C3%A4dische+Praxis+beate/@49.0569727,8.3733155,9z/data=!3m1!4b1!4m13!4m12!1m5!1m1!1s0x4797cea6d1d1cfe7:0x2e5a6f2d0dc689f6!2m2!1d8.47785!2d49.47711!1m5!1m1!1s0x47999589fa5c5f6f:0x47d1c40256d752b3!2m2!1d9.41863!2d48.65538
-            ">-->
-            Bahnhofstraße 91, 67059 Ludwigshafen am Rhein,
-            <a target="_blank" ng-href="{{url}" (click) ="samuel()">
-                  <button mat-raised-button color="primary" >
-                    Zu Googlemaps
-                </button> </a> 
-            <button mat-raised-button color="primary" (click)="onEndRoute()">
-                    Navigation beenden
+        <a target="_blank" ng-href="{{url}" (click)="openGoogleMaps()">
+            <button mat-raised-button color="primary">
+                Zu Google Maps
             </button>
-            <div #navigationPanel></div>
-            <br>
-           
-        </div>
-   
+        </a>
+        &nbsp;
+        <button mat-raised-button color="secondary" (click)="onEndRoute()">
+            Navigation beenden
+        </button>
+        <div #navigationPanel></div>
+        <br>
+    </div>
 </main>

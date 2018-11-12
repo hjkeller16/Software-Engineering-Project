@@ -20,6 +20,7 @@ declare var google: any;
 export class HomeComponent {
 
   // Variables
+  private currentMarkerLocation: any;
   public currentLatLng = {
     lat: 0,
     lng: 0
@@ -64,6 +65,10 @@ export class HomeComponent {
       lng: location.coords.longitude
     };
 
+    //Set current marker location null;
+    this.currentMarkerLocation = null;
+
+    // Get all places from database
     this.locations = await this.locationRepositoryService.getAll();
   }
 
@@ -117,9 +122,9 @@ export class HomeComponent {
   }
 
   // Transfer coordinates into an address
-  async getAddressFromCoordinates(lat, lng) {
+  async getAddressFromCoordinates(lat, lng): Promise<any> {
     return new Promise((resolve, reject) => {
-      let currAddress;
+      let currAddress: string;
       this.geocoder.geocode({
         'location': {
           lat: lat,
@@ -128,13 +133,14 @@ export class HomeComponent {
       }, (results) => {
         currAddress = results[0].formatted_address
         resolve(currAddress);
-      })
-    })
+      });
+    });
   }
 
-  // On click on marker display details
+  // Click on marker displays details
   async onMarkerClick(location) {
     console.log(location);
+    this.currentMarkerLocation = location;
     let events = {
       showRouteClicked: false
     };
@@ -163,15 +169,16 @@ export class HomeComponent {
     this.origin = null;
     this.destination = null;
   }
- //samuel test @Todo replace startLocation and Zeil
- async samuel()
- {
-   var gmaps ="https://www.google.com/maps/dir/"
-   var startingPoint="Turmstraße 8, 67059 Ludwigshafen am Rhein"
-   var destination ="Gaußstraße 18, 68165 Mannheim";
-   
-   var gmapsLink =gmaps+encodeURIComponent(startingPoint)+"/"+encodeURIComponent(destination);
-   window.open(gmapsLink, "_blank");
- }
+
+  async openGoogleMaps() {
+    console.log(this.currentMarkerLocation);
+    console.log(this.currentLatLng);
+    var gmaps = "https://www.google.com/maps/dir/"
+    var startingPoint = await this.getAddressFromCoordinates(this.currentLatLng.lat, this.currentLatLng.lng);
+    var destination = await this.currentMarkerLocation.address;
+
+    var gmapsLink = gmaps + encodeURIComponent(startingPoint) + "/" + encodeURIComponent(destination);
+    window.open(gmapsLink, "_blank");
+  }
 
 }
