@@ -1,14 +1,15 @@
-<header class="header-shadow">FavPlace</header>
+<mat-toolbar class="mat-elevation-z5" color="primary">
+    <h1>FavPlace</h1>
+</mat-toolbar>
 
 <section>
     <img class="image" src="assets/sports.png">
     <form (ngSubmit)="onLogin()" class="example-form">
         <mat-form-field class="example-full-width">
-            <input matInput placeholder="E-Mail" value="" required [(ngModel)]="user.username" name="username">
+            <input matInput placeholder="Username oder E-mail" value="" required [(ngModel)]="user.username" name="username">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-            <input matInput placeholder="Passwort" type="password" required [(ngModel)]="user.password" name="password"
-                value="Sushi">
+            <input matInput placeholder="Passwort" type="password" required [(ngModel)]="user.password" name="password">
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit">
             Einloggen
@@ -16,12 +17,3 @@
         <a (click)="onSignUp()">Sign Up</a>
     </form>
 </section>
-
-<!-- 
-    <mat-form-field class="example-full-width">
-          <input matInput type="text" class="form-control" placeholder="E-Mail" required [(ngModel)]="user.username" name="username">
-      </mat-form-field>
-      <mat-form field class="example-full-width">
-          <input matInput type="password" class="form-control"  placeholder="Passwort" required [(ngModel)]="user.password" name="password">
-      </mat-form>
--->

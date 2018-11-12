@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { LocationRepositoryService } from '../location-repository.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-place',
@@ -31,10 +32,18 @@ export class AddPlaceComponent {
     otherCategory: new FormControl('')
   })
 
-  constructor(private readonly locationRepositoryService: LocationRepositoryService, public readonly dialogRef: MatDialogRef<AddPlaceComponent>, @Inject(MAT_DIALOG_DATA) data: any) {
+  constructor(private readonly locationRepositoryService: LocationRepositoryService,
+    private readonly router: Router,
+    public readonly dialogRef: MatDialogRef<AddPlaceComponent>,
+    @Inject(MAT_DIALOG_DATA) data: any) {
     console.log()
     this.location.lat = data.lat;
     this.location.lng = data.lng;
+    this.location.address = data.address;
+    // Navigate back to home component
+    dialogRef.afterClosed().subscribe(result => {
+      this.router.navigate(['']);
+    });
   }
 
   async onAddPlace() {

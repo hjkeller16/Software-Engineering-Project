@@ -1,15 +1,15 @@
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { TokenPayload } from '../token-payload';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '../location';
 import { LocationRepositoryService } from '../location-repository.service';
-import { MatDialog } from '@angular/material';
-import { AddPlaceComponent } from '../add-place/add-place.component';
 import { SelectMarkerComponent } from '../select-marker/select-marker.component';
-import { LatLng } from '@agm/core';
+import { MatBottomSheet } from '@angular/material';
+import { MarkPlaceComponent } from '../mark-place/mark-place.component';
+import { MapsAPILoader } from '@agm/core';
 
-declare const L;
+declare var google: any;
 
 @Component({
   selector: 'app-home',
@@ -18,21 +18,30 @@ declare const L;
 })
 export class HomeComponent {
 
+  // Variables
   public currentLatLng = {
     lat: 0,
     lng: 0
   };
   public locations: Location[] = [];
   public tokenPayload: TokenPayload;
-  private map;
+  geocoder: any;
+  public selectedLatLng = null;
+  public origin: any;
+  public destination: any;
 
-  constructor(private readonly authService: AuthService,
+  constructor(
+    public mapsApiLoader: MapsAPILoader,
+    private readonly authService: AuthService,
     private readonly locationRepositoryService: LocationRepositoryService,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly dialog: MatDialog
+    private readonly bottomSheet: MatBottomSheet,
   ) {
     this.activatedRoute.params.subscribe(this.initializeComponent.bind(this));
+    this.mapsApiLoader.load().then(() => {
+      this.geocoder = new google.maps.Geocoder();
+    });
   }
 
   async initializeComponent() {
@@ -62,6 +71,7 @@ export class HomeComponent {
     this.router.navigate(['login']);
   }
 
+  // Get user information through token
   async getTokenPayload() {
     try {
       const tokenPayload: TokenPayload = await this.authService.payload();
@@ -72,35 +82,84 @@ export class HomeComponent {
     }
   }
 
-  onMapClick(e) {
-    this.dialog
-      .open(AddPlaceComponent, {
-        autoFocus: true,
-        data: {
-          lat: e.coords.lat,
-          lng: e.coords.lng
-        },
-        panelClass: 'add-place-dialog-panel'
-      })
-      .afterClosed()
-      .subscribe(result => {
-        this.initializeComponent();
-      });
+  // On click on map
+  async onMapClick(e) {
+    // Set market at selected location
+    this.selectedLatLng = {
+      lat: e.coords.lat,
+      lng: e.coords.lng
+    };
+
+    // Get address from coordinates
+    const address = await this.getAddressFromCoordinates(e.coords.lat, e.coords.lng);
+
+    const dialogWrapper = {
+      ref: null
+    };
+
+    await this.bottomSheet.open(MarkPlaceComponent, {
+      data: {
+        lat: e.coords.lat,
+        lng: e.coords.lng,
+        address: address,
+        dialogWrapper
+      },
+    }).afterDismissed().toPromise();
+
+    // If add-place component was closed the home component will be initilized to display added marker
+    if (dialogWrapper.ref) {
+      await dialogWrapper.ref.afterClosed().toPromise();
+      this.initializeComponent();
+    }
+
+    this.selectedLatLng = null;
   }
 
-  onMarkerClick(location) {
-    console.log(location);
-    this.dialog
-    .open(SelectMarkerComponent, {
-      autoFocus: true,
-      data: {
-        location:location
-      },
-      panelClass: 'add-place-dialog-panel'
+  // Transfer coordinates into an address
+  async getAddressFromCoordinates(lat, lng) {
+    return new Promise((resolve, reject) => {
+      let currAddress;
+      this.geocoder.geocode({
+        'location': {
+          lat: lat,
+          lng: lng
+        }
+      }, (results) => {
+        currAddress = results[0].formatted_address
+        resolve(currAddress);
+      })
     })
-    .afterClosed()
-    .subscribe(result => {
-      this.initializeComponent();
-    });
+  }
+
+  // On click on marker display details
+  async onMarkerClick(location) {
+    console.log(location);
+    let events = {
+      showRouteClicked: false
+    };
+    await this.bottomSheet.open(SelectMarkerComponent, {
+      data: {
+        location: location,
+        events
+      },
+    }).afterDismissed().toPromise();
+
+    if (events.showRouteClicked) {
+      this.showRoute(location);
+    }
+  }
+
+  showRoute(location: Location) {
+    this.origin = { lat: this.currentLatLng.lat, lng: this.currentLatLng.lng };
+    this.destination = { lat: location.lat, lng: location.lng };
+  }
+
+  onMapReady(e) {
+    (window.document.querySelector('agm-map > div') as any).style.height = '100%';
+  }
+
+  onEndRoute() {
+    this.origin = null;
+    this.destination = null;
   }
 }

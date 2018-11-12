@@ -1,7 +1,7 @@
-<!-- TODO: 
-     Das HTML & DESIGN stimmt soweit,[(ngModel)]="" name=" " sollte noch angepasst werden.
--->
-<header>Registrieren</header>
+<mat-toolbar class="mat-elevation-z5" color="primary">
+  <h1>Registrieren</h1>
+</mat-toolbar>
+
 <section>
   <form (ngSubmit)="onRegister()">
     <input type="text" class="form-control" placeholder="Vorname" required [(ngModel)]="user.firstname" name="firstname">
@@ -20,7 +20,7 @@
     <br>
     <br>
     <label id="privacy-statement">Indem du auf &quot;Registrieren&quot; klickst, stimmst du zu, dass deine
-      personenbezognen Daten erfasst und gespeichert werden dürfen.</label>
+      personenbezogenen Daten erfasst und gespeichert werden dürfen.</label>
     <br><br><br>
     <button type="submit" class="black-button">Registrieren</button>
   </form>
