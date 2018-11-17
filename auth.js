@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const uniqid = require('uniqid');
 const databaseConnector = require('./database');
+const emailValidator = require("email-validator");
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.post('/register', async (req, res) => {
 
         // Check if user already exists
         if (user) {
-            res.status(409).send({ error: 'Username already exists' });
+            res.status(409).send({ error: 'Username existiert bereits' });
             return;
         }
 
@@ -50,23 +51,36 @@ router.post('/login', async (req, res) => {
         await databaseConnector.sequelize.sync();
 
         // Verify user input
-        const user = await databaseConnector.User.findByPrimary(req.body.username);
+        let userInput = req.body.username;
+        // Test if user input is username or email and get user information
+        let user;
+        if (emailValidator.validate(userInput)) {
+            user = await databaseConnector.User.findOne({
+                where: {
+                    email: userInput
+                }
+            });
+            //Send username instead of email
+            userInput = user.username;
+        } else {
+            user = await databaseConnector.User.findByPrimary(userInput);
+        }
         const valid = user && await user.verifyPassword(req.body.password);
 
         if (!valid) {
-            res.status(401).send({ error: 'Login unsuccessful' });
+            res.status(401).send({ error: 'Login nicht erfolgreich' });
             return;
         }
         // Assign token to user
         const token = jwt.sign({
-            username: req.body.username
+            username: userInput
         }, secret, {
                 expiresIn: '2 days'
             }
         );
 
         res.send({
-            token
+            token,
         });
     } catch (err) {
         res.status(400).send({ error: err.message });
