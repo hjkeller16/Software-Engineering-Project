@@ -4,7 +4,6 @@ export interface Location {
     name: string,
     description: string,
     address: string,
-    city: string,
     lat: number,
     lng: number
 }

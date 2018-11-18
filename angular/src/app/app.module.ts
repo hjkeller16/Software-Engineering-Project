@@ -16,7 +16,7 @@ import { MarkPlaceComponent } from './mark-place/mark-place.component';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 import { SelectMarkerComponent } from './select-marker/select-marker.component';
 import { AgmDirectionModule } from 'agm-direction'
-import { CdkVirtualScrollViewport, ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -34,8 +34,8 @@ import { CdkVirtualScrollViewport, ScrollDispatchModule } from '@angular/cdk/scr
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatInputModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
+    MatInputModule,
     MatDialogModule,
     ReactiveFormsModule,
     MatCheckboxModule,
