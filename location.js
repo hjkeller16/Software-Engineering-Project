@@ -2,6 +2,9 @@ const express = require('express');
 const uniqid = require('uniqid');
 const databaseConnector = require('./database');
 const auth = require('./auth');
+var fs = require('fs');
+let multer = require('multer');
+let upload = multer();
 
 const router = express.Router();
 
@@ -22,8 +25,10 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single('locationImage'), async (req, res) => {
     try {
+        console.log("the body is " + JSON.stringify(req.body));
+        console.log("the body is " + JSON.stringify(req.file));
         let currentuser = await auth.decodeToken(req);
         console.log("the username is " + currentuser.username);
         //console.log("use: is " + use + "user id: " + use.username);
@@ -52,15 +57,16 @@ router.post('/', async (req, res) => {
         await databaseConnector.sequelize.sync();
 
 
+
         await databaseConnector.Location.create({
             category: req.body.category,
             name: req.body.name,
             description: req.body.description,
             address: req.body.address,
-            city: req.body.city,
             lat: req.body.lat,
             lng: req.body.lng,
-            user_id: currentuser.username
+            user_id: currentuser.username,
+            image: req.file.buffer
             // TODO: User has to added as foreign key
         });
 

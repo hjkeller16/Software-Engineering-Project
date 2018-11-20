@@ -84,7 +84,6 @@ const Location = sequelize.define('location', {
     name: Sequelize.STRING,
     description: Sequelize.STRING,
     address: Sequelize.STRING,
-    city: Sequelize.STRING,
     lat: Sequelize.FLOAT,
     lng: Sequelize.FLOAT,
     image: Sequelize.BLOB('tiny')
