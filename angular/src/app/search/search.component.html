@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Ort suchen</h2>
+
+<mat-dialog-content [formGroup]="form">
+	<mat-form-field>
+		<input matInput placeholder="Suche" formControlName="seach">
+	</mat-form-field>
+	<br /><br />
+	<mat-checkbox color="primary">
+		Fußball
+	</mat-checkbox>
+	<br /><br />
+	<mat-checkbox color="primary">
+		Tischtennis
+	</mat-checkbox>
+	<br /><br />
+	<mat-checkbox color="primary">
+		Basketball
+	</mat-checkbox>
+	<br /><br />
+	<mat-form-field>
+		<input matInput placeholder="Andere Kategorie">
+	</mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+	<button class="mat-raised-button mat-primary">Suchen</button>
+	<button class="mat-raised-button" mat-button [mat-dialog-close]="true">Schließen</button>
+</mat-dialog-actions>
