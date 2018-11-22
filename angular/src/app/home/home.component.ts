@@ -166,8 +166,8 @@ export class HomeComponent {
  //samuel test @Todo replace startLocation and Zeil
  async samuel()
  {
-   var gmaps ="https://www.google.com/maps/dir/"
-   var startingPoint="Turmstraße 8, 67059 Ludwigshafen am Rhein"
+   var gmaps ="https://www.google.com/maps/dir/";
+   var startingPoint="Turmstraße 8, 67059 Ludwigshafen am Rhein";
    var destination ="Gaußstraße 18, 68165 Mannheim";
    
    var gmapsLink =gmaps+encodeURIComponent(startingPoint)+"/"+encodeURIComponent(destination);
