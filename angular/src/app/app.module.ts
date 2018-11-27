@@ -17,6 +17,7 @@ import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 import { SelectMarkerComponent } from './select-marker/select-marker.component';
 import { AgmDirectionModule } from 'agm-direction'
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
     SignupComponent,
     AddPlaceComponent,
     MarkPlaceComponent,
-    SelectMarkerComponent
+    SelectMarkerComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +64,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
   entryComponents: [
     AddPlaceComponent,
     MarkPlaceComponent,
+    SearchComponent,
     SelectMarkerComponent
   ]
 })

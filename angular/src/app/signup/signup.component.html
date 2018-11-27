@@ -8,25 +8,25 @@
 <section>
     <form (ngSubmit)="onRegister()" class="userDetails-form">
         <mat-form-field class="full-width">
-            <input matInput placeholder="Vorname" value="" required [(ngModel)]="user.firstname" name="firstname">
+            <input matInput placeholder="Vorname" pattern="[a-zA-Z ]*" value="" required [(ngModel)]="user.firstname" name="firstname">
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input matInput placeholder="Nachname" value="" required [(ngModel)]="user.lastname" name="lastname">
+            <input matInput placeholder="Nachname" pattern="[a-zA-Z ]*" value="" required [(ngModel)]="user.lastname" name="lastname">
         </mat-form-field>
         <mat-form-field class="full-width">
             <input matInput placeholder="Username" value="" required [(ngModel)]="user.username" name="username">
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input matInput placeholder="E-mail" value="" required [(ngModel)]="user.email" name="email">
+            <input matInput placeholder="E-mail" value="" pattern="^[a-z0-9_-]{8,15}$" required [(ngModel)]="user.email" name="email">
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input matInput placeholder="E-mail wiederholen" value="" name="emailWdh">
+            <input matInput placeholder = "E-mail wiederholen" value="" required [(ngModel)]="user.emailWdh" name="emailWdh">
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input matInput placeholder="Passwort" type="password" required [(ngModel)]="user.password" name="password">
+            <input matInput placeholder="Passwort" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" type="password" required [(ngModel)]="user.password" name="password">
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input matInput placeholder="Passwort wiederholen" type="password" name="passwordWdh">
+            <input matInput placeholder="Passwort wiederholen" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" type="password" required [(ngModel)]="user.passwordWdh" name="passwordWdh">
         </mat-form-field>
         <label id="privacy-statement">Indem du auf &quot;Registrieren&quot; klickst, stimmst du zu, dass deine
             personenbezogenen Daten erfasst und gespeichert werden dürfen.</label>

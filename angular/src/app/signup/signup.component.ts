@@ -20,16 +20,37 @@ export class SignupComponent implements OnInit {
       firstname: '',
       lastname: '',
       email: '',
-      password: ''
+      emailWdh: '',
+      password: '',
+      passwordWdh: ''
     }
   }
 
   async onRegister() {
-    try {
-      await this.authService.register(this.user);
-      this.router.navigate(['']);
-    } catch (err) {
-      window.alert(err.error.error);
+    var inputFalse =""; 
+    var stop;
+    if(this.user.email != this.user.emailWdh)
+    {
+      inputFalse = "Die Emails stimmen nicht überein.\n";
+      stop = true;
+    }
+    if(this.user.password != this.user.passwordWdh)
+    {
+      inputFalse += "Die Password stimmen nicht überein";
+      stop = true;
+    }
+    if(stop!=true)
+    {
+      try {
+        await this.authService.register(this.user);
+        this.router.navigate(['']);
+      } catch (err) {
+        window.alert(err.error.error);
+      }
+    }
+    else
+    {
+      window.alert(inputFalse);
     }
   }
   async back() {
