@@ -1,0 +1,33 @@
+#placeDesc
+{
+   float:left;
+    width:78%!important;
+    margin-right:1em;
+}
+div
+{
+
+}
+mat-form-field
+{
+    width:78%;
+    margin-top:2em;
+    margin-right:1em;
+}
+.commentTextArea
+{
+    display:inline;
+    width:80%!important;
+}
+.mat-raised-button
+{
+    display:inline;   
+    width:10%;
+    padding: 0.25em;
+    margin-top:2em;
+    padding-left: 0em;
+    padding-right: 0em;
+}
+.commentButton{
+    margin-top:2em;
+}

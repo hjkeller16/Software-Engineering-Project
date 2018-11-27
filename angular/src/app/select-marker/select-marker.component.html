@@ -1,10 +1,30 @@
-<h3>{{ data.location.address }}</h3>
-<h6>{{ data.location.category }}</h6>
-<p>{{ data.location.description }}</p>
-<button mat-raised-button color="primary" (click)="onShowRoute()">
-  Route anzeigen
-</button>
-&nbsp;
-<button mat-raised-button color="primary">
+<div>
+  <div id="placeDesc">
+    <h3>{{ data.location.address }}</h3>
+    <h6>{{ data.location.category }}</h6>
+    <p>{{ data.location.description }}</p>
+  </div>
+
+  <button mat-raised-button color="primary" (click)="onShowRoute()">
+    <i class="material-icons">
+      navigation
+    </i>
+  </button>
+</div>
+
+
+<div>
+  <mat-form-field class="commentTextarea">
+    <textarea matInput placeholder="Kommentieren"></textarea>
+  </mat-form-field>
+  <button mat-raised-button color="primary" class="commentButton">
+    <i class="material-icons">
+      send
+    </i>
+  </button>
+</div>
+
+<!--<button mat-raised-button color="primary">
   Kommentieren
 </button>
+-->

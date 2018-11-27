@@ -14,3 +14,6 @@ main {
   justify-content: stretch;
   height: 92%;
 }
+
+.searchButton
+{margin-right:0.5em;}

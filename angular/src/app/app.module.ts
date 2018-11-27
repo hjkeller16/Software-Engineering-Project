@@ -11,12 +11,13 @@ import { AddPlaceComponent } from './add-place/add-place.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatDialogModule, MatCheckboxModule, MatBadgeModule, MatButtonModule, MatFormFieldModule, MatProgressSpinnerModule, MatGridListModule, MatToolbar, MatToolbarModule, MatBottomSheetModule, MatDialogRef } from '@angular/material';
 import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
-import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule, GoogleMapsScriptProtocol } from '@agm/core';
 import { MarkPlaceComponent } from './mark-place/mark-place.component';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 import { SelectMarkerComponent } from './select-marker/select-marker.component';
 import { AgmDirectionModule } from 'agm-direction'
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
     SignupComponent,
     AddPlaceComponent,
     MarkPlaceComponent,
-    SelectMarkerComponent
+    SelectMarkerComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,8 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
     MatToolbarModule,
     MatBottomSheetModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAPN8BwmAlGH29eT-u1UHYcE7sj4tJFSg4'
+      apiKey: 'AIzaSyAPN8BwmAlGH29eT-u1UHYcE7sj4tJFSg4',
+      protocol: GoogleMapsScriptProtocol.HTTP
     }),
     AgmJsMarkerClustererModule,
     AgmDirectionModule,
@@ -61,6 +64,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
   entryComponents: [
     AddPlaceComponent,
     MarkPlaceComponent,
+    SearchComponent,
     SelectMarkerComponent
   ]
 })

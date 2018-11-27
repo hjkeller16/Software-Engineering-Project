@@ -8,9 +8,20 @@ import { SelectMarkerComponent } from '../select-marker/select-marker.component'
 import { MatBottomSheet } from '@angular/material';
 import { MarkPlaceComponent } from '../mark-place/mark-place.component';
 import { MapsAPILoader } from '@agm/core';
+import { SearchComponent } from '../search/search.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Inject } from '@angular/core';
 import { ZipOperator } from 'rxjs/internal/observable/zip';
+import { OnInit } from '@angular/core';
+import { AddPlaceComponent } from '../add-place/add-place.component';
 
 declare var google: any;
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
+
 
 @Component({
   selector: 'app-home',
@@ -25,6 +36,11 @@ export class HomeComponent {
     lat: 0,
     lng: 0
   };
+
+
+  animal: string;
+  name: string;
+
   public locations: Location[] = [];
   public tokenPayload: TokenPayload;
   geocoder: any;
@@ -34,6 +50,7 @@ export class HomeComponent {
 
   constructor(
     public mapsApiLoader: MapsAPILoader,
+    public dialog: MatDialog,
     private readonly authService: AuthService,
     private readonly locationRepositoryService: LocationRepositoryService,
     private readonly router: Router,
@@ -181,4 +198,12 @@ export class HomeComponent {
     window.open(gmapsLink, "_blank");
   }
 
+  openSearch(): void {
+    let dialogRef = this.dialog.open(SearchComponent, {
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 }
