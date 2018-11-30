@@ -61,7 +61,7 @@ router.post('/login', async (req, res) => {
                 }
             });
             //Send username instead of email
-            userInput = user.username;
+            userInput = user ? user.username : null;
         } else {
             user = await databaseConnector.User.findByPrimary(userInput);
         }
