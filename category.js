@@ -2,7 +2,7 @@ const express = require('express');
 const databaseConnector = require('./database');
 const auth = require('./auth');
 const router = express.Router();
-const location = require('./location');
+const category = require('./category');
 
 
 router.get('/', async (req, res) => {
@@ -26,11 +26,14 @@ router.post('/', async (req, res) => {
 
         await databaseConnector.Category.create({
             category: req.body.category,
-            location_id: req.body.locations
+            //locations: [{location_id: 1}, {location_id: 2}]
 
-        }/*, {
-            include: [{model: location}]
-        }*/);
+        })/*.then(function (category) {
+            category.setLocations(req.body.locations);
+            
+        })*/;
+        //category.addLocation(locations);
+        //category.setLocations([1, 2]);
 
         const cat = req.body.title;
 

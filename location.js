@@ -5,6 +5,7 @@ const auth = require('./auth');
 var fs = require('fs');
 let multer = require('multer');
 let upload = multer();
+const category = require('./category');
 
 const router = express.Router();
 
@@ -15,8 +16,7 @@ router.get('/', async (req, res) => {
         auth.decodeToken(req);
         await databaseConnector.sequelize.sync();
         const locations = await databaseConnector.Location.findAll({
-            attributes: { exclude: ['userUsername'] },
-            raw: true
+            //raw: true
         });
 
         res.send(locations);
@@ -27,39 +27,12 @@ router.get('/', async (req, res) => {
 
 router.post('/', upload.single('locationImage'), async (req, res) => {
     try {
-        console.log("the body is " + JSON.stringify(req.body));
-        console.log("the body is " + JSON.stringify(req.file));
+
         let currentuser = await auth.decodeToken(req);
-        console.log("the username is " + currentuser.username);
-        //console.log("use: is " + use + "user id: " + use.username);
-        /*
-        if (req.header('Authorization')) {
-            console.log("auth is" + req.header('Authorization'));
-            var authorization = req.header('Authorization').split('Bearer ').reduce((acc, cur) => cur),
-
-                decoded;
-            try {
-                decoded = jwt.verify(authorization, secret, function (err, decoded) {
-                    if (err) {
-                        reject(new Error('Auth token is invalid'));
-                    } else {
-                        resolve(decoded);
-                    }
-                });
-                 console.log("decoded is "+decoded);
-            } catch (e) {
-                return res.status(401).send('unauthorized');
-            }
-            var userId = decoded.id;
-            console.log("userId = " + userId);
-        }*/
-
         await databaseConnector.sequelize.sync();
 
-
-
-        await databaseConnector.Location.create({
-            category: req.body.category,
+        const location = await databaseConnector.Location.create({
+            category_id: req.body.category,
             name: req.body.name,
             description: req.body.description,
             address: req.body.address,
@@ -68,9 +41,21 @@ router.post('/', upload.single('locationImage'), async (req, res) => {
             user_id: currentuser.username,
             image: req.file.buffer
             // TODO: User has to added as foreign key
-        });
+        }/*, { include: [category] }).then(location=>{
+            location.setCategories([1,2])}*/);
 
         const loc = req.body.title;
+        //category.addLocation(location);
+
+        //await databaseConnector.Location.findByPrimary(1).addCategories([1,2]);
+        //maybe correct
+        /*databaseConnector.Location.findById(1).then(function(project){
+            return project.addCategory(1);
+            // project will be an instance of Project and stores the content of the table entry
+            // with id 123. if such an entry is not defined you will get null
+          });*/
+
+
 
         res.send({
             loc
@@ -80,6 +65,47 @@ router.post('/', upload.single('locationImage'), async (req, res) => {
         return;
     }
 });
+
+router.post('/noimage', async (req, res) => {
+    try {
+
+        let currentuser = await auth.decodeToken(req);
+        await databaseConnector.sequelize.sync();
+
+        const location = await databaseConnector.Location.create({
+            category_id: req.body.category,
+            name: req.body.name,
+            description: req.body.description,
+            address: req.body.address,
+            lat: req.body.lat,
+            lng: req.body.lng,
+            user_id: currentuser.username
+            //image: req.file.buffer
+            // TODO: User has to added as foreign key
+        }/*, { include: [category] }).then(location=>{
+            location.setCategories([1,2])}*/);
+
+        const loc = req.body.title;
+        //category.addLocation(location);
+
+        //await databaseConnector.Location.findByPrimary(1).addCategories([1,2]);
+       // databaseConnector.Location.findById(1).then(function(project){
+        //    return project.addCategory(1);
+            // project will be an instance of Project and stores the content of the table entry
+            // with id 123. if such an entry is not defined you will get null
+          //});
+
+
+
+        res.send({
+            loc
+        });
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+        return;
+    }
+});
+
 
 router.get('/:id', async (req, res) => {
     try {
