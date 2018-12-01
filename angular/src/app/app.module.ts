@@ -9,7 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { AddPlaceComponent } from './add-place/add-place.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatDialogModule, MatCheckboxModule, MatBadgeModule, MatButtonModule, MatFormFieldModule, MatProgressSpinnerModule, MatGridListModule, MatToolbar, MatToolbarModule, MatBottomSheetModule, MatDialogRef } from '@angular/material';
+import { MatInputModule, MatDialogModule, MatCheckboxModule, MatBadgeModule, MatButtonModule, MatFormFieldModule, MatProgressSpinnerModule, MatGridListModule, MatToolbar, MatToolbarModule, MatBottomSheetModule, MatDialogRef, MatRadioModule, MatCardModule } from '@angular/material';
 import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
 import { AgmCoreModule, GoogleMapsScriptProtocol } from '@agm/core';
 import { MarkPlaceComponent } from './mark-place/mark-place.component';
@@ -44,6 +44,8 @@ import { SearchComponent } from './search/search.component';
     MatBadgeModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatRadioModule,
+    MatCardModule,
     MatProgressSpinnerModule,
     MatGridListModule,
     MatToolbarModule,

@@ -1,33 +1,24 @@
 <h2 mat-dialog-title>Ort erfassen</h2>
 
-<mat-dialog-content [formGroup]="form">
+<mat-dialog-content>
 	<mat-form-field>
-		<input matInput placeholder="Name" formControlName="name" [(ngModel)]="location.name">
+		<input matInput placeholder="Name" [(ngModel)]="location.name" required>
 	</mat-form-field>
 	<br /><br />
 	<mat-form-field>
-		<input matInput placeholder="Adresse" formControlName="address" [(ngModel)]="location.address">
+		<input matInput placeholder="Adresse" [(ngModel)]="location.address" required>
 	</mat-form-field>
 	<br /><br />
 	<mat-form-field>
-		<input matInput placeholder="Beschreibung" formControlName="description" [(ngModel)]="location.description">
+		<input matInput placeholder="Beschreibung" [(ngModel)]="location.description">
 	</mat-form-field>
-	<br /><br />
-	<mat-checkbox color="primary">
-		Fußball
-	</mat-checkbox>
-	<br /><br />
-	<mat-checkbox color="primary">
-		Tischtennis
-	</mat-checkbox>
-	<br /><br />
-	<mat-checkbox color="primary">
-		Basketball
-	</mat-checkbox>
-	<br /><br />
-	<mat-form-field>
-		<input matInput placeholder="Andere Kategorie">
-	</mat-form-field>
+	<mat-radio-group [(ngModel)]="location.category">
+		<mat-radio-button [value]="'Fußball'" color="primary">Fußball</mat-radio-button>
+		&nbsp;
+		<mat-radio-button [value]="'Tischtennis'" color="primary">Tischtennis</mat-radio-button>
+		&nbsp;
+		<mat-radio-button [value]="'Basketball'" color="primary">Basketball</mat-radio-button>
+	</mat-radio-group>
 </mat-dialog-content>
 
 <mat-dialog-actions>

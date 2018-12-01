@@ -1,18 +1,23 @@
 <div>
   <div id="placeDesc">
-    <h3>{{ data.location.address }}</h3>
-    <h6>{{ data.location.category }}</h6>
-    <p>{{ data.location.description }}</p>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ data.location.name }}</mat-card-title>
+        <mat-card-subtitle>{{ data.location.address }}</mat-card-subtitle>
+        <mat-card-subtitle>{{ data.location.category }}</mat-card-subtitle>
+      </mat-card-header>
+      <!--<img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"> -->
+      <mat-card-content>
+        <p *ngIf="data.location.description">{{ data.location.description }}</p>
+      </mat-card-content>
+    </mat-card>
   </div>
-
   <button mat-raised-button color="primary" (click)="onShowRoute()">
     <i class="material-icons">
       navigation
     </i>
   </button>
 </div>
-
-
 <div>
   <mat-form-field class="commentTextarea">
     <textarea matInput placeholder="Kommentieren"></textarea>
@@ -23,8 +28,3 @@
     </i>
   </button>
 </div>
-
-<!--<button mat-raised-button color="primary">
-  Kommentieren
-</button>
--->

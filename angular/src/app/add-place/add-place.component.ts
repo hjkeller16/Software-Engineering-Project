@@ -13,7 +13,7 @@ export class AddPlaceComponent {
 
   public location = {
     id: '',
-    category: '',
+    category: 'Fußball',
     name: '',
     description: '',
     address: '',
@@ -47,6 +47,7 @@ export class AddPlaceComponent {
   }
 
   async onAddPlace() {
+    debugger;
     await this.locationRepositoryService.add(this.location);
     this.dialogRef.close();
   }

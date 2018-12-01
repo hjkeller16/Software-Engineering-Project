@@ -1,4 +1,4 @@
-import { Component, Testability } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { TokenPayload } from '../token-payload';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,19 +9,9 @@ import { MatBottomSheet } from '@angular/material';
 import { MarkPlaceComponent } from '../mark-place/mark-place.component';
 import { MapsAPILoader } from '@agm/core';
 import { SearchComponent } from '../search/search.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Inject } from '@angular/core';
-import { ZipOperator } from 'rxjs/internal/observable/zip';
-import { OnInit } from '@angular/core';
-import { AddPlaceComponent } from '../add-place/add-place.component';
+import { MatDialog } from '@angular/material';
 
 declare var google: any;
-
-export interface DialogData {
-  animal: string;
-  name: string;
-}
-
 
 @Component({
   selector: 'app-home',
@@ -36,10 +26,6 @@ export class HomeComponent {
     lat: 0,
     lng: 0
   };
-
-
-  animal: string;
-  name: string;
 
   public locations: Location[] = [];
   public tokenPayload: TokenPayload;
