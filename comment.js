@@ -4,14 +4,12 @@ const auth = require('./auth');
 const router = express.Router();
 const location = require('./location');
 
-
-
 router.get('/', async (req, res) => {
     try {
         auth.decodeToken(req);
         await databaseConnector.sequelize.sync();
         const comments = await databaseConnector.Comment.findAll({
-            attributes: {  },
+            attributes: {},
             raw: true
         });
 
@@ -23,26 +21,15 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-
         let currentuser = await auth.decodeToken(req);
-
-
         await databaseConnector.sequelize.sync();
-
-
-
         await databaseConnector.Comment.create({
             rating: req.body.rating,
             content: req.body.content,
             user_id: currentuser.username,
-            location_id: req.body.location
+            location_id: req.body.location_id
         });
-
-        const loc = req.body.title;
-
-        res.send({
-            loc
-        });
+        res.send();
     } catch (err) {
         res.status(500).send({ error: err.message });
         return;
@@ -53,7 +40,7 @@ router.get('/:id', async (req, res) => {
     try {
         await databaseConnector.sequelize.sync();
         const comment = await databaseConnector.Comment.findByPrimary(req.params.id, {
-            attributes: {  },
+            attributes: {},
             raw: true
         });
 

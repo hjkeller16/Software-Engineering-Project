@@ -22,16 +22,6 @@ export class AddPlaceComponent {
     lng: 0
   }
 
-  public form = new FormGroup({
-    name: new FormControl(this.location.name, Validators.required),
-    address: new FormControl(this.location.address, Validators.required),
-    description: new FormControl(this.location.description),
-    soccer: new FormControl(false),
-    tabletennis: new FormControl(false),
-    basketball: new FormControl(false),
-    otherCategory: new FormControl('')
-  })
-
   constructor(private readonly locationRepositoryService: LocationRepositoryService,
     private readonly router: Router,
     public readonly dialogRef: MatDialogRef<AddPlaceComponent>,
@@ -47,7 +37,6 @@ export class AddPlaceComponent {
   }
 
   async onAddPlace() {
-    debugger;
     await this.locationRepositoryService.add(this.location);
     this.dialogRef.close();
   }

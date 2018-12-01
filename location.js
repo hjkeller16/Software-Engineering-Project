@@ -31,33 +31,10 @@ router.post('/', upload.single('locationImage'), async (req, res) => {
         console.log("the body is " + JSON.stringify(req.file));
         let currentuser = await auth.decodeToken(req);
         console.log("the username is " + currentuser.username);
-        //console.log("use: is " + use + "user id: " + use.username);
-        /*
-        if (req.header('Authorization')) {
-            console.log("auth is" + req.header('Authorization'));
-            var authorization = req.header('Authorization').split('Bearer ').reduce((acc, cur) => cur),
 
-                decoded;
-            try {
-                decoded = jwt.verify(authorization, secret, function (err, decoded) {
-                    if (err) {
-                        reject(new Error('Auth token is invalid'));
-                    } else {
-                        resolve(decoded);
-                    }
-                });
-                 console.log("decoded is "+decoded);
-            } catch (e) {
-                return res.status(401).send('unauthorized');
-            }
-            var userId = decoded.id;
-            console.log("userId = " + userId);
-        }*/
-
+        // Connect to database
         await databaseConnector.sequelize.sync();
-
-
-
+        // Create table
         await databaseConnector.Location.create({
             category: req.body.category,
             name: req.body.name,
@@ -65,13 +42,11 @@ router.post('/', upload.single('locationImage'), async (req, res) => {
             address: req.body.address,
             lat: req.body.lat,
             lng: req.body.lng,
-            user_id: currentuser.username,
-            image: req.file.buffer
-            // TODO: User has to added as foreign key
+            user_id: currentuser.username
+            //image: req.file.buffer
         });
 
         const loc = req.body.title;
-
         res.send({
             loc
         });
