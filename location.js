@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', upload.single('locationImage'), async (req, res) => {
+router.post('/image', upload.single('locationImage'), async (req, res) => {
     try {
 
         let currentuser = await auth.decodeToken(req);
@@ -66,7 +66,7 @@ router.post('/', upload.single('locationImage'), async (req, res) => {
     }
 });
 
-router.post('/noimage', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
 
         let currentuser = await auth.decodeToken(req);
