@@ -19,6 +19,11 @@
   </button>
 </div>
 <div>
+  <div class="rating">
+  <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">  
+    <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>   
+  </a>  
+</div>
   <mat-form-field class="commentTextarea">
     <textarea matInput placeholder="Kommentieren"></textarea>
   </mat-form-field>
