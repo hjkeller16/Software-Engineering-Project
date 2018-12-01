@@ -84,19 +84,49 @@ const Location = sequelize.define('location', {
     name: Sequelize.STRING,
     description: Sequelize.STRING,
     address: Sequelize.STRING,
-    city: Sequelize.STRING,
     lat: Sequelize.FLOAT,
     lng: Sequelize.FLOAT,
     image: Sequelize.BLOB('tiny')
     //productImage is a string
 });
-Location.belongsTo(User, { foreignKey: 'user_id' });
 
+//create entity category
+const Category = sequelize.define('category', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    category: Sequelize.STRING
+});
+Location.belongsTo(User, { foreignKey: 'user_id' });
+Location.belongsToMany(Category, {through: 'LocationCategory', foreignKey: 'category_id'});
+
+
+//create entity Comment
+const Comment = sequelize.define('comment', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    rating: Sequelize.INTEGER,
+    content: Sequelize.STRING
+});
+Comment.belongsTo(User, {foreignKey: 'user_id'});
+Comment.belongsTo(Location, {foreignKey: 'location_id'});
+
+
+
+Category.belongsToMany(Location, {through: 'locationcategory', foreignKey: 'location_id'});
+Location.belongsToMany(Category, {through: 'locationcategory', foreignKey: 'category_id'});
 
 
 // Export entities
 module.exports = {
     sequelize,
     User,
-    Location
+    Location,
+    Category,
+    Comment
 };
