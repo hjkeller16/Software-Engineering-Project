@@ -26,10 +26,16 @@ router.post('/', async (req, res) => {
         let currentuser = await auth.decodeToken(req);
         console.log("the username is " + currentuser.username);
 
+        if (req.body.category == "") {
+            res.status(422).send({ error: "please enter category" });
+            return;
+        }
+
         // Connect to database
         await databaseConnector.sequelize.sync();
         // Create table
         await databaseConnector.Location.create({
+            // category_id: req.body.category,
             category: req.body.category,
             name: req.body.name,
             description: req.body.description,

@@ -57,4 +57,4 @@ if (process.argv[2] === 'debug') {
         '/', express.static(`${__dirname}/angular/dist`));
 }
 
-app.listen(3000, () => console.log(`Server started.`));
+module.exports = app.listen(3000, () => console.log(`Server started.`));
