@@ -61,6 +61,8 @@ const User = sequelize.define('user', {
         }
     });
 
+
+
 // Compare hashed passwords
 User.prototype.verifyPassword = function (password) {
     return new Promise((resolve, reject) => {
@@ -72,6 +74,9 @@ User.prototype.verifyPassword = function (password) {
         });
     });
 };
+
+//correct
+//const LocationCategory = sequelize.define('locationcategory', {});
 
 // Create entity location
 const Location = sequelize.define('location', {
@@ -99,7 +104,6 @@ const Location = sequelize.define('location', {
     },
     category: Sequelize.STRING
 }); */
-Location.belongsTo(User, { foreignKey: 'user_id' });
 //Location.belongsToMany(Category, { through: 'LocationCategory', foreignKey: 'category_id' });
 
 //create entity Comment
@@ -112,8 +116,19 @@ const Comment = sequelize.define('comment', {
     rating: Sequelize.INTEGER,
     content: Sequelize.STRING
 });
+
+Location.belongsTo(User, { foreignKey: 'user_id' });
 Comment.belongsTo(User, { foreignKey: 'user_id' });
 Comment.belongsTo(Location, { foreignKey: 'location_id' });
+//Location.belongsTo(Category, { foreignKey: 'category_id' });
+
+//LocationCategory.hasMany(Location, {foreignKey: 'id'});
+//LocationCategory.hasMany(Category, {foreignKey: 'id'});
+//location.addCategory(category);
+//category.addLocation(location);
+//Location.addCategory(Category);
+//Category.addLocation(Location);
+
 
 //Category.belongsToMany(Location, { through: 'locationcategory', foreignKey: 'location_id' });
 //Location.belongsToMany(Category, { through: 'locationcategory', foreignKey: 'category_id' });
@@ -123,6 +138,7 @@ module.exports = {
     sequelize,
     User,
     Location,
-    //Category,
-    Comment
+    // Category,
+    Comment,
+    // LocationCategory
 };

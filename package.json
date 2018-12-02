@@ -9,11 +9,13 @@
     "start-debug": "node server.js debug",
     "build": "cd angular && npx ng build --prod && cd ..",
     "serve-angular": "cd angular && npx ng serve",
-    "postinstall": "cd angular && npm install"
+    "postinstall": "cd angular && npm install",
+    "test": "mocha --timeout 10000"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
@@ -23,5 +25,15 @@
     "pg": "^6.1.0",
     "sequelize": "^4.39.1",
     "uniqid": "^5.0.3"
+  },
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp-env": "^0.4.0",
+    "gulp-mocha": "^2.2.0",
+    "gulp-plumber": "^1.2.1",
+    "run-sequence": "^1.2.2",
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "mocha": "^2.4.5"
   }
 }
