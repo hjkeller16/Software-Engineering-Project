@@ -30,6 +30,10 @@ router.post('/image', upload.single('locationImage'), async (req, res) => {
 
         let currentuser = await auth.decodeToken(req);
         await databaseConnector.sequelize.sync();
+        if(req.body.category == ""){
+            res.status(422).send({ error: "please enter category" });
+        }
+        //if(req.body.)
 
         const location = await databaseConnector.Location.create({
             category_id: req.body.category,
@@ -66,24 +70,40 @@ router.post('/image', upload.single('locationImage'), async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single('locationImage'), async (req, res) => {
     try {
 
         let currentuser = await auth.decodeToken(req);
         await databaseConnector.sequelize.sync();
+        if(req.body.category == ""){
+            res.status(422).send({ error: "please enter category" });
+            return;
+        }
+        if(req.file == null){
+            
+        }
 
-        const location = await databaseConnector.Location.create({
+        const location1 = {
             category_id: req.body.category,
             name: req.body.name,
             description: req.body.description,
             address: req.body.address,
             lat: req.body.lat,
             lng: req.body.lng,
-            user_id: currentuser.username
+            user_id: currentuser.username,
             //image: req.file.buffer
             // TODO: User has to added as foreign key
-        }/*, { include: [category] }).then(location=>{
+        };
+        if(req.file != null){
+            location1.image = req.file.buffer;
+
+        };
+
+        const location = await databaseConnector.Location.create(location1
+            /*, { include: [category] }).then(location=>{
             location.setCategories([1,2])}*/);
+
+       
 
         const loc = req.body.title;
         //category.addLocation(location);

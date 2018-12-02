@@ -8,13 +8,13 @@ chai.use(chaiHttp);
 //Our parent block
 describe('Locations', () => {
     describe('/GET location', () => {
-        it('it should GET all the books', (done) => {
+        it('it should GET all the locations', (done) => {
           chai.request('http://localhost:3000')
               .get('/location')
               .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
-                    res.body.length.should.be.eql(2);
+                    res.body.length.should.be.eql(9);
                 done();
               });
         });

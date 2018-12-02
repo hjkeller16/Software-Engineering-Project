@@ -10,9 +10,11 @@ chai.use(chaiHttp);
 //Our parent block
 describe('Users', () => {
 
-    beforeEach((done) => {
-        databaseConnector.User.destroy({where: {}, truncate: false});       
-    });
+
+
+        databaseConnector.User.destroy({where: {}, truncate: false}).then(() => {
+        }).then(() => done());;       
+    
 
     /*describe('/GET user', () => {
         it('it should GET current user', (done) => {
@@ -30,7 +32,7 @@ describe('Users', () => {
     describe('/POST user', () => {
         it('it should POST a user', (done) => {
             let user = {
-                username: "test1",
+                username: "test2",
                 password: "test1",
                 firstname: "test1",
                 lastname: "Keller",
