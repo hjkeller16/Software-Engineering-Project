@@ -18,6 +18,7 @@ import { SelectMarkerComponent } from './select-marker/select-marker.component';
 import { AgmDirectionModule } from 'agm-direction'
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { SearchComponent } from './search/search.component';
+import { Base64Pipe } from './base64.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SearchComponent } from './search/search.component';
     AddPlaceComponent,
     MarkPlaceComponent,
     SelectMarkerComponent,
-    SearchComponent
+    SearchComponent,
+    Base64Pipe
   ],
   imports: [
     BrowserModule,

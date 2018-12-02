@@ -56,6 +56,6 @@ export class AddPlaceComponent {
       fileReader.onloadend = res;
       fileReader.onerror = rej;
     });
-    this.location.image = (fileReader.result as String).split(',')[1];
+    this.location.image = fileReader.result;
   }
 }

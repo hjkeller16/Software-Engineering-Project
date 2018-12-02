@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
             lat: req.body.lat,
             lng: req.body.lng,
             user_id: currentuser.username,
-            image: Buffer.from(req.body.image)
+            image: req.body.image
         });
         res.send();
     } catch (err) {

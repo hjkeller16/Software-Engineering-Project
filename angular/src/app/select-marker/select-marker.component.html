@@ -6,7 +6,7 @@
         <mat-card-subtitle>{{ data.location.address }}</mat-card-subtitle>
         <mat-card-subtitle>{{ data.location.category }}</mat-card-subtitle>
       </mat-card-header>
-      <!--<img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"> -->
+      <img mat-card-image *ngIf="data.location.image && data.location.image.data" [src]="data.location.image.data | base64">
       <mat-card-content>
         <p *ngIf="data.location.description">{{ data.location.description }}</p>
       </mat-card-content>
@@ -16,6 +16,9 @@
     <i class="material-icons">
       navigation
     </i>
+  </button>
+  <br>
+  <button *ngIf="data.username === data.location.user_id" mat-raised-button color="secondary" (click)="onDeleteLocation()">Löschen
   </button>
 </div>
 <div>
@@ -31,7 +34,5 @@
     <i class="material-icons">
       send
     </i>
-  </button>
-  <button *ngIf="data.username === data.location.user_id" mat-raised-button color="primary" (click)="onDeleteLocation()">Löschen
   </button>
 </div>

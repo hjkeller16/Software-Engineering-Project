@@ -57,7 +57,6 @@ export class SelectMarkerComponent {
     } catch (err) {
       console.log('Error: ' + err);
     }
-    this.comment = null;
     this.bottomDialogRef.dismiss();
   }
 
