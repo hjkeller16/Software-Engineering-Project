@@ -15,7 +15,6 @@ router.get('/', async (req, res) => {
         auth.decodeToken(req);
         await databaseConnector.sequelize.sync();
         const locations = await databaseConnector.Location.findAll({
-            attributes: { exclude: ['userUsername'] },
             raw: true
         });
 
@@ -45,11 +44,7 @@ router.post('/', upload.single('locationImage'), async (req, res) => {
             user_id: currentuser.username
             //image: req.file.buffer
         });
-
-        const loc = req.body.title;
-        res.send({
-            loc
-        });
+        res.send();
     } catch (err) {
         res.status(500).send({ error: err.message });
         return;
@@ -60,7 +55,6 @@ router.get('/:id', async (req, res) => {
     try {
         await databaseConnector.sequelize.sync();
         const location = await databaseConnector.Location.findByPrimary(req.params.id, {
-            attributes: { exclude: ['userUsername'] },
             raw: true
         });
 
@@ -87,7 +81,31 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
-        //TODO: Implement deleting functionality of req.params.id
+        let currentuser = await auth.decodeToken(req);
+        // Find out if user is allowed to delete location
+        const location = await databaseConnector.Location.find({
+            where: {
+                id: req.params.id,
+            },
+            raw: true
+        });
+        if (!location) {
+            return res.send(404, {
+                error: `Location(id:${req.params.id}) does not exist`
+            })
+        }
+        if (location.user_id != currentuser.username) {
+            return res.send(403, {
+                error: `User is not authorized to delete location(id:${req.params.id})`
+            })
+        }
+        // Connect to database
+        await databaseConnector.sequelize.sync();
+        // Delete location object
+        await databaseConnector.Location.destroy(
+            { where: { id: req.params.id } }
+        );
+        res.send();
     } catch (err) {
         res.status(500).send({ error: err.message });
     }

@@ -1,9 +1,10 @@
 export interface Location {
-    readonly id: string,
+    readonly id: number,
     category: string,
     name: string,
     description: string,
     address: string,
     lat: number,
-    lng: number
+    lng: number,
+    user_id: string;
 }

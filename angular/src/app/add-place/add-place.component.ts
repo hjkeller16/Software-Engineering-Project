@@ -12,14 +12,15 @@ import { Router } from '@angular/router';
 export class AddPlaceComponent {
 
   public location = {
-    id: '',
-    category: 'Fußball',
+    id: undefined,
+    category: 'Fußball', //Default category
     name: '',
     description: '',
     address: '',
     city: '',
     lat: 0,
-    lng: 0
+    lng: 0,
+    user_id: ''
   }
 
   constructor(private readonly locationRepositoryService: LocationRepositoryService,

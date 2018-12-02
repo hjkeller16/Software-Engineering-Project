@@ -150,9 +150,11 @@ export class HomeComponent {
     await this.bottomSheet.open(SelectMarkerComponent, {
       data: {
         location: location,
+        username: this.tokenPayload.username,
         events
       },
     }).afterDismissed().toPromise();
+    this.initializeComponent();
 
     if (events.showRouteClicked) {
       this.showRoute(location);

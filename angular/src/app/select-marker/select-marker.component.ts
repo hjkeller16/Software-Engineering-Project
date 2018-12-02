@@ -2,6 +2,7 @@ import { Component, Inject, NgZone } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 import { CommentRepositoryService } from '../comment-repository.service';
 import { Comment } from '../comment';
+import { LocationRepositoryService } from '../location-repository.service';
 
 
 @Component({
@@ -19,11 +20,13 @@ export class SelectMarkerComponent {
 
   constructor(
     private readonly commentRepositoryService: CommentRepositoryService,
+    private readonly locationRepositoryService: LocationRepositoryService,
     private readonly ngZone: NgZone,
     private readonly bottomDialogRef: MatBottomSheetRef<SelectMarkerComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any
   ) {
     console.log(data);
+    debugger;
     this.comment.location_id = data.location.id;
   }
 
@@ -56,6 +59,15 @@ export class SelectMarkerComponent {
       console.log('Error: ' + err);
     }
     this.comment = null;
+    this.bottomDialogRef.dismiss();
+  }
+
+  async onDeleteLocation() {
+    try {
+      await this.locationRepositoryService.delete(this.data.location.id);
+    } catch (err) {
+      console.log('Error' + err);
+    }
     this.bottomDialogRef.dismiss();
   }
 }

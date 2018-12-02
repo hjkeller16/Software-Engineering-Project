@@ -24,12 +24,14 @@
       <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
     </a>
   </div>
-  <mat-form-field *ngIf="comment" class="commentTextarea">
+  <mat-form-field class="commentTextarea">
     <textarea matInput placeholder="Kommentieren" [(ngModel)]="comment.content"></textarea>
   </mat-form-field>
-  <button *ngIf="comment" mat-raised-button color="primary" class="commentButton" (click)="onComment()">
+  <button mat-raised-button color="primary" class="commentButton" (click)="onComment()">
     <i class="material-icons">
       send
     </i>
+  </button>
+  <button *ngIf="data.username === data.location.user_id" mat-raised-button color="primary" (click)="onDeleteLocation()">Löschen
   </button>
 </div>
