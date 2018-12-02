@@ -1,10 +1,6 @@
 const express = require('express');
-const uniqid = require('uniqid');
 const databaseConnector = require('./database');
 const auth = require('./auth');
-var fs = require('fs');
-let multer = require('multer');
-let upload = multer();
 
 const router = express.Router();
 
@@ -24,10 +20,9 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', upload.single('locationImage'), async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         console.log("the body is " + JSON.stringify(req.body));
-        console.log("the body is " + JSON.stringify(req.file));
         let currentuser = await auth.decodeToken(req);
         console.log("the username is " + currentuser.username);
 
@@ -41,8 +36,8 @@ router.post('/', upload.single('locationImage'), async (req, res) => {
             address: req.body.address,
             lat: req.body.lat,
             lng: req.body.lng,
-            user_id: currentuser.username
-            //image: req.file.buffer
+            user_id: currentuser.username,
+            image: Buffer.from(req.body.image)
         });
         res.send();
     } catch (err) {

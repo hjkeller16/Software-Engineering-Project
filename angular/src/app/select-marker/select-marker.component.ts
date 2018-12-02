@@ -26,7 +26,6 @@ export class SelectMarkerComponent {
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any
   ) {
     console.log(data);
-    debugger;
     this.comment.location_id = data.location.id;
   }
 

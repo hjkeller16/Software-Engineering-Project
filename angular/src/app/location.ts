@@ -6,5 +6,6 @@ export interface Location {
     address: string,
     lat: number,
     lng: number,
-    user_id: string;
+    user_id: string,
+    image: FormData
 }

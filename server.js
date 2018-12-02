@@ -4,11 +4,11 @@ const cors = require('cors');
 const auth = require('./auth');
 const location = require('./location');
 const category = require('./category');
-const comment = require ('./comment');
+const comment = require('./comment');
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cors());
 
 app.use((req, res, next) => {

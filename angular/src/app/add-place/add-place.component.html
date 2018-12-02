@@ -19,6 +19,15 @@
 		&nbsp;
 		<mat-radio-button [value]="'Basketball'" color="primary">Basketball</mat-radio-button>
 	</mat-radio-group>
+	<br>
+	<br>
+	<label class="image-upload-container">
+		<input #imageInput type="file" accept="image/*" (change)="processFile(imageInput)">
+	</label>
+	<div *ngIf="selectedFile" class="img-preview-container">
+		<div class="img-preview" [ngStyle]="{'background-image': 'url('+ selectedFile.src + ')'}">
+		</div>
+	</div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
