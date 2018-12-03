@@ -1,6 +1,9 @@
 const express = require('express');
 const databaseConnector = require('./database');
 const auth = require('./auth');
+let multer = require('multer');
+let upload = multer();
+
 
 const router = express.Router();
 
@@ -21,11 +24,9 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single('locationImage'), async (req, res) => {
     try {
-        console.log("the body is " + JSON.stringify(req.body));
         let currentuser = await auth.decodeToken(req);
-        console.log("the username is " + currentuser.username);
 
         if (req.body.category == "") {
             res.status(422).send({ error: "please enter category" });
@@ -35,7 +36,7 @@ router.post('/', async (req, res) => {
         // Connect to database
         await databaseConnector.sequelize.sync();
         // Create table
-        await databaseConnector.Location.create({
+        const location1 = {
             // category_id: req.body.category,
             category: req.body.category,
             name: req.body.name,
@@ -44,8 +45,20 @@ router.post('/', async (req, res) => {
             lat: req.body.lat,
             lng: req.body.lng,
             user_id: currentuser.username,
-            image: req.body.image
-        });
+            //image: req.body.image
+        };
+
+        if(req.file != null){
+            location1.image = req.file.buffer;
+         };
+         const location = await databaseConnector.Location.create(location1
+            /*, { include: [category] }).then(location=>{
+            location.setCategories([1,2])}*/);
+
+
+
+
+
         res.send();
     } catch (err) {
         res.status(500).send({ error: err.message });
