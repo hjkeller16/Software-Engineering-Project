@@ -1,13 +1,8 @@
 const express = require('express');
 const databaseConnector = require('./database');
 const auth = require('./auth');
-var Sequelize = require('sequelize');
-
-
-
+const seq = require('sequelize');
 const router = express.Router();
-
-// TODO: Add authorization
 
 router.get('/', async (req, res) => {
     try {
@@ -24,7 +19,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', upload.single('locationImage'), async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         let currentuser = await auth.decodeToken(req);
 
@@ -36,7 +31,7 @@ router.post('/', upload.single('locationImage'), async (req, res) => {
         // Connect to database
         await databaseConnector.sequelize.sync();
         // Create table
-        const location1 = {
+        await databaseConnector.Location.create({
             // category_id: req.body.category,
             category: req.body.category,
             name: req.body.name,
@@ -45,20 +40,8 @@ router.post('/', upload.single('locationImage'), async (req, res) => {
             lat: req.body.lat,
             lng: req.body.lng,
             user_id: currentuser.username,
-            //image: req.body.image
-        };
-
-        if(req.file != null){
-            location1.image = req.file.buffer;
-         };
-         const location = await databaseConnector.Location.create(location1
-            /*, { include: [category] }).then(location=>{
-            location.setCategories([1,2])}*/);
-
-
-
-
-
+            image: req.body.image
+        });
         res.send();
     } catch (err) {
         res.status(500).send({ error: err.message });
@@ -68,58 +51,58 @@ router.post('/', upload.single('locationImage'), async (req, res) => {
 
 router.post('/search', async (req, res) => {
     try {
-        // Test: send empty array back
-        const Op = Sequelize.Op;
+        const Op = seq.Op;
         const beginning = req.body.address + "%";
         const end = "%" + req.body.address;
         const middle = "%" + req.body.address + "%";
         const arraysize = req.body.categories.length;
 
-        var addressLocations;
-        
-        if(arraysize > 0){
-             addressLocations = await databaseConnector.Location.findAll({
-                 where: {
-                    [Op.or]: [
-                        {
-                            address: {
-                                [Op.like]: beginning
-                            }
-                        },{
-                            address: {
-                                [Op.like]: middle
-                            }
-                        },{
-                            address: {
-                                [Op.like]: end
-                            }
-                        }
-                    ], [Op.and]: [
-                        { [Op.or]: 
-                            [{
-                                category: {
-                                    [Op.like]: { [Op.any]: req.body.categories} 
-                                }
-                            }]
-                        }
-                    ]
-                }
-            });
-        }
+        let addressLocations;
 
-        if (arraysize === 0){
-             addressLocations = await databaseConnector.Location.findAll({
+        if (arraysize > 0) {
+            addressLocations = await databaseConnector.Location.findAll({
                 where: {
                     [Op.or]: [
                         {
                             address: {
                                 [Op.like]: beginning
                             }
-                        },{
+                        }, {
                             address: {
                                 [Op.like]: middle
                             }
-                        },{
+                        }, {
+                            address: {
+                                [Op.like]: end
+                            }
+                        }
+                    ], [Op.and]: [
+                        {
+                            [Op.or]:
+                                [{
+                                    category: {
+                                        [Op.like]: { [Op.any]: req.body.categories }
+                                    }
+                                }]
+                        }
+                    ]
+                }
+            });
+        }
+
+        if (arraysize === 0) {
+            addressLocations = await databaseConnector.Location.findAll({
+                where: {
+                    [Op.or]: [
+                        {
+                            address: {
+                                [Op.like]: beginning
+                            }
+                        }, {
+                            address: {
+                                [Op.like]: middle
+                            }
+                        }, {
                             address: {
                                 [Op.like]: end
                             }
@@ -127,9 +110,7 @@ router.post('/search', async (req, res) => {
                     ]
                 }
             });
-
         }
-
         res.send(addressLocations);
     } catch (err) {
         res.status(500).send({ error: err.message });
