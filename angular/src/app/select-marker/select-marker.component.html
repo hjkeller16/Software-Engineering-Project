@@ -8,6 +8,7 @@
       </mat-card-header>
       <img mat-card-image *ngIf="data.location.image && data.location.image.data" [src]="data.location.image.data | base64">
       <mat-card-content>
+        <mat-spinner *ngIf="imageLoading" color="primary"></mat-spinner>
         <p *ngIf="data.location.description">{{ data.location.description }}</p>
       </mat-card-content>
     </mat-card>

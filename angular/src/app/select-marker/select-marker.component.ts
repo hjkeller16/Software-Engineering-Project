@@ -3,6 +3,7 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 import { CommentRepositoryService } from '../comment-repository.service';
 import { Comment } from '../comment';
 import { LocationRepositoryService } from '../location-repository.service';
+import { Location } from '../location';
 
 
 @Component({
@@ -17,6 +18,8 @@ export class SelectMarkerComponent {
     content: '',
     location_id: ''
   };
+  public location: Location;
+  public imageLoading: boolean = true;
 
   constructor(
     private readonly commentRepositoryService: CommentRepositoryService,
@@ -27,6 +30,13 @@ export class SelectMarkerComponent {
   ) {
     console.log(data);
     this.comment.location_id = data.location.id;
+    this.getLocation(data.location.id, data);
+  }
+
+  async getLocation(locationId: number, data: any) {
+    this.location = await this.locationRepositoryService.get(locationId);
+    data.location.image = this.location.image;
+    this.imageLoading = false;
   }
 
   onShowRoute() {

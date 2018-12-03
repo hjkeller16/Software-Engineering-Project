@@ -27,7 +27,15 @@ export class LocationRepositoryService {
     }).toPromise();
   }
 
-  public async delete(location_id: string): Promise<void> {
+  public async get(location_id: number): Promise<Location> {
+    return this.httpClient.get<Location>(this.apiBaseUrl + `/location/${location_id}`, {
+      headers: {
+        Authorization: 'Bearer ' + this.authService.getToken()
+      }
+    }).toPromise();
+  }
+
+  public async delete(location_id: number): Promise<void> {
     return this.httpClient.delete<void>(this.apiBaseUrl + `/location/${location_id}`, {
       headers: {
         Authorization: 'Bearer ' + this.authService.getToken()

@@ -23,12 +23,12 @@ export class AddPlaceComponent {
     name: '',
     description: '',
     address: '',
-    city: '',
     lat: 0,
     lng: 0,
     user_id: '',
     image: undefined
   }
+  public isLoading: boolean = false;
   selectedFile: ImageSnippet = null;;
 
   constructor(private readonly locationRepositoryService: LocationRepositoryService,
@@ -45,8 +45,10 @@ export class AddPlaceComponent {
   }
 
   async onAddPlace() {
+    this.isLoading = true;
     await this.locationRepositoryService.add(this.location);
     this.dialogRef.close();
+    this.isLoading = false;
   }
 
   async processFile(imageInput: any) {

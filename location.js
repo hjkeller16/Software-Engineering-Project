@@ -11,6 +11,7 @@ router.get('/', async (req, res) => {
         auth.decodeToken(req);
         await databaseConnector.sequelize.sync();
         const locations = await databaseConnector.Location.findAll({
+            attributes: { exclude: ['image'] },
             raw: true
         });
 
@@ -54,6 +55,7 @@ router.post('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
+        await auth.decodeToken(req);
         await databaseConnector.sequelize.sync();
         const location = await databaseConnector.Location.findByPrimary(req.params.id, {
             raw: true
