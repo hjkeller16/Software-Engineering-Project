@@ -1,3 +1,4 @@
+
 <div>
   <div id="placeDesc">
     <mat-card>
@@ -5,12 +6,40 @@
         <mat-card-title>{{ data.location.name }}</mat-card-title>
         <mat-card-subtitle>{{ data.location.address }}</mat-card-subtitle>
         <mat-card-subtitle>{{ data.location.category }}</mat-card-subtitle>
+      
+      <div class="ratingMain">
+          <a *ngFor="let item of starListA; let i=index ">
+            <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+          </a>
+        </div>
       </mat-card-header>
       <img mat-card-image *ngIf="data.location.image && data.location.image.data" [src]="data.location.image.data | base64">
       <mat-card-content>
         <mat-spinner *ngIf="imageLoading" color="primary"></mat-spinner>
         <p *ngIf="data.location.description">{{ data.location.description }}</p>
       </mat-card-content>
+      <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                3 Kommentare anzeigen
+              </mat-panel-title>
+              <mat-panel-description>
+               
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+        
+            <p>
+              Dies ist ein Kommentart
+            </p>
+            <p>
+              Dies ist ein Kommentart
+            </p>
+            <p>
+              Dies ist ein Kommentart
+            </p>
+          </mat-expansion-panel>
+        </mat-accordion>
     </mat-card>
   </div>
   <button mat-raised-button color="primary" (click)="onShowRoute()">
@@ -22,7 +51,9 @@
   <button *ngIf="data.username === data.location.user_id" mat-raised-button color="secondary" (click)="onDeleteLocation()">Löschen
   </button>
 </div>
+
 <div>
+    
   <div class="rating">
     <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">
       <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
@@ -37,3 +68,4 @@
     </i>
   </button>
 </div>
+

@@ -17,6 +17,8 @@ import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 import { SelectMarkerComponent } from '../select-marker/select-marker.component';
 import { AgmDirectionModule } from 'agm-direction'
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 
 describe('SelectMarkerComponent', () => {
   let component: SelectMarkerComponent;
@@ -51,6 +53,7 @@ describe('SelectMarkerComponent', () => {
         MatGridListModule,
         MatToolbarModule,
         MatBottomSheetModule,
+        MatExpansionModule,
         AgmCoreModule.forRoot({
           apiKey: 'AIzaSyAPN8BwmAlGH29eT-u1UHYcE7sj4tJFSg4'
         }),

@@ -6,6 +6,7 @@ import { LocationRepositoryService } from '../location-repository.service';
 import { Location } from '../location';
 
 
+
 @Component({
   selector: 'app-select-marker',
   templateUrl: './select-marker.component.html',
@@ -31,6 +32,8 @@ export class SelectMarkerComponent {
     console.log(data);
     this.comment.location_id = data.location.id;
     this.getLocation(data.location.id, data);
+    //Anna please change 0=1Stern, sollte aber mit dem abspeichern in der DB automatisch passens
+    this.setStarA(4);
   }
 
   async getLocation(locationId: number, data: any) {
@@ -44,7 +47,7 @@ export class SelectMarkerComponent {
     this.data.events.showRouteClicked = true;
   }
 
-  title = 'Star Rating';
+  //title = 'Star Rating';
   // create a list which contains status of 5 stars
   starList: boolean[] = [true, true, true, true, true];
   //Function which receives the value counting of stars click, 
@@ -60,6 +63,26 @@ export class SelectMarkerComponent {
       }
     }
   }
+
+  title = 'Star Rating';
+  // create a list which contains status of 5 stars
+  starListA: boolean[] = [true, true, true, true, true];
+  //Function which receives the value counting of stars click, 
+  //and according to that value we do change the value of that star in list.
+  setStarA(data: any) {
+    this.comment.rating = data + 1;
+    for (var i = 0; i <= 4; i++) {
+      if (i <= data) {
+        this.starListA[i] = false;
+      }
+      else {
+        this.starListA[i] = true;
+      }
+    }
+  }
+
+
+
 
   async onComment() {
     try {
