@@ -1,8 +1,8 @@
 const express = require('express');
 const databaseConnector = require('./database');
 const auth = require('./auth');
-let multer = require('multer');
-let upload = multer();
+var Sequelize = require('sequelize');
+
 
 
 const router = express.Router();
@@ -69,7 +69,68 @@ router.post('/', upload.single('locationImage'), async (req, res) => {
 router.post('/search', async (req, res) => {
     try {
         // Test: send empty array back
-        res.send([]);
+        const Op = Sequelize.Op;
+        const beginning = req.body.address + "%";
+        const end = "%" + req.body.address;
+        const middle = "%" + req.body.address + "%";
+        const arraysize = req.body.categories.length;
+
+        var addressLocations;
+        
+        if(arraysize > 0){
+             addressLocations = await databaseConnector.Location.findAll({
+                 where: {
+                    [Op.or]: [
+                        {
+                            address: {
+                                [Op.like]: beginning
+                            }
+                        },{
+                            address: {
+                                [Op.like]: middle
+                            }
+                        },{
+                            address: {
+                                [Op.like]: end
+                            }
+                        }
+                    ], [Op.and]: [
+                        { [Op.or]: 
+                            [{
+                                category: {
+                                    [Op.like]: { [Op.any]: req.body.categories} 
+                                }
+                            }]
+                        }
+                    ]
+                }
+            });
+        }
+
+        if (arraysize === 0){
+             addressLocations = await databaseConnector.Location.findAll({
+                where: {
+                    [Op.or]: [
+                        {
+                            address: {
+                                [Op.like]: beginning
+                            }
+                        },{
+                            address: {
+                                [Op.like]: middle
+                            }
+                        },{
+                            address: {
+                                [Op.like]: end
+                            }
+                        }
+                    ]
+                }
+            });
+
+        }
+
+        res.send(addressLocations);
     } catch (err) {
         res.status(500).send({ error: err.message });
         return;
