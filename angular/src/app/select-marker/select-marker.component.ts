@@ -1,11 +1,9 @@
-import { Component, Inject, NgZone } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 import { CommentRepositoryService } from '../comment-repository.service';
 import { Comment } from '../comment';
 import { LocationRepositoryService } from '../location-repository.service';
 import { Location } from '../location';
-
-
 
 @Component({
   selector: 'app-select-marker',
@@ -19,13 +17,12 @@ export class SelectMarkerComponent {
     content: '',
     location_id: ''
   };
-  public location: Location;
-  public imageLoading: boolean = true;
+  public location: Location = undefined;
+  public imageLoading: boolean = location ? true : false;
 
   constructor(
     private readonly commentRepositoryService: CommentRepositoryService,
     private readonly locationRepositoryService: LocationRepositoryService,
-    private readonly ngZone: NgZone,
     private readonly bottomDialogRef: MatBottomSheetRef<SelectMarkerComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any
   ) {
@@ -80,9 +77,6 @@ export class SelectMarkerComponent {
       }
     }
   }
-
-
-
 
   async onComment() {
     try {

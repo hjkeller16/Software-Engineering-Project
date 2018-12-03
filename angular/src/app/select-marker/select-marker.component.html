@@ -1,4 +1,3 @@
-
 <div>
   <div id="placeDesc">
     <mat-card>
@@ -6,8 +5,8 @@
         <mat-card-title>{{ data.location.name }}</mat-card-title>
         <mat-card-subtitle>{{ data.location.address }}</mat-card-subtitle>
         <mat-card-subtitle>{{ data.location.category }}</mat-card-subtitle>
-      
-      <div class="ratingMain">
+
+        <div class="ratingMain">
           <a *ngFor="let item of starListA; let i=index ">
             <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
           </a>
@@ -19,27 +18,19 @@
         <p *ngIf="data.location.description">{{ data.location.description }}</p>
       </mat-card-content>
       <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                3 Kommentare anzeigen
-              </mat-panel-title>
-              <mat-panel-description>
-               
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-        
-            <p>
-              Dies ist ein Kommentart
-            </p>
-            <p>
-              Dies ist ein Kommentart
-            </p>
-            <p>
-              Dies ist ein Kommentart
-            </p>
-          </mat-expansion-panel>
-        </mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Kommentare anzeigen
+            </mat-panel-title>
+            <mat-panel-description>
+
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>
+          </p>
+        </mat-expansion-panel>
+      </mat-accordion>
     </mat-card>
   </div>
   <button mat-raised-button color="primary" (click)="onShowRoute()">
@@ -53,7 +44,7 @@
 </div>
 
 <div>
-    
+
   <div class="rating">
     <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">
       <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
@@ -68,4 +59,3 @@
     </i>
   </button>
 </div>
-
