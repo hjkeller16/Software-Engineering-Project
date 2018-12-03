@@ -41,7 +41,7 @@ export class SearchComponent {
       this.dialogRef.close(false);
     } else {
       // Values have been selected an searchMode is true
-      this.dialogRef.close(true);
+      this.dialogRef.close({ valuesSelected: true, search: this.search });
     }
   }
 

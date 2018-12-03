@@ -53,6 +53,16 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.post('/search', async (req, res) => {
+    try {
+        // Test: send empty array back
+        res.send([]);
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+        return;
+    }
+});
+
 router.get('/:id', async (req, res) => {
     try {
         await auth.decodeToken(req);

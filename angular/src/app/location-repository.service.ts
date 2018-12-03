@@ -28,6 +28,14 @@ export class LocationRepositoryService {
     }).toPromise();
   }
 
+  public async getSeachedLocations(searchItems: Search): Promise<Location[]> {
+    return this.httpClient.post<Location[]>(this.apiBaseUrl + '/location/search', searchItems, {
+      headers: {
+        Authorization: 'Bearer ' + this.authService.getToken()
+      }
+    }).toPromise();
+  }
+
   public async get(location_id: number): Promise<Location> {
     return this.httpClient.get<Location>(this.apiBaseUrl + `/location/${location_id}`, {
       headers: {

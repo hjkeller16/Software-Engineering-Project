@@ -10,6 +10,7 @@ import { MarkPlaceComponent } from '../mark-place/mark-place.component';
 import { MapsAPILoader } from '@agm/core';
 import { SearchComponent } from '../search/search.component';
 import { MatDialog } from '@angular/material';
+import { Search } from '../search';
 
 declare var google: any;
 
@@ -22,6 +23,7 @@ export class HomeComponent {
 
   // Variables
   private currentMarkerLocation: any;
+  private searchCriterias: Search;
   public currentLatLng = {
     lat: 0,
     lng: 0
@@ -75,7 +77,7 @@ export class HomeComponent {
 
     // Get desired places from database
     if (this.searchMode) {
-      this.locations = [];
+      this.locations = await this.locationRepositoryService.getSeachedLocations(this.searchCriterias);
     } else {
       this.locations = await this.locationRepositoryService.getAll();
     }
@@ -198,8 +200,9 @@ export class HomeComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      if (result) {
+      if (result.valuesSelected) {
         this.searchMode = true;
+        this.searchCriterias = result.search;
         this.initializeComponent();
       }
     });
