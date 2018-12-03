@@ -43,4 +43,11 @@ mat-form-field
     width: 100%;
     font-size: 200%;
 }
+.ratingMain
+{
+    color:#673ab7;
+    float: left;
+    width: 100%;
+    font-size: 150%;
+}
   

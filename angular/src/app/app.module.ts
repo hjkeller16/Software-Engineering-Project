@@ -19,6 +19,7 @@ import { AgmDirectionModule } from 'agm-direction'
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { SearchComponent } from './search/search.component';
 import { Base64Pipe } from './base64.pipe';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { Base64Pipe } from './base64.pipe';
     MatToolbarModule,
     MatProgressBarModule,
     MatBottomSheetModule,
+    MatExpansionModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAPN8BwmAlGH29eT-u1UHYcE7sj4tJFSg4',
       protocol: GoogleMapsScriptProtocol.HTTP
