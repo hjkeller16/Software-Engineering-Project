@@ -33,6 +33,8 @@ export class HomeComponent {
   public selectedLatLng = null;
   public origin: any;
   public destination: any;
+  // Different view
+  public searchMode: boolean = false;
 
   constructor(
     public mapsApiLoader: MapsAPILoader,
@@ -71,8 +73,12 @@ export class HomeComponent {
     //Set current marker location null;
     this.currentMarkerLocation = null;
 
-    // Get all places from database
-    this.locations = await this.locationRepositoryService.getAll();
+    // Get desired places from database
+    if (this.searchMode) {
+      this.locations = [];
+    } else {
+      this.locations = await this.locationRepositoryService.getAll();
+    }
   }
 
   onLogout() {
@@ -192,6 +198,15 @@ export class HomeComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      if (result) {
+        this.searchMode = true;
+        this.initializeComponent();
+      }
     });
+  }
+
+  onExitSearchMode() {
+    this.searchMode = false;
+    this.initializeComponent();
   }
 }

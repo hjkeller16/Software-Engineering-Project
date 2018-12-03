@@ -1,9 +1,15 @@
 <mat-toolbar class="mat-elevation-z24" color="primary">
     <h1>Hallo {{tokenPayload.username}}</h1>
+    <h3 *ngIf="searchMode" class="searchMode">Suchmodus</h3>
     <p class="fill-space"></p>
-    <button mat-raised-button class="searchButton" (click)="openSearch()">
+    <button *ngIf="!searchMode" mat-raised-button class="buttonSpace" (click)="openSearch()">
         <i class="material-icons">
             search
+        </i>
+    </button>
+    <button *ngIf="searchMode" mat-raised-button class="buttonSpace" color="warn" (click)="onExitSearchMode()">
+        <i class="material-icons">
+            clear
         </i>
     </button>
     <button mat-raised-button color="secondary" (click)="onLogout()">

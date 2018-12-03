@@ -3,6 +3,7 @@ import { Location } from './location';
 import { HttpClient } from '@angular/common/http';
 import { API_BASE_URL } from './api-base-url';
 import { AuthService } from './auth.service';
+import { Search } from './search';
 
 @Injectable({
   providedIn: 'root'

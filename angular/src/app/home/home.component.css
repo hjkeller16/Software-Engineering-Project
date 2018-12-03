@@ -15,5 +15,11 @@ main {
   height: 92%;
 }
 
-.searchButton
-{margin-right:0.5em;}
+.buttonSpace{
+  margin-right:0.5em;
+}
+
+.searchMode {
+  color: red;
+  margin-left: 0.5em;
+}
