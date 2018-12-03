@@ -27,9 +27,7 @@ mat-form-field
     margin-top:1em;
     padding-left: 0em;
     padding-right: 0em;
-}
-.commentButton{
-    margin-top:2em;
+    margin-right:0.5em;
 }
 
 /*star rating*/

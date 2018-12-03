@@ -73,7 +73,7 @@ export class HomeComponent {
     };
 
     //Set current marker location null;
-    this.currentMarkerLocation = null;
+    //this.currentMarkerLocation = null;
 
     // Get desired places from database
     if (this.searchMode) {

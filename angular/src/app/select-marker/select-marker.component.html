@@ -38,8 +38,10 @@
       navigation
     </i>
   </button>
-  <br>
-  <button *ngIf="data.username === data.location.user_id" mat-raised-button color="secondary" (click)="onDeleteLocation()">Löschen
+  <button *ngIf="data.username === data.location.user_id" mat-raised-button color="warn" (click)="onDeleteLocation()">
+    <i class="material-icons">
+      delete_forever
+    </i>
   </button>
 </div>
 
@@ -51,9 +53,9 @@
     </a>
   </div>
   <mat-form-field class="commentTextarea">
-    <textarea matInput placeholder="Kommentieren" [(ngModel)]="comment.content"></textarea>
+    <textarea matInput placeholder="Kommentieren" [(ngModel)]="comment.content" width="50vh"></textarea>
   </mat-form-field>
-  <button mat-raised-button color="primary" class="commentButton" (click)="onComment()">
+  <button mat-raised-button color="primary" (click)="onComment()">
     <i class="material-icons">
       send
     </i>
