@@ -25,6 +25,13 @@ router.post('/', async (req, res) => {
         let currentuser = await auth.decodeToken(req);
         await databaseConnector.sequelize.sync();
 
+        await databaseConnector.Comment.create({
+            rating: req.body.rating,
+            content: req.body.content,
+            user_id: currentuser.username,
+            location_id: req.body.location_id
+        });
+
         const avgrate = await databaseConnector.Comment.findAll({
             attributes: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'avgrating']],
             where: {
@@ -50,27 +57,21 @@ router.post('/', async (req, res) => {
               }
           );*/
 
-
-          
-          
-
-
-
           await databaseConnector.Location.update(
             { avgrating: avgrate[0].dataValues.avgrating },
             { where: { id: req.body.location_id } }
-          ).then(() => {})
-          
+          ).then(() => {
+
+          });
+        
+          await databaseConnector.sequelize.sync();
+
+
 
           //loc.rating = avgrate;
 
 
-        await databaseConnector.Comment.create({
-            rating: req.body.rating,
-            content: req.body.content,
-            user_id: currentuser.username,
-            location_id: req.body.location_id
-        });
+        
         res.send();
     } catch (err) {
         res.status(500).send({ error: err.message });
