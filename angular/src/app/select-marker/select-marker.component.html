@@ -36,7 +36,7 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Kommentare ({{ comments.length }})
+          Bewertungen ({{ comments.length }})
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-list role="list">
@@ -54,7 +54,7 @@
     </a>
   </div>
   <mat-form-field class="commentTextarea">
-    <textarea id="commentArea" matInput placeholder="Kommentieren" [(ngModel)]="comment.content" width="50vh"></textarea>
+    <textarea id="commentArea" matInput placeholder="Bewerten" [(ngModel)]="comment.content" width="50vh"></textarea>
   </mat-form-field>
   <button mat-raised-button color="primary" (click)="onComment()">
     <i class="material-icons">
