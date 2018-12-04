@@ -40,10 +40,9 @@ router.post('/', async (req, res) => {
 router.get('/:locationid', async (req, res) => {
     try {
         await databaseConnector.sequelize.sync();
-        const comment = await databaseConnector.comment.findAll({
+        const comment = await databaseConnector.Comment.findAll({
             where: {
                 location_id: locationid
-                
             }});
 
         if (!comment) {
