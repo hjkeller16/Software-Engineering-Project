@@ -91,7 +91,8 @@ const Location = sequelize.define('location', {
     address: Sequelize.STRING,
     lat: Sequelize.FLOAT,
     lng: Sequelize.FLOAT,
-    image: Sequelize.BLOB('tiny')
+    image: Sequelize.BLOB('tiny'),
+    avgrating: Sequelize.FLOAT
     //productImage is a string
 });
 

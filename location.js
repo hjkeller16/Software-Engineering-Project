@@ -75,6 +75,18 @@ router.post('/search', async (req, res) => {
                             address: {
                                 [Op.like]: end
                             }
+                        },{
+                            name: {
+                                [Op.like]: end
+                            }
+                        },{
+                            name: {
+                                [Op.like]: middle
+                            }
+                        },{
+                            name: {
+                                [Op.like]: beginning
+                            }
                         }
                     ], [Op.and]: [
                         {
@@ -105,6 +117,18 @@ router.post('/search', async (req, res) => {
                         }, {
                             address: {
                                 [Op.like]: end
+                            }
+                        },{
+                            name: {
+                                [Op.like]: end
+                            }
+                        },{
+                            name: {
+                                [Op.like]: middle
+                            }
+                        },{
+                            name: {
+                                [Op.like]: beginning
                             }
                         }
                     ]
