@@ -32,12 +32,14 @@ router.post('/', async (req, res) => {
             location_id: req.body.location_id
         });
 
-        const avgrate = await databaseConnector.Comment.findAll({
+        var avgrate = await databaseConnector.Comment.findAll({
             attributes: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'avgrating']],
             where: {
                 location_id: req.body.location_id
             }
         })
+
+       avgrate[0].dataValues.avgrating = Math.round (avgrate[0].dataValues.avgrating);
 
         await databaseConnector.Location.update(
             { avgrating: avgrate[0].dataValues.avgrating },
@@ -75,14 +77,7 @@ router.get('/:locationid', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
-    try {
-        //TODO: Implement editing functionality of req.params.id
-        //TODO: Implement authentification
-    } catch (err) {
-        res.status(500).send({ error: err.message });
-    }
-});
+
 
 router.delete('/:id', async (req, res) => {
     try {
