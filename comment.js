@@ -42,8 +42,10 @@ router.post('/', async (req, res) => {
         await databaseConnector.Location.update(
             { avgrating: avgrate[0].dataValues.avgrating },
             { where: { id: req.body.location_id } }
-        ).then(() => { })
+        ).then(() => {
 
+        });
+        await databaseConnector.sequelize.sync();
         res.send();
     } catch (err) {
         res.status(500).send({ error: err.message });
