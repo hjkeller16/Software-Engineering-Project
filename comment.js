@@ -36,6 +36,27 @@ router.post('/', async (req, res) => {
     }
 });
 
+
+router.get('/:locationid', async (req, res) => {
+    try {
+        await databaseConnector.sequelize.sync();
+        const comment = await databaseConnector.comment.findAll({
+            where: {
+                location_id: locationid
+                
+            }});
+
+        if (!comment) {
+            return res.send(404, {
+                error: `Comment(id:${req.params.id}) does not exist`
+            })
+        }
+        res.send(comment);
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+});
+
 router.get('/:id', async (req, res) => {
     try {
         await databaseConnector.sequelize.sync();
