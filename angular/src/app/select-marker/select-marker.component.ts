@@ -12,11 +12,14 @@ import { Location } from '../location';
 })
 export class SelectMarkerComponent {
   //Variables
+  //New comment
   comment: Comment = {
     rating: 0,
     content: '',
     location_id: ''
   };
+  //All comments
+  comments: Comment[] = [];
   public location: Location = undefined;
   public imageLoading: boolean = location ? true : false;
 
@@ -29,6 +32,7 @@ export class SelectMarkerComponent {
     console.log(data);
     this.comment.location_id = data.location.id;
     this.getLocation(data.location.id, data);
+    this.getComments(data.location.id);
     //Anna please change 0=1Stern, sollte aber mit dem abspeichern in der DB automatisch passens
     this.setStarA(4);
   }
@@ -37,6 +41,11 @@ export class SelectMarkerComponent {
     this.location = await this.locationRepositoryService.get(locationId);
     data.location.image = this.location.image;
     this.imageLoading = false;
+  }
+
+  async getComments(locationId) {
+    this.comments = await this.commentRepositoryService.get(locationId);
+    debugger;
   }
 
   onShowRoute() {
