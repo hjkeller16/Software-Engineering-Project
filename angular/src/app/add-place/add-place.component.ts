@@ -24,7 +24,8 @@ export class AddPlaceComponent {
     lat: 0,
     lng: 0,
     user_id: '',
-    image: undefined
+    image: undefined,
+    avgrating: 0
   }
   public isLoading: boolean = false;
   selectedFile: ImageSnippet = null;;
