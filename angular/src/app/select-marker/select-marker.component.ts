@@ -37,7 +37,7 @@ export class SelectMarkerComponent {
     this.getLocation(data.location.id, data);
     this.getComments(data.location.id);
     //Change required
-    this.setStarAverage(data.location.avgrating);
+    this.setStarAverage(data.location.avgrating - 1);
   }
 
   async getLocation(locationId: number, data: any) {
