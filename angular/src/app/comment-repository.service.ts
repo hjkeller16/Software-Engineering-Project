@@ -18,4 +18,12 @@ export class CommentRepositoryService {
       }
     }).toPromise();
   }
+
+  public async get(location_id: number): Promise<Comment[]> {
+    return this.httpClient.get<Comment[]>(this.apiBaseUrl + `/comment/${location_id}`, {
+      headers: {
+        Authorization: 'Bearer ' + this.authService.getToken()
+      }
+    }).toPromise();
+  }
 }

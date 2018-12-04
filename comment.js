@@ -6,7 +6,7 @@ const location = require('./location');
 
 router.get('/', async (req, res) => {
     try {
-        auth.decodeToken(req);
+        await auth.decodeToken(req);
         await databaseConnector.sequelize.sync();
         const comments = await databaseConnector.Comment.findAll({
             attributes: {},
@@ -39,15 +39,17 @@ router.post('/', async (req, res) => {
 
 router.get('/:locationid', async (req, res) => {
     try {
+        await auth.decodeToken(req);
         await databaseConnector.sequelize.sync();
         const comment = await databaseConnector.Comment.findAll({
             where: {
-                location_id: locationid
-            }});
 
+                location_id: req.params.locationid
+            }
+        });
         if (!comment) {
             return res.send(404, {
-                error: `Comment(id:${req.params.id}) does not exist`
+                error: `Comment(id:${req.params.locationid}) does not exist`
             })
         }
         res.send(comment);
@@ -56,8 +58,9 @@ router.get('/:locationid', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+/*router.get('/:id', async (req, res) => {
     try {
+        await auth.decodeToken(req);
         await databaseConnector.sequelize.sync();
         const comment = await databaseConnector.Comment.findByPrimary(req.params.id, {
             attributes: {},
@@ -73,7 +76,7 @@ router.get('/:id', async (req, res) => {
     } catch (err) {
         res.status(500).send({ error: err.message });
     }
-});
+});*/
 
 router.put('/:id', async (req, res) => {
     try {

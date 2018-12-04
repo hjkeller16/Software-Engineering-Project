@@ -9,7 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { AddPlaceComponent } from './add-place/add-place.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatDialogModule, MatCheckboxModule, MatBadgeModule, MatButtonModule, MatFormFieldModule, MatProgressSpinnerModule, MatGridListModule, MatToolbar, MatToolbarModule, MatBottomSheetModule, MatDialogRef, MatRadioModule, MatCardModule, MatProgressBarModule } from '@angular/material';
+import { MatInputModule, MatDialogModule, MatCheckboxModule, MatBadgeModule, MatButtonModule, MatFormFieldModule, MatProgressSpinnerModule, MatGridListModule, MatToolbar, MatToolbarModule, MatBottomSheetModule, MatDialogRef, MatRadioModule, MatCardModule, MatProgressBarModule, MatListModule } from '@angular/material';
 import { API_BASE_URL, apiBaseUrlFactory } from './api-base-url';
 import { AgmCoreModule, GoogleMapsScriptProtocol } from '@agm/core';
 import { MarkPlaceComponent } from './mark-place/mark-place.component';
@@ -19,7 +19,7 @@ import { AgmDirectionModule } from 'agm-direction'
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { SearchComponent } from './search/search.component';
 import { Base64Pipe } from './base64.pipe';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -51,6 +51,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatCardModule,
     MatProgressSpinnerModule,
     MatGridListModule,
+    MatListModule,
     MatToolbarModule,
     MatProgressBarModule,
     MatBottomSheetModule,

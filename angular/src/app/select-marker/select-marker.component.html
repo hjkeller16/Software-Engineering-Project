@@ -27,8 +27,11 @@
 
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <p>
-          </p>
+          <mat-list role="list">
+            <mat-list-item *ngFor="let comment of comments">
+              <p mat-line> {{comment.content}} </p>
+            </mat-list-item>
+          </mat-list>
         </mat-expansion-panel>
       </mat-accordion>
     </mat-card>
