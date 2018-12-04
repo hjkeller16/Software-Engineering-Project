@@ -200,6 +200,7 @@ export class HomeComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      debugger;
       if (result.valuesSelected) {
         this.searchMode = true;
         this.searchCriterias = result.search;
