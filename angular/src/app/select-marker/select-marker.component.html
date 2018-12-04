@@ -7,7 +7,7 @@
         <mat-card-subtitle>{{ data.location.category }}</mat-card-subtitle>
 
         <div class="ratingMain">
-          <a *ngFor="let item of starListA; let i=index ">
+          <a *ngFor="let item of startListAverage; let i=index ">
             <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
           </a>
         </div>
@@ -17,23 +17,6 @@
         <mat-spinner *ngIf="imageLoading" color="primary"></mat-spinner>
         <p *ngIf="data.location.description">{{ data.location.description }}</p>
       </mat-card-content>
-      <mat-accordion>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Kommentare anzeigen
-            </mat-panel-title>
-            <mat-panel-description>
-
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <mat-list role="list">
-            <mat-list-item *ngFor="let comment of comments">
-              <p mat-line> {{comment.content}} </p>
-            </mat-list-item>
-          </mat-list>
-        </mat-expansion-panel>
-      </mat-accordion>
     </mat-card>
   </div>
   <button mat-raised-button color="primary" (click)="onShowRoute()">
@@ -47,16 +30,31 @@
     </i>
   </button>
 </div>
-
 <div>
-
+  <br>
+  <mat-accordion class="rating">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Kommentare ({{ comments.length }})
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-list role="list">
+        <mat-list-item *ngFor="let comment of comments">
+          <mat-icon mat-list-icon>mode_comment</mat-icon>
+          <h4 mat-line> {{ comment.user_id }}: {{comment.content}} </h4>
+          <p mat-line>Rating: {{ comment.rating }}</p>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+  </mat-accordion>
   <div class="rating">
     <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">
       <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
     </a>
   </div>
   <mat-form-field class="commentTextarea">
-    <textarea matInput placeholder="Kommentieren" [(ngModel)]="comment.content" width="50vh"></textarea>
+    <textarea id="commentArea" matInput placeholder="Kommentieren" [(ngModel)]="comment.content" width="50vh"></textarea>
   </mat-form-field>
   <button mat-raised-button color="primary" (click)="onComment()">
     <i class="material-icons">

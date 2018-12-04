@@ -38,7 +38,7 @@ export class SearchComponent {
     // Check if any values were selected
     if (this.search.address === '' && this.search.categories.length === 0) {
       // No values have been selected
-      this.dialogRef.close(false);
+      this.dialogRef.close({ valuesSelected: false });
     } else {
       // Values have been selected an searchMode is true
       this.dialogRef.close({ valuesSelected: true, search: this.search });
