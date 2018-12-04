@@ -10,7 +10,7 @@ div
 }
 mat-form-field
 {
-    width:78%;
+    width:70%;
     margin-top:2em;
     margin-right:1em;
 }
@@ -46,6 +46,6 @@ mat-form-field
     color:#673ab7;
     float: left;
     width: 100%;
-    font-size: 150%;
+    font-size: 110%;
 }
   
