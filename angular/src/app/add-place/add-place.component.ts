@@ -30,7 +30,8 @@ export class AddPlaceComponent {
   public isLoading: boolean = false;
   selectedFile: ImageSnippet = null;;
 
-  constructor(private readonly locationRepositoryService: LocationRepositoryService,
+  constructor(
+    private readonly locationRepositoryService: LocationRepositoryService,
     private readonly router: Router,
     public readonly dialogRef: MatDialogRef<AddPlaceComponent>,
     @Inject(MAT_DIALOG_DATA) data: any) {

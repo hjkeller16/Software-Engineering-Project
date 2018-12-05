@@ -11,6 +11,7 @@ import { MapsAPILoader } from '@agm/core';
 import { SearchComponent } from '../search/search.component';
 import { MatDialog } from '@angular/material';
 import { Search } from '../search';
+import { SearchResultComponent } from '../search-result/search-result.component';
 
 declare var google: any;
 
@@ -65,12 +66,7 @@ export class HomeComponent {
     await this.getTokenPayload();
 
     // Get current location
-    const location: any = await new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject));
-
-    this.currentLatLng = {
-      lat: location.coords.latitude,
-      lng: location.coords.longitude
-    };
+    this.getCurrentLocation();
 
     //Set current marker location null;
     //this.currentMarkerLocation = null;
@@ -78,9 +74,20 @@ export class HomeComponent {
     // Get desired places from database
     if (this.searchMode) {
       this.locations = await this.locationRepositoryService.getSeachedLocations(this.searchCriterias);
+      //Open seasrch results
+      this.openSearchResults();
     } else {
       this.locations = await this.locationRepositoryService.getAll();
     }
+  }
+
+  async getCurrentLocation() {
+    const location: any = await new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject));
+
+    this.currentLatLng = {
+      lat: location.coords.latitude,
+      lng: location.coords.longitude
+    };
   }
 
   onLogout() {
@@ -150,7 +157,6 @@ export class HomeComponent {
 
   // Click on marker displays details
   async onMarkerClick(location) {
-    console.log(location);
     this.currentMarkerLocation = location;
     let events = {
       showRouteClicked: false
@@ -165,6 +171,11 @@ export class HomeComponent {
     this.initializeComponent();
 
     if (events.showRouteClicked) {
+      // If search mode is activated get original current location and end search mode
+      if (this.searchMode) {
+        await this.getCurrentLocation();
+        this.searchMode = false;
+      }
       this.showRoute(location);
     }
   }
@@ -187,9 +198,10 @@ export class HomeComponent {
     console.log(this.currentMarkerLocation);
     console.log(this.currentLatLng);
     var gmaps = "https://www.google.com/maps/dir/"
+    // Get starting point address
     var startingPoint = await this.getAddressFromCoordinates(this.currentLatLng.lat, this.currentLatLng.lng);
+    // Get destination address
     var destination = await this.currentMarkerLocation.address;
-
     var gmapsLink = gmaps + encodeURIComponent(startingPoint) + "/" + encodeURIComponent(destination);
     window.open(gmapsLink, "_blank");
   }
@@ -199,12 +211,27 @@ export class HomeComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      debugger;
+      console.log('The search dialog was closed');
       if (result.valuesSelected) {
         this.searchMode = true;
         this.searchCriterias = result.search;
         this.initializeComponent();
+      }
+    });
+  }
+
+  async openSearchResults() {
+    // Open bottem sheet that shows the results of the search
+    await this.bottomSheet.open(SearchResultComponent, {
+      data: {
+        results: this.locations
+      },
+    }).afterDismissed().subscribe(result => {
+      // Set focus on the selected location
+      if (result) {
+        debugger;
+        this.currentLatLng.lat = result.lat;
+        this.currentLatLng.lng = result.lng;
       }
     });
   }
