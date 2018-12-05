@@ -19,17 +19,21 @@ describe('Locations', () => {
                 });
         });
     });
-    /*
+    
     describe('/POST location', () => {
         it('it should POST a location', (done) => {
-            let book = {
-                title: "The Lord of the Rings",
-                author: "J.R.R. Tolkien",
-                year: 1954
+            let location = {
+                category: 'Fußball',
+                name: 'test',
+                description: 'test',
+                address: 'Bayreuther Str. 25, 67059 Ludwigshafen am Rhein, Germany',
+                lat: 49.4780691165434,
+                lng: 8.4182114997526
             }
           chai.request(server)
               .post('/location/noimage')
-              .send(book)
+              .set('Authorization', 'abc123')
+              .send(location)
               .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -40,6 +44,6 @@ describe('Locations', () => {
               });
         });
   
-    });*/
+    });
 
 });

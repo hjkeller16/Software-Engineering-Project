@@ -12,6 +12,10 @@
     "postinstall": "cd angular && npm install",
     "test": "mocha --timeout 10000"
   },
+  "keywords": [
+    "example",
+    "heroku"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -36,5 +40,8 @@
     "chai": "^3.5.0",
     "chai-http": "^2.0.1",
     "mocha": "^2.4.5"
+  },
+  "engines": {
+    "node": "8.12.0"
   }
 }
