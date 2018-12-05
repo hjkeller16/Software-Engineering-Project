@@ -229,7 +229,6 @@ export class HomeComponent {
     }).afterDismissed().subscribe(result => {
       // Set focus on the selected location
       if (result) {
-        debugger;
         this.currentLatLng.lat = result.lat;
         this.currentLatLng.lng = result.lng;
       }
