@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "npm run start-debug",
+    "start": "npm run start-prod",
     "start-prod": "node server.js",
     "start-debug": "node server.js debug",
     "build": "cd angular && npx ng build --prod && cd ..",
@@ -19,6 +19,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@angular/common": "^7.1.1",
+    "@angular/compiler": "^7.1.1",
+    "@angular/compiler-cli": "^7.1.1",
+    "@angular/core": "^7.1.1",
+    "@angular/forms": "^7.1.1",
+    "@angular/platform-browser": "^7.1.1",
+    "@ng-bootstrap/ng-bootstrap": "^4.0.0",
     "async": "^2.6.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
@@ -28,10 +35,13 @@
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
     "multer": "^1.4.1",
+    "ng": "0.0.0",
     "pg": "^7.4.3",
     "sequelize": "^4.39.1",
     "supervisor": "^0.12.0",
-    "uniqid": "^5.0.3"
+    "typescript": "^3.2.1",
+    "uniqid": "^5.0.3",
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "del": "^2.2.2",

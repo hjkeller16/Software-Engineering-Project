@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt-nodejs');
 const validator = require("email-validator");
-const config = require('./config');
+//const config = require('./config');
 
 const { Pool } = require('pg');
 const pool = new Pool({
@@ -10,8 +10,8 @@ const pool = new Pool({
 });
 
 
-const sequelize = new Sequelize(config.postgres.database, config.postgres.username, config.postgres.password, {
-    host: config.postgres.host,
+const sequelize = new Sequelize(/*config.postgres.database, config.postgres.username, config.postgres.password,*/ {
+    //host: config.postgres.host,
     dialect: 'postgres',
     pool: pool
     /*{
