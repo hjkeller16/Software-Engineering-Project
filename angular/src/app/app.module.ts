@@ -21,6 +21,7 @@ import { SearchComponent } from './search/search.component';
 import { Base64Pipe } from './base64.pipe';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -59,9 +60,12 @@ import { SearchResultComponent } from './search-result/search-result.component';
     MatProgressBarModule,
     MatBottomSheetModule,
     MatExpansionModule,
+    // Proxy requests via the backend to allow HTTPS access
+    // A bug in chrome prohibits this natively
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAPN8BwmAlGH29eT-u1UHYcE7sj4tJFSg4',
-      protocol: GoogleMapsScriptProtocol.HTTP
+      hostAndPath: (environment.production ? `${location.host}${location.pathname}` : 'localhost:3000/') + 'mapsapiproxy/maps/api/js',
+      protocol: environment.production && location.protocol === 'https:' ? GoogleMapsScriptProtocol.HTTPS : GoogleMapsScriptProtocol.HTTP
     }),
     AgmJsMarkerClustererModule,
     AgmDirectionModule,

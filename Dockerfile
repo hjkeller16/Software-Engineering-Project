@@ -2,7 +2,6 @@ FROM node:8
 
 WORKDIR /app
 
-
 COPY angular/package*.json ./angular/
 COPY package*.json ./
 

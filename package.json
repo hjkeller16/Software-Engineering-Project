@@ -21,6 +21,7 @@
     "cors": "^2.8.4",
     "email-validator": "^2.0.4",
     "express": "^4.16.3",
+    "express-request-proxy": "^2.2.2",
     "jsonwebtoken": "^8.3.0",
     "multer": "^1.4.1",
     "pg": "^6.1.0",

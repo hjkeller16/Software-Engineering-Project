@@ -49,13 +49,13 @@ export class AuthService extends EventEmitter<TokenPayload> {
   }
 
   public async register(user: User): Promise<void> {
-    const response = await this.httpClient.post<TokenResponse>(this.apiBaseUrl + '/auth/register', user).toPromise();
+    const response = await this.httpClient.post<TokenResponse>(this.apiBaseUrl + 'auth/register', user).toPromise();
     this.setToken(response.token);
     this.emitPayload();
   }
 
   public async login(user: User): Promise<void> {
-    const response = await this.httpClient.post<TokenResponse>(this.apiBaseUrl + '/auth/login', user).toPromise();
+    const response = await this.httpClient.post<TokenResponse>(this.apiBaseUrl + 'auth/login', user).toPromise();
     this.setToken(response.token);
     this.emitPayload();
   }
@@ -65,7 +65,7 @@ export class AuthService extends EventEmitter<TokenPayload> {
       return null;
     }
 
-    return this.httpClient.get<TokenPayload>(this.apiBaseUrl + '/auth/payload', {
+    return this.httpClient.get<TokenPayload>(this.apiBaseUrl + 'auth/payload', {
       headers: {
         Authorization: 'Bearer ' + this.getToken()
       }
