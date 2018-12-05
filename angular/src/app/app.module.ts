@@ -20,6 +20,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { SearchComponent } from './search/search.component';
 import { Base64Pipe } from './base64.pipe';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MarkPlaceComponent,
     SelectMarkerComponent,
     SearchComponent,
-    Base64Pipe
+    Base64Pipe,
+    SearchResultComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     AddPlaceComponent,
     MarkPlaceComponent,
     SearchComponent,
-    SelectMarkerComponent
+    SelectMarkerComponent,
+    SearchResultComponent
   ]
 })
 export class AppModule { }

@@ -71,6 +71,9 @@ export class SelectMarkerComponent {
   //Function which receives the value counting of stars click, 
   //and according to that value we do change the value of that star in list.
   setStar(data: any) {
+    if (this.comment.rating !== 0 && data === 0) {
+      data = -1;
+    }
     this.comment.rating = data + 1;
     for (var i = 0; i <= 4; i++) {
       if (i <= data) {
