@@ -5,7 +5,6 @@ const auth = require('./auth');
 const location = require('./location');
 const category = require('./category');
 const comment = require('./comment');
-const requestProxy = require("express-request-proxy");
 
 const app = express();
 
@@ -23,17 +22,6 @@ app.use('/auth', auth.router);
 app.use('/location', location.router);
 app.use('/category', category.router);
 app.use('/comment', comment.router);
-
-// Proxy requests to the actual Google Maps API to allow HTTPS access
-// A bug in chrome prohibits this natively
-app.get("/mapsapiproxy/:path*",
-    (req, res, next) =>
-        requestProxy({
-            cacheMaxAge: 60,
-            url: "http://maps.googleapis.com/" + req.params.path + req.params[0],
-        })(req, res, next)
-);
-// app.use('/mapsapiproxy', proxy('http://maps.googleapis.com'));
 
 app.use('/data', async (req, res) => {
     let tokenPayload;
