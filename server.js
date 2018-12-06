@@ -8,6 +8,7 @@ const comment = require('./comment');
 
 const app = express();
 
+
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cors());
 
@@ -56,4 +57,4 @@ if (process.argv[2] === 'debug') {
         '/', express.static(`${__dirname}/angular/dist`));
 }
 
-module.exports = app.listen(3000, () => console.log(`Server started.`));
+module.exports = app.listen(process.env.PORT || 3000, () => console.log(`Server started.`));

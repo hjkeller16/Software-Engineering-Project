@@ -3,15 +3,23 @@ const bcrypt = require('bcrypt-nodejs');
 const validator = require("email-validator");
 const config = require('./config');
 
+const { Pool } = require('pg');
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
+});
+
+
 const sequelize = new Sequelize(config.postgres.database, config.postgres.username, config.postgres.password, {
     host: config.postgres.host,
     dialect: 'postgres',
-    pool: {
+    pool: pool
+    /*{
         max: 5,
         min: 0,
         acquire: 30000,
         idle: 10000
-    },
+    }*/,
 
     // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
     operatorsAliases: false
