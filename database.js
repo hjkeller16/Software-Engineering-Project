@@ -9,21 +9,46 @@ const pool = new Pool({
   ssl: true
 });
 
+const sequelize; 
+if (process.env.DATABASE_URL) {
+    // the application is executed on Heroku ... use the postgres database
+    sequelize = new Sequelize(process.env.DATABASE_URL, {
+      dialect:  'postgres',
+      protocol: 'postgres',
+      port:     3000,//match[4],
+      host:     3000,//match[3],
+      logging:  true //false
+    });
+  } else {
+    // the application is executed on the local machine ... use postgres
+    sequelize = new Sequelize(config.postgres.database, config.postgres.username, config.postgres.password, {
+        host: config.postgres.host,
+        dialect: 'postgres',
+        pool: {
+            max: 5,
+            min: 0,
+            acquire: 30000,
+            idle: 10000
+        }
+  });
+}
 
-const sequelize = new Sequelize(/*config.postgres.database, config.postgres.username, config.postgres.password,*/ {
+
+
+/*const sequelize = new Sequelize(config.postgres.database, config.postgres.username, config.postgres.password, {
     //host: config.postgres.host,
     dialect: 'postgres',
     pool: pool
-    /*{
+    /
         max: 5,
         min: 0,
         acquire: 30000,
         idle: 10000
-    }*/,
+    },
 
     // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
     operatorsAliases: false
-});
+});*/
 
 // Create entity user
 const User = sequelize.define('user', {
