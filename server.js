@@ -24,7 +24,6 @@ app.use('/location', location.router);
 app.use('/category', category.router);
 app.use('/comment', comment.router);
 
-
 app.use('/data', async (req, res) => {
     let tokenPayload;
     try {

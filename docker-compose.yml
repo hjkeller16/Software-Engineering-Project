@@ -1,0 +1,15 @@
+version: '2'
+networks:
+  proxy: 
+    external: true
+services:
+  fubati:
+    build: .
+    labels:
+      - traefik.backend=fubati
+      - "traefik.frontend.redirect.regex=^(.*)/fubati$$"
+      - "traefik.frontend.redirect.replacement=$$1/fubati/"
+      - "traefik.frontend.rule=Host:annabaier.de; PathPrefix:/fubati; ReplacePathRegex:^/fubati/(.*) /$$1"
+      - traefik.port=3000
+    networks:
+      - proxy

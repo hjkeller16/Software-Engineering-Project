@@ -61,7 +61,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
     MatExpansionModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAPN8BwmAlGH29eT-u1UHYcE7sj4tJFSg4',
-      protocol: GoogleMapsScriptProtocol.HTTP
+      protocol: GoogleMapsScriptProtocol.HTTPS
     }),
     AgmJsMarkerClustererModule,
     AgmDirectionModule,
