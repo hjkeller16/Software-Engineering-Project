@@ -3,6 +3,7 @@
    float:left;
     width:78%!important;
     margin-right:1em;
+    margin-left:0.5em;
 }
 mat-form-field
 {
@@ -24,6 +25,14 @@ mat-form-field
     padding-left: 0em;
     padding-right: 0em;
     margin-right:0.5em;
+}
+
+/* Comments about location */
+.comments
+{
+    float: left;
+    width: 100%;
+    font-size: 200%;
 }
 
 /*star rating*/
