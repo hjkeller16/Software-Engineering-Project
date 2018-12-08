@@ -19,7 +19,7 @@
 <main>
     <agm-map [style.height]="origin && destination ? '66%' : '100%'" [zoom]="17" [latitude]="currentLatLng.lat"
         [longitude]="currentLatLng.lng" (mapClick)="onMapClick($event)" (mapReady)="onMapReady($event)">
-        <agm-marker iconUrl="./assets/blue-dot.png" [latitude]="currentLatLng.lat" [longitude]="currentLatLng.lng"></agm-marker>
+        <agm-marker iconUrl="./assets/blue-dot.png" [latitude]="userLatLng.lat" [longitude]="userLatLng.lng"></agm-marker>
         <agm-marker iconUrl="./assets/blue-marker.png" *ngIf="selectedLatLng" [latitude]="selectedLatLng.lat"
             [longitude]="selectedLatLng.lng"></agm-marker>
         <agm-marker-cluster [maxZoom]="15" [imagePath]="'https://googlemaps.github.io/js-marker-clusterer/images/m'">

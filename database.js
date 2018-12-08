@@ -1,26 +1,26 @@
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt-nodejs');
 const validator = require("email-validator");
-//const config = require('./config');
-
+const config = require('./config');
 const { Pool } = require('pg');
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
-});
 
-var sequelize; 
+const pool = process.env.DATABASE_URL ? new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+}) : null;
+
+var sequelize;
 
 if (process.env.DATABASE_URL) {
     // the application is executed on Heroku ... use the postgres database
     sequelize = new Sequelize(process.env.DATABASE_URL, {
-      dialect:  'postgres',
-      protocol: 'postgres',
-      port:     3000,//match[4],
-      host:     3000,//match[3],
-      logging:  true //false
+        dialect: 'postgres',
+        protocol: 'postgres',
+        port: 3000,//match[4],
+        host: 3000,//match[3],
+        logging: true //false
     });
-  } else {
+} else {
     // the application is executed on the local machine ... use postgres
     sequelize = new Sequelize(config.postgres.database, config.postgres.username, config.postgres.password, {
         host: config.postgres.host,
@@ -31,25 +31,8 @@ if (process.env.DATABASE_URL) {
             acquire: 30000,
             idle: 10000
         }
-  });
+    });
 }
-
-
-
-/*const sequelize = new Sequelize(config.postgres.database, config.postgres.username, config.postgres.password, {
-    //host: config.postgres.host,
-    dialect: 'postgres',
-    pool: pool
-    /
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
-    },
-
-    // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
-    operatorsAliases: false
-});*/
 
 // Create entity user
 const User = sequelize.define('user', {
