@@ -10,19 +10,33 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { AddPlaceComponent } from './add-place/add-place.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatDialogModule, MatCheckboxModule, MatBadgeModule, MatButtonModule, MatFormFieldModule, MatProgressSpinnerModule, MatGridListModule, MatToolbarModule, MatBottomSheetModule, MatDialogRef } from '@angular/material';
-import { AgmCoreModule } from '@agm/core';
+import { MatInputModule, MatDialogModule, MatCheckboxModule, MatBadgeModule, MatButtonModule, MatFormFieldModule, MatProgressSpinnerModule, MatGridListModule, MatToolbarModule, MatBottomSheetModule, MatDialogRef, MatRadioModule, MatCardModule, MatListModule, MatIconModule, MatProgressBarModule, MatExpansionModule } from '@angular/material';
+import { AgmCoreModule, GoogleMapsScriptProtocol } from '@agm/core';
 import { MarkPlaceComponent } from './mark-place/mark-place.component';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 import { SelectMarkerComponent } from './select-marker/select-marker.component';
 import { AgmDirectionModule } from 'agm-direction'
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { SearchComponent } from './search/search.component';
+import { Base64Pipe } from './base64.pipe';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [
+        AppComponent,
+        LoginComponent,
+        HomeComponent,
+        SignupComponent,
+        AddPlaceComponent,
+        MarkPlaceComponent,
+        SelectMarkerComponent,
+        SearchComponent,
+        Base64Pipe,
+        SearchResultComponent
+      ],
       imports: [
-        RouterTestingModule,
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
@@ -36,25 +50,23 @@ describe('AppComponent', () => {
         MatBadgeModule,
         MatButtonModule,
         MatFormFieldModule,
+        MatRadioModule,
+        MatCardModule,
         MatProgressSpinnerModule,
         MatGridListModule,
+        MatListModule,
+        MatIconModule,
         MatToolbarModule,
+        MatProgressBarModule,
         MatBottomSheetModule,
+        MatExpansionModule,
         AgmCoreModule.forRoot({
-          apiKey: 'AIzaSyAPN8BwmAlGH29eT-u1UHYcE7sj4tJFSg4'
+          apiKey: 'AIzaSyAPN8BwmAlGH29eT-u1UHYcE7sj4tJFSg4',
+          protocol: GoogleMapsScriptProtocol.HTTPS
         }),
         AgmJsMarkerClustererModule,
         AgmDirectionModule,
         ScrollDispatchModule
-      ],
-      declarations: [
-        AppComponent,
-        LoginComponent,
-        HomeComponent,
-        SignupComponent,
-        AddPlaceComponent,
-        MarkPlaceComponent,
-        SelectMarkerComponent
       ],
     }).compileComponents();
   }));
@@ -63,11 +75,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'Software-Engineering-Project'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('Software-Engineering-Project');
   });
 });
