@@ -25,11 +25,16 @@ export class HomeComponent {
   // Variables
   private currentMarkerLocation: any;
   private searchCriterias: Search;
+  // Currently important position
   public currentLatLng = {
     lat: 0,
     lng: 0
   };
-
+  //Position of user
+  public userLatLng = {
+    lat: 0,
+    lng: 0
+  }
   public locations: Location[] = [];
   public tokenPayload: TokenPayload;
   geocoder: any;
@@ -88,6 +93,12 @@ export class HomeComponent {
       lat: location.coords.latitude,
       lng: location.coords.longitude
     };
+
+    //Set current location to userLocation if not in search mode
+    if (!this.searchMode) {
+      this.userLatLng.lat = this.currentLatLng.lat;
+      this.userLatLng.lng = this.currentLatLng.lng;
+    }
   }
 
   onLogout() {

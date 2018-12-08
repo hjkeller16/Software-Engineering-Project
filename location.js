@@ -61,6 +61,7 @@ router.post('/search', async (req, res) => {
 
         if (arraysize > 0) {
             addressLocations = await databaseConnector.Location.findAll({
+                attributes: { exclude: ['image'] },
                 where: {
                     [Op.or]: [
                         {
@@ -75,15 +76,15 @@ router.post('/search', async (req, res) => {
                             address: {
                                 [Op.like]: end
                             }
-                        },{
+                        }, {
                             name: {
                                 [Op.like]: end
                             }
-                        },{
+                        }, {
                             name: {
                                 [Op.like]: middle
                             }
-                        },{
+                        }, {
                             name: {
                                 [Op.like]: beginning
                             }
@@ -104,6 +105,7 @@ router.post('/search', async (req, res) => {
 
         if (arraysize === 0) {
             addressLocations = await databaseConnector.Location.findAll({
+                attributes: { exclude: ['image'] },
                 where: {
                     [Op.or]: [
                         {
@@ -118,15 +120,15 @@ router.post('/search', async (req, res) => {
                             address: {
                                 [Op.like]: end
                             }
-                        },{
+                        }, {
                             name: {
                                 [Op.like]: end
                             }
-                        },{
+                        }, {
                             name: {
                                 [Op.like]: middle
                             }
-                        },{
+                        }, {
                             name: {
                                 [Op.like]: beginning
                             }
