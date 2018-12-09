@@ -22,6 +22,7 @@ if (process.env.DATABASE_URL) {
         logging: true //false
     });
 } else {
+    //use local database
     const config = require('./config');
     // the application is executed on the local machine ... use postgres
     sequelize = new Sequelize(config.postgres.database, config.postgres.username, config.postgres.password, {
