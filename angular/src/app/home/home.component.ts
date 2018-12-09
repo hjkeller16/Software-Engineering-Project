@@ -26,10 +26,7 @@ export class HomeComponent {
   private currentMarkerLocation: any;
   private searchCriterias: Search;
   // Currently important position
-  public currentLatLng = {
-    lat: 0,
-    lng: 0
-  };
+  public currentLatLng = null;
   //Position of user
   public userLatLng = {
     lat: 0,
@@ -87,18 +84,15 @@ export class HomeComponent {
   }
 
   async getCurrentLocation() {
+    // Get location of user
     const location: any = await new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject));
 
-    this.currentLatLng = {
-      lat: location.coords.latitude,
-      lng: location.coords.longitude
-    };
+    // Set user position indicator
+    this.userLatLng.lat = location.coords.latitude;
+    this.userLatLng.lng = location.coords.longitude;
 
-    //Set current location to userLocation if not in search mode
-    if (!this.searchMode) {
-      this.userLatLng.lat = this.currentLatLng.lat;
-      this.userLatLng.lng = this.currentLatLng.lng;
-    }
+    // Set visible map excerpt
+    this.currentLatLng = this.currentLatLng || Object.assign({}, this.userLatLng);
   }
 
   onLogout() {
