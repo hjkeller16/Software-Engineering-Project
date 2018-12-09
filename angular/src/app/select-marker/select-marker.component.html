@@ -1,23 +1,15 @@
 <div>
   <div id="placeDesc">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{ data.location.name }}</mat-card-title>
-        <mat-card-subtitle>{{ data.location.address }}</mat-card-subtitle>
-        <mat-card-subtitle>{{ data.location.category }}</mat-card-subtitle>
-
-        <div class="ratingMain">
-          <a *ngFor="let item of startListAverage; let i=index ">
-            <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
-          </a>
-        </div>
-      </mat-card-header>
-      <img mat-card-image *ngIf="data.location.image && data.location.image.data" [src]="data.location.image.data | base64">
-      <mat-card-content>
-        <mat-spinner *ngIf="imageLoading" color="primary"></mat-spinner>
-        <p *ngIf="data.location.description">{{ data.location.description }}</p>
-      </mat-card-content>
-    </mat-card>
+    <h2>{{ data.location.name }}</h2>
+    <div class="ratingMain">
+      <a *ngFor="let item of startListAverage; let i=index ">
+        <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+      </a>
+    </div>
+    <h4>{{ data.location.address }}</h4>
+    <h4>{{ data.location.category }}</h4>
+    <img width="100%" class="mat-elevation-z5 image" *ngIf="data.location.image && data.location.image.data" [src]="data.location.image.data | base64">
+    <p *ngIf="data.location.description">{{ data.location.description }}</p>
   </div>
   <button mat-raised-button color="primary" (click)="onShowRoute()">
     <i class="material-icons">
@@ -32,7 +24,7 @@
 </div>
 <div>
   <br>
-  <mat-accordion class="rating">
+  <mat-accordion class="comments">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>

@@ -17,6 +17,7 @@
         }
     }
     ```
+1. Install [Node.js](https://nodejs.org)
 5. Run `npm install` to install Node.js dependencies
 
 ## Development

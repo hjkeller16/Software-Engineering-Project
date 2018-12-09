@@ -3,10 +3,7 @@
    float:left;
     width:78%!important;
     margin-right:1em;
-}
-div
-{
-
+    margin-left:0.5em;
 }
 mat-form-field
 {
@@ -30,6 +27,14 @@ mat-form-field
     margin-right:0.5em;
 }
 
+/* Comments about location */
+.comments
+{
+    float: left;
+    width: 100%;
+    font-size: 200%;
+}
+
 /*star rating*/
 .rating
 {
@@ -44,8 +49,15 @@ mat-form-field
 .ratingMain
 {
     color:#673ab7;
-    float: left;
+    /* float: left; */
     width: 100%;
     font-size: 110%;
 }
-  
+
+@media screen 
+and (min-device-width: 1200px) 
+and (-webkit-min-device-pixel-ratio: 1) { 
+  .image{
+        width: 50% !important;
+    }
+  }

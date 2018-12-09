@@ -3,6 +3,7 @@ const databaseConnector = require('./database');
 const auth = require('./auth');
 const seq = require('sequelize');
 const router = express.Router();
+const sharp = require('sharp');
 
 router.get('/', async (req, res) => {
     try {
@@ -19,6 +20,13 @@ router.get('/', async (req, res) => {
     }
 });
 
+async function resizeImage(dataUri) {
+    const imageBuffer = Buffer.from(dataUri.split(';base64,').pop(), 'base64');
+    const image = sharp(imageBuffer);
+    const resizedBuffer = await image.resize(500).toBuffer();
+    return dataUri.split(';base64,')[0] + ';base64,' + resizedBuffer.toString('base64');
+}
+
 router.post('/', async (req, res) => {
     try {
         let currentuser = await auth.decodeToken(req);
@@ -26,6 +34,10 @@ router.post('/', async (req, res) => {
         if (req.body.category == "") {
             res.status(422).send({ error: "please enter category" });
             return;
+        }
+
+        if (req.body.image) {
+            req.body.image = await resizeImage(req.body.image);
         }
 
         // Connect to database
@@ -61,6 +73,7 @@ router.post('/search', async (req, res) => {
 
         if (arraysize > 0) {
             addressLocations = await databaseConnector.Location.findAll({
+                attributes: { exclude: ['image'] },
                 where: {
                     [Op.or]: [
                         {
@@ -75,15 +88,15 @@ router.post('/search', async (req, res) => {
                             address: {
                                 [Op.like]: end
                             }
-                        },{
+                        }, {
                             name: {
                                 [Op.like]: end
                             }
-                        },{
+                        }, {
                             name: {
                                 [Op.like]: middle
                             }
-                        },{
+                        }, {
                             name: {
                                 [Op.like]: beginning
                             }
@@ -104,6 +117,7 @@ router.post('/search', async (req, res) => {
 
         if (arraysize === 0) {
             addressLocations = await databaseConnector.Location.findAll({
+                attributes: { exclude: ['image'] },
                 where: {
                     [Op.or]: [
                         {
@@ -118,15 +132,15 @@ router.post('/search', async (req, res) => {
                             address: {
                                 [Op.like]: end
                             }
-                        },{
+                        }, {
                             name: {
                                 [Op.like]: end
                             }
-                        },{
+                        }, {
                             name: {
                                 [Op.like]: middle
                             }
-                        },{
+                        }, {
                             name: {
                                 [Op.like]: beginning
                             }
