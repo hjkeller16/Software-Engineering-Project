@@ -186,7 +186,7 @@ export class HomeComponent {
   }
 
   showRoute(location: Location) {
-    this.origin = { lat: this.currentLatLng.lat, lng: this.currentLatLng.lng };
+    this.origin = { lat: this.userLatLng.lat, lng: this.userLatLng.lng };
     this.destination = { lat: location.lat, lng: location.lng };
   }
 
@@ -232,8 +232,8 @@ export class HomeComponent {
         results: this.locations
       },
     }).afterDismissed().subscribe(result => {
-      // Set focus on the selected location
       if (result) {
+        // Zoom to the selected location
         this.currentLatLng.lat = result.lat;
         this.currentLatLng.lng = result.lng;
       }
