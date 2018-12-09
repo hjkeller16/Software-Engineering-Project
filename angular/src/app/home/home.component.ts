@@ -84,15 +84,15 @@ export class HomeComponent {
   }
 
   async getCurrentLocation() {
-    // Get location of user
     const location: any = await new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject));
 
     // Set user position indicator
     this.userLatLng.lat = location.coords.latitude;
     this.userLatLng.lng = location.coords.longitude;
 
-    // Set visible map excerpt
-    this.currentLatLng = this.currentLatLng || Object.assign({}, this.userLatLng);
+    if (!this.currentLatLng) {
+      this.zoomToUserLocation();
+    }
   }
 
   onLogout() {
@@ -243,5 +243,16 @@ export class HomeComponent {
   onExitSearchMode() {
     this.searchMode = false;
     this.initializeComponent();
+  }
+
+  zoomToUserLocation() {
+    if (this.currentLatLng) {
+      this.currentLatLng.lng = this.userLatLng.lng;
+      this.currentLatLng.lat = this.userLatLng.lat;
+    } else {
+      this.currentLatLng = Object.assign({}, this.userLatLng);
+    }
+    console.log(this.currentLatLng);
+    console.log(this.userLatLng);
   }
 }
