@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt-nodejs');
 const validator = require("email-validator");
-//const config = require('./config');
+const config = require('./config');
 
 const { Pool } = require('pg');
 const pool = new Pool({
@@ -30,7 +30,8 @@ if (process.env.DATABASE_URL) {
             min: 0,
             acquire: 30000,
             idle: 10000
-        }
+        },
+        operatorsAliases: false
   });
 }
 
