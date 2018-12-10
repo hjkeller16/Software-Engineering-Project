@@ -1,4 +1,4 @@
-<mat-toolbar class="mat-elevation-z24" color="primary">
+<mat-toolbar class="mat-elevation-z5" color="primary">
     <h1 *ngIf="!searchMode">Hallo {{tokenPayload.username}}</h1>
     <h1 *ngIf="searchMode" class="searchMode">Suchmodus</h1>
     <p class="fill-space"></p>
@@ -17,8 +17,8 @@
     </button>
 </mat-toolbar>
 <main>
-    <agm-map [style.height]="origin && destination ? '66%' : '100%'" [zoom]="17" [latitude]="currentLatLng.lat"
-        [longitude]="currentLatLng.lng" (mapClick)="onMapClick($event)" (mapReady)="onMapReady($event)">
+    <agm-map class="mat-elevation-z5" [style.height]="origin && destination ? '66%' : '100%'" [zoom]="17" [latitude]="currentLatLng ? currentLatLng.lat : 0"
+        [longitude]="currentLatLng ? currentLatLng.lng : 0" (mapClick)="onMapClick($event)" (mapReady)="onMapReady($event)">
         <agm-marker iconUrl="./assets/blue-dot.png" [latitude]="userLatLng.lat" [longitude]="userLatLng.lng"></agm-marker>
         <agm-marker iconUrl="./assets/blue-marker.png" *ngIf="selectedLatLng" [latitude]="selectedLatLng.lat"
             [longitude]="selectedLatLng.lng"></agm-marker>
@@ -29,12 +29,13 @@
         <agm-direction [panel]="navigationPanel" [visible]="origin && destination" [origin]="origin" [destination]="destination">
         </agm-direction>
     </agm-map>
+    <!--<button mat-fab color="primary" (click)="zoomToUserLocation()">
+        <mat-icon>my_location</mat-icon>
+    </button>-->
     <div id="navigationPanelContainer">
-        <a target="_blank" ng-href="{{url}" (click)="openGoogleMaps()">
-            <button mat-raised-button color="primary">
-                Zu Google Maps
-            </button>
-        </a>
+        <button mat-raised-button color="primary" (click)="openGoogleMaps()">
+            Zu Google Maps
+        </button>
         &nbsp;
         <button mat-raised-button color="secondary" (click)="onEndRoute()">
             Navigation beenden

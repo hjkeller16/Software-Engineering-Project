@@ -1,2 +1,7 @@
 node_modules/**
+<<<<<<< HEAD
 angular/dist/**
+=======
+angular/node_modules/**
+angular/dist/**
+>>>>>>> 8e7997c2f00a263e6d616f728138a160995820ff

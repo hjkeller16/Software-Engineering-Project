@@ -26,10 +26,7 @@ export class HomeComponent {
   private currentMarkerLocation: any;
   private searchCriterias: Search;
   // Currently important position
-  public currentLatLng = {
-    lat: 0,
-    lng: 0
-  };
+  public currentLatLng = null;
   //Position of user
   public userLatLng = {
     lat: 0,
@@ -89,15 +86,12 @@ export class HomeComponent {
   async getCurrentLocation() {
     const location: any = await new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject));
 
-    this.currentLatLng = {
-      lat: location.coords.latitude,
-      lng: location.coords.longitude
-    };
+    // Set user position indicator
+    this.userLatLng.lat = location.coords.latitude;
+    this.userLatLng.lng = location.coords.longitude;
 
-    //Set current location to userLocation if not in search mode
-    if (!this.searchMode) {
-      this.userLatLng.lat = this.currentLatLng.lat;
-      this.userLatLng.lng = this.currentLatLng.lng;
+    if (!this.currentLatLng) {
+      this.zoomToUserLocation();
     }
   }
 
@@ -192,7 +186,7 @@ export class HomeComponent {
   }
 
   showRoute(location: Location) {
-    this.origin = { lat: this.currentLatLng.lat, lng: this.currentLatLng.lng };
+    this.origin = { lat: this.userLatLng.lat, lng: this.userLatLng.lng };
     this.destination = { lat: location.lat, lng: location.lng };
   }
 
@@ -238,8 +232,8 @@ export class HomeComponent {
         results: this.locations
       },
     }).afterDismissed().subscribe(result => {
-      // Set focus on the selected location
       if (result) {
+        // Zoom to the selected location
         this.currentLatLng.lat = result.lat;
         this.currentLatLng.lng = result.lng;
       }
@@ -249,5 +243,16 @@ export class HomeComponent {
   onExitSearchMode() {
     this.searchMode = false;
     this.initializeComponent();
+  }
+
+  zoomToUserLocation() {
+    if (this.currentLatLng) {
+      this.currentLatLng.lng = this.userLatLng.lng;
+      this.currentLatLng.lat = this.userLatLng.lat;
+    } else {
+      this.currentLatLng = Object.assign({}, this.userLatLng);
+    }
+    console.log(this.currentLatLng);
+    console.log(this.userLatLng);
   }
 }
