@@ -54,6 +54,23 @@ mat-form-field
     font-size: 110%;
 }
 
+::ng-deep .mat-list .mat-list-item .mat-line{
+   word-wrap: break-word;
+   white-space: pre-wrap;
+}
+::ng-deep  .mat-list .mat-list-item{
+    height:initial!important;
+  }
+.Lcomment
+{
+    margin-bottom:1em;
+}
+.commentRating
+{
+    color:#673ab7;
+    font-weight:bold;
+}
+
 @media screen 
 and (min-device-width: 1200px) 
 and (-webkit-min-device-pixel-ratio: 1) { 

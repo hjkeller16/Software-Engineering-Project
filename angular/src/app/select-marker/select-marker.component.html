@@ -32,10 +32,11 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-list role="list">
-        <mat-list-item *ngFor="let comment of comments">
+        <mat-list-item *ngFor="let comment of comments" class="Lcomment">
           <mat-icon mat-list-icon>mode_comment</mat-icon>
-          <h4 mat-line> {{ comment.user_id }}: {{comment.content}} </h4>
-          <p mat-line>Rating: {{ comment.rating }}</p>
+          <p mat-line><b>{{comment.user_id }}</b>: {{comment.content}}
+          </p>
+         <p class="commentRating" mat-line>Rating: {{ comment.rating }}</p>
         </mat-list-item>
       </mat-list>
     </mat-expansion-panel>
