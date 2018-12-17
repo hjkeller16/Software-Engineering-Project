@@ -9,7 +9,7 @@ RUN npm install --unsafe-perm
 
 COPY . .
 
-RUN ls angular/dist &> /etc/null || npm run build
+RUN npm run build
 
 EXPOSE 3000
 CMD [ "npm", "run", "start-prod" ]
