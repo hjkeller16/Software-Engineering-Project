@@ -23,7 +23,6 @@ declare var google: any;
 export class HomeComponent {
 
   // Variables
-  private currentMarkerLocation: any;
   private searchCriterias: Search;
   // Currently important position
   public currentLatLng = null;
@@ -32,6 +31,7 @@ export class HomeComponent {
     lat: 0,
     lng: 0
   }
+  public currentMarkerLocation: any;
   public locations: Location[] = [];
   public tokenPayload: TokenPayload;
   geocoder: any;
@@ -48,7 +48,7 @@ export class HomeComponent {
     private readonly locationRepositoryService: LocationRepositoryService,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly bottomSheet: MatBottomSheet,
+    public readonly bottomSheet: MatBottomSheet,
   ) {
     this.activatedRoute.params.subscribe(this.initializeComponent.bind(this));
     this.mapsApiLoader.load().then(() => {

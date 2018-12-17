@@ -20,10 +20,23 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { SearchComponent } from '../search/search.component';
 import { Base64Pipe } from '../base64.pipe';
 import { SearchResultComponent } from '../search-result/search-result.component';
+import { Location } from '../location';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+  let mockLocation: Location = {
+    id: 1,
+    lat: 0,
+    lng: 0,
+    name: "Test location",
+    address: "Turmstraße 7, Lu",
+    category: "Tischtennis",
+    description: "This is a test location",
+    user_id: "testUser",
+    image: null,
+    avgrating: 0
+  }
 
   //Import all needed modules
   beforeEach(async(() => {
@@ -84,9 +97,47 @@ describe('HomeComponent', () => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    // Close botton sheet if it was opened
+    if (component.bottomSheet) {
+      component.bottomSheet.dismiss();
+    }
+    if (component.dialog) {
+      component.dialog.closeAll();
+    }
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('initialize component', async () => {
+    // Test if component can be initilized and locations can be set
+    await component.initializeComponent();
+    expect(component.locations).toBeDefined;
+  });
+
+  it('click on marker', async () => {
+    spyOn(component, 'onMarkerClick');
+    let marker = await fixture.debugElement.nativeElement.querySelector('agm-marker');
+    await marker.click();
+    // Bottom sheet should open
+    expect(component.bottomSheet).toBeDefined();
+  });
+
+  it('click on map', async () => {
+    spyOn(component, "onMapClick");
+    let map = await fixture.debugElement.nativeElement.querySelector('agm-map');
+    await map.click();
+    // Bottom sheet should open
+    expect(component.bottomSheet).toBeDefined();
+  });
+
+  it('click on search button', async () => {
+    spyOn(component, "onMapClick");
+    let searchButton = await fixture.debugElement.nativeElement.querySelector('#searchButton');
+    await searchButton.click();
+    // Search diaglog should open
+    expect(component.dialog).toBeDefined();
+  })
+
 });

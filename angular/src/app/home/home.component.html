@@ -2,7 +2,7 @@
     <h1 *ngIf="!searchMode">Hallo {{tokenPayload.username}}</h1>
     <h1 *ngIf="searchMode" class="searchMode">Suchmodus</h1>
     <p class="fill-space"></p>
-    <button *ngIf="!searchMode" mat-raised-button class="buttonSpace" (click)="openSearch()">
+    <button id="searchButton" *ngIf="!searchMode" mat-raised-button class="buttonSpace" (click)="openSearch()">
         <i class="material-icons">
             search
         </i>
@@ -23,8 +23,14 @@
         <agm-marker iconUrl="./assets/blue-marker.png" *ngIf="selectedLatLng" [latitude]="selectedLatLng.lat"
             [longitude]="selectedLatLng.lng"></agm-marker>
         <agm-marker-cluster [maxZoom]="15" [imagePath]="'https://googlemaps.github.io/js-marker-clusterer/images/m'">
-            <agm-marker iconUrl="./assets/red-marker.png" *ngFor="let location of locations" [latitude]="location.lat"
-                [longitude]="location.lng" (markerClick)="onMarkerClick(location)"></agm-marker>
+            <ng-component *ngFor="let location of locations">
+                <agm-marker iconUrl="./assets/basketball-marker.png" *ngIf="location.category === 'Basketball'"
+                    [latitude]="location.lat" [longitude]="location.lng" (markerClick)="onMarkerClick(location)"></agm-marker>
+                <agm-marker iconUrl="./assets/football-marker.png" *ngIf="location.category === 'Fußball'" [latitude]="location.lat"
+                    [longitude]="location.lng" (markerClick)="onMarkerClick(location)"></agm-marker>
+                <agm-marker iconUrl="./assets/tabletennis-marker.png" *ngIf="location.category === 'Tischtennis'"
+                    [latitude]="location.lat" [longitude]="location.lng" (markerClick)="onMarkerClick(location)"></agm-marker>
+            </ng-component>
         </agm-marker-cluster>
         <agm-direction [panel]="navigationPanel" [visible]="origin && destination" [origin]="origin" [destination]="destination">
         </agm-direction>

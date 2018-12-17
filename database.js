@@ -34,7 +34,7 @@ if (process.env.DATABASE_URL) {
             idle: 10000
         },
         operatorsAliases: false
-  });
+    });
 }
 
 // Create entity user
@@ -59,9 +59,9 @@ const User = sequelize.define('user', {
                         return reject(new Error('No empty values possible'));
                     }
                     // Check if email is valid
-                    if (!validator.validate(user.email)) {
-                        return reject(new Error('Email is invalid'));
-                    }
+                    //if (!validator.validate(user.email)) {
+                    //return reject(new Error('Email is invalid'));
+                    //}
                     // Salt password
                     bcrypt.genSalt(8, (err, result) => {
                         if (err) {
