@@ -19,7 +19,6 @@ export class SearchResultComponent {
   }
 
   onClickResult(location) {
-    console.log(location);
     this.bottomDialogRef.dismiss(location);
   }
 

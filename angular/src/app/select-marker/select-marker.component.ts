@@ -24,7 +24,7 @@ export class SelectMarkerComponent {
   public imageLoading: boolean = location ? true : false;
   // create a list which contains status of 5 stars
   starList: boolean[] = [true, true, true, true, true];
-  startListAverage: boolean[] = [true, true, true, true, true];
+  starListAverage: boolean[] = [true, true, true, true, true];
 
   constructor(
     private readonly commentRepositoryService: CommentRepositoryService,
@@ -32,7 +32,6 @@ export class SelectMarkerComponent {
     private readonly bottomDialogRef: MatBottomSheetRef<SelectMarkerComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any
   ) {
-    console.log(data);
     this.comment.location_id = data.location.id;
     this.getLocation(data.location.id, data);
     this.getComments(data.location.id);
@@ -60,10 +59,10 @@ export class SelectMarkerComponent {
     this.comment.rating = data + 1;
     for (var i = 0; i <= 4; i++) {
       if (i <= data) {
-        this.startListAverage[i] = false;
+        this.starListAverage[i] = false;
       }
       else {
-        this.startListAverage[i] = true;
+        this.starListAverage[i] = true;
       }
     }
   }
@@ -92,7 +91,9 @@ export class SelectMarkerComponent {
     } catch (err) {
       console.log('Error: ' + err);
     }
-    this.bottomDialogRef.dismiss();
+    // Set variable focusOnLocation true
+    let focusOnLocation = true;
+    this.bottomDialogRef.dismiss(focusOnLocation);
   }
 
   async onDeleteLocation() {

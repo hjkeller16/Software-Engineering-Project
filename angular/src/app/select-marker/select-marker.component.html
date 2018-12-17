@@ -2,7 +2,7 @@
   <div id="placeDesc">
     <h2>{{ data.location.name }}</h2>
     <div class="ratingMain">
-      <a *ngFor="let item of startListAverage; let i=index ">
+      <a *ngFor="let item of starListAverage; let i=index ">
         <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
       </a>
     </div>
@@ -24,7 +24,7 @@
 </div>
 <div>
   <br>
-  <mat-accordion class="comments">
+  <mat-accordion class="comments" *ngIf="comments.length > 0">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -36,7 +36,7 @@
           <mat-icon mat-list-icon>mode_comment</mat-icon>
           <p mat-line><b>{{comment.user_id }}</b>: {{comment.content}}
           </p>
-         <p class="commentRating" mat-line>Rating: {{ comment.rating }}</p>
+          <p class="commentRating" mat-line>Rating: {{ comment.rating }}</p>
         </mat-list-item>
       </mat-list>
     </mat-expansion-panel>

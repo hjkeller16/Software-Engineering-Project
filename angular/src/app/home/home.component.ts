@@ -172,17 +172,24 @@ export class HomeComponent {
         username: this.tokenPayload.username,
         events
       },
-    }).afterDismissed().toPromise();
-    this.initializeComponent();
-
-    if (events.showRouteClicked) {
-      // If search mode is activated get original current location and end search mode
-      if (this.searchMode) {
-        await this.getCurrentLocation();
-        this.searchMode = false;
+    }).afterDismissed().subscribe(async result => {
+      if (result) {
+        // Focus on location
+        this.currentLatLng.lat = location.lat;
+        this.currentLatLng.lng = location.lng;
       }
-      this.showRoute(location);
-    }
+      this.initializeComponent();
+
+      if (events.showRouteClicked) {
+        // If search mode is activated get original current location and end search mode
+        if (this.searchMode) {
+          await this.getCurrentLocation();
+          this.searchMode = false;
+        }
+        this.showRoute(location);
+      }
+
+    });
   }
 
   showRoute(location: Location) {
@@ -200,8 +207,6 @@ export class HomeComponent {
   }
 
   async openGoogleMaps() {
-    console.log(this.currentMarkerLocation);
-    console.log(this.currentLatLng);
     var gmaps = "https://www.google.com/maps/dir/"
     // Get starting point address
     var startingPoint = await this.getAddressFromCoordinates(this.currentLatLng.lat, this.currentLatLng.lng);
@@ -216,7 +221,6 @@ export class HomeComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The search dialog was closed');
       if (result.valuesSelected) {
         this.searchMode = true;
         this.searchCriterias = result.search;
@@ -252,7 +256,5 @@ export class HomeComponent {
     } else {
       this.currentLatLng = Object.assign({}, this.userLatLng);
     }
-    console.log(this.currentLatLng);
-    console.log(this.userLatLng);
   }
 }
