@@ -12,7 +12,6 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cors());
 
 app.use((req, res, next) => {
-    console.log(`Incoming Request: ${req.url}`);
     next();
 });
 

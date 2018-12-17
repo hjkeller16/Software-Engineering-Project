@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 
 describe('Locations', () => {
     databaseConnector.Location.destroy({where: {}, truncate: false}).then(() => {
-    }).then(() => done()); 
+    }).then(() => done());
     var token = null;
     let user = {
         username: "test1",
@@ -29,14 +29,6 @@ describe('Locations', () => {
         address: 'Bayreuther Str. 25, 67059 Ludwigshafen am Rhein, Germany',
         lat: 49.4780691165434,
         lng: 8.4182114997526
-    }
-    let locationwithimage = {
-        category: 'Fußball',
-        name: 'testy',
-        description: 'testy',
-        address: 'Bayreuther Str. 5, 67059 Ludwigshafen am Rhein, Germany',
-        lat: 51.4780691165434,
-        lng: 10.4182114997526
     }
     let locationwocategory = {
         name: 'test',
@@ -110,22 +102,6 @@ describe('Locations', () => {
                         });
                     });
                 });
-                done();
-            });
-        });
-    });
-
-    describe('/POST location', () => {
-        it('it should POST a location with image', (done) => {
-            chai.request(server)
-            .post('/location/')
-            .set('Authorization', 'Bearer '+ token)    
-            .attach('file', fs.readFileSync('/Users/hannahkeller/Desktop/wald.jpeg'), 'wald.jpeg')
-            .set('Content-Type', 'image')
-            .send(locationwithimage)
-            .end((err, res) => {
-                res.should.have.status(200);
-                res.body.should.be.a('object');
                 done();
             });
         });

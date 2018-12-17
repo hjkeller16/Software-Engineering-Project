@@ -32,13 +32,13 @@ describe('Users', () => {
         password: "test",
         firstname: "test",
         lastname: "Kell",
-        email: "test@gmail.com"
+        email: "testusername@gmail.com"
     }
     let usernopassword = {
         username: "test3",
         firstname: "test",
         lastname: "Kell",
-        email: "test@gmail.com"
+        email: "testpassword@gmail.com"
     }
     
     describe('/POST user', () => {

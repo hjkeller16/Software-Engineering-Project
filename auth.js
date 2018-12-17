@@ -10,9 +10,14 @@ router.post('/register', async (req, res) => {
     try {
         await databaseConnector.sequelize.sync();
         const user = await databaseConnector.User.findByPrimary(req.body.username);
+        const emailuser = await databaseConnector.User.findAll({where: {email: req.body.email}})
         // Check if user already exists
         if (user) {
             res.status(409).send({ error: 'Username existiert bereits' });
+            return;
+        }
+        if (emailuser.length > 0) {
+            res.status(409).send({ error: 'Email existiert bereits' });
             return;
         }
         // Check if user forgot to enter a username or password
