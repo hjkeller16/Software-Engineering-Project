@@ -3,24 +3,27 @@ const jwt = require('jsonwebtoken');
 const uniqid = require('uniqid');
 const databaseConnector = require('./database');
 const emailValidator = require("email-validator");
-
 const router = express.Router();
-
 const secret = uniqid();
 
 router.post('/register', async (req, res) => {
     try {
-
         await databaseConnector.sequelize.sync();
-
         const user = await databaseConnector.User.findByPrimary(req.body.username);
-
         // Check if user already exists
         if (user) {
             res.status(409).send({ error: 'Username existiert bereits' });
             return;
         }
-
+        // Check if user forgot to enter a username or password
+        if (!req.body.username || req.body.username == "") {
+            res.status(422).send({ error: "please enter username" });
+            return;
+        }
+        if (!req.body.password || req.body.password == "") {
+            res.status(422).send({ error: "please enter password" });
+            return;
+        }
         // Create user
         await databaseConnector.User.create({
             username: req.body.username,
@@ -45,11 +48,9 @@ router.post('/register', async (req, res) => {
     }
 });
 
-
 router.post('/login', async (req, res) => {
     try {
         await databaseConnector.sequelize.sync();
-
         // Verify user input
         let userInput = req.body.username;
         // Test if user input is username or email and get user information
@@ -66,7 +67,6 @@ router.post('/login', async (req, res) => {
             user = await databaseConnector.User.findByPrimary(userInput);
         }
         const valid = user && await user.verifyPassword(req.body.password);
-
         if (!valid) {
             res.status(401).send({ error: 'Login nicht erfolgreich' });
             return;
@@ -78,7 +78,6 @@ router.post('/login', async (req, res) => {
                 expiresIn: '2 days'
             }
         );
-
         res.send({
             token,
         });

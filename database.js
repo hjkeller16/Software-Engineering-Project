@@ -1,10 +1,7 @@
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt-nodejs');
 const validator = require("email-validator");
-
-
 const { Pool } = require('pg');
-
 const pool = process.env.DATABASE_URL ? new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: true
