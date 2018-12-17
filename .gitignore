@@ -85,3 +85,7 @@ typings/
 # configuration file
 config.json
 config2.json
+
+# bat
+_startAngular.bat
+_startNodeServer.bat
