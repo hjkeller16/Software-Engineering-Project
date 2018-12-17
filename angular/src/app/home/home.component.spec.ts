@@ -109,35 +109,4 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('initialize component', async () => {
-    // Test if component can be initilized and locations can be set
-    await component.initializeComponent();
-    expect(component.locations).toBeDefined;
-  });
-
-  it('click on marker', async () => {
-    spyOn(component, 'onMarkerClick');
-    let marker = await fixture.debugElement.nativeElement.querySelector('agm-marker');
-    await marker.click();
-    // Bottom sheet should open
-    expect(component.bottomSheet).toBeDefined();
-  });
-
-  it('click on map', async () => {
-    spyOn(component, "onMapClick");
-    let map = await fixture.debugElement.nativeElement.querySelector('agm-map');
-    await map.click();
-    // Bottom sheet should open
-    expect(component.bottomSheet).toBeDefined();
-  });
-
-  it('click on search button', async () => {
-    spyOn(component, "onMapClick");
-    let searchButton = await fixture.debugElement.nativeElement.querySelector('#searchButton');
-    await searchButton.click();
-    // Search diaglog should open
-    expect(component.dialog).toBeDefined();
-  })
-
 });
