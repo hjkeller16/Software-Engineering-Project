@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AddPlaceComponent } from '../add-place/add-place.component';
 import { MatDialog, MatBottomSheetRef } from '@angular/material';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material';
@@ -8,16 +8,13 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material';
   templateUrl: './mark-place.component.html',
   styleUrls: ['./mark-place.component.css']
 })
-export class MarkPlaceComponent implements OnInit {
+export class MarkPlaceComponent {
 
   constructor(
     private bottomDialogRef: MatBottomSheetRef<MarkPlaceComponent>,
     private readonly dialog: MatDialog,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any
   ) { }
-
-  ngOnInit() {
-  }
 
   onAddPlace() {
     this.bottomDialogRef.dismiss();

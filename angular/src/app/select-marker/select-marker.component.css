@@ -1,23 +1,22 @@
-#placeDesc
-{
+#placeDesc {
    float:left;
     width:78%!important;
     margin-right:1em;
     margin-left:0.5em;
 }
-mat-form-field
-{
+
+mat-form-field {
     width:70%;
     margin-top:2em;
     margin-right:1em;
 }
-.commentTextArea
-{
+
+.commentTextArea {
     display:inline;
     width:80%!important;
 }
-.mat-raised-button
-{
+
+.mat-raised-button {
     display:inline;   
     width:10%;
     padding: 0.25em;
@@ -28,16 +27,14 @@ mat-form-field
 }
 
 /* Comments about location */
-.comments
-{
+.comments {
     float: left;
     width: 100%;
     font-size: 200%;
 }
 
 /*star rating*/
-.rating
-{
+.rating {
     margin-top:0.5em;
     border-top:1px solid gray;
     padding-top:1em;
@@ -46,27 +43,28 @@ mat-form-field
     width: 100%;
     font-size: 200%;
 }
-.ratingMain
-{
+
+.ratingMain {
     color:#673ab7;
     /* float: left; */
     width: 100%;
     font-size: 110%;
 }
 
-::ng-deep .mat-list .mat-list-item .mat-line{
+::ng-deep .mat-list .mat-list-item .mat-line {
    word-wrap: break-word;
    white-space: pre-wrap;
 }
-::ng-deep  .mat-list .mat-list-item{
+
+::ng-deep  .mat-list .mat-list-item {
     height:initial!important;
-  }
-.Lcomment
-{
+}
+
+.Lcomment {
     margin-bottom:1em;
 }
-.commentRating
-{
+
+.commentRating {
     color:#673ab7;
     font-weight:bold;
 }
@@ -74,7 +72,7 @@ mat-form-field
 @media screen 
 and (min-device-width: 1200px) 
 and (-webkit-min-device-pixel-ratio: 1) { 
-  .image{
+  .image {
         width: 50% !important;
     }
   }

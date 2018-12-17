@@ -22,7 +22,7 @@ export class SelectMarkerComponent {
   comments: Comment[] = [];
   public location: Location = undefined;
   public imageLoading: boolean = location ? true : false;
-  // create a list which contains status of 5 stars
+  // create a list which contains status of five stars
   starList: boolean[] = [true, true, true, true, true];
   starListAverage: boolean[] = [true, true, true, true, true];
 
@@ -54,7 +54,7 @@ export class SelectMarkerComponent {
     this.data.events.showRouteClicked = true;
   }
 
-  //Sets the avarage rating of this location
+  //Set the avarage rating of this location
   setStarAverage(data: any) {
     this.comment.rating = data + 1;
     for (var i = 0; i <= 4; i++) {
@@ -68,7 +68,7 @@ export class SelectMarkerComponent {
   }
 
   //Function which receives the value counting of stars click, 
-  //and according to that value we do change the value of that star in list.
+  //and according to that value the value of that star in list changes.
   setStar(data: any) {
     if (this.comment.rating !== 0 && data === 0) {
       data = -1;

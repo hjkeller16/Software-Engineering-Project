@@ -9,7 +9,7 @@ import { Location } from '../location';
 })
 export class SearchResultComponent {
 
-  //Variables
+  //Variable
   public results: Location[];
 
   constructor(

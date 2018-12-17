@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material';
 import { Search } from '../search';
 import { SearchResultComponent } from '../search-result/search-result.component';
 
+// Variable for google maps
 declare var google: any;
 
 @Component({
@@ -69,9 +70,6 @@ export class HomeComponent {
 
     // Get current location
     this.getCurrentLocation();
-
-    //Set current marker location null;
-    //this.currentMarkerLocation = null;
 
     // Get desired places from database
     if (this.searchMode) {
@@ -132,7 +130,7 @@ export class HomeComponent {
         lng: e.coords.lng,
         address: address,
         dialogWrapper
-      },
+      }
     }).afterDismissed().toPromise();
 
     // If add-place component was closed the home component will be initilized to display added marker
@@ -140,7 +138,6 @@ export class HomeComponent {
       await dialogWrapper.ref.afterClosed().toPromise();
       this.initializeComponent();
     }
-
     this.selectedLatLng = null;
   }
 
@@ -171,7 +168,7 @@ export class HomeComponent {
         location: location,
         username: this.tokenPayload.username,
         events
-      },
+      }
     }).afterDismissed().subscribe(async result => {
       if (result) {
         // Focus on location
@@ -188,7 +185,6 @@ export class HomeComponent {
         }
         this.showRoute(location);
       }
-
     });
   }
 
@@ -219,7 +215,6 @@ export class HomeComponent {
   openSearch(): void {
     let dialogRef = this.dialog.open(SearchComponent, {
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result.valuesSelected) {
         this.searchMode = true;

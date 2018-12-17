@@ -89,4 +89,7 @@ describe('SelectMarkerComponent', () => {
     fixture.detectChanges();
   });
 
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

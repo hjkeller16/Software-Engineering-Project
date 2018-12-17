@@ -1,7 +1,6 @@
 <mat-list>
   <h3 mat-subheader>Suchergebnisse</h3>
   <mat-list-item *ngFor="let result of results" (click)="onClickResult(result)">
-    <!--<mat-icon mat-list-icon>folder</mat-icon> !-->
     <h4 mat-line>{{ result.name }}</h4>
     <p mat-line> {{ result.address }} </p>
     <p mat-line> {{ result.category }} </p>
