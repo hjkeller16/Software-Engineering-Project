@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const auth = require('./auth');
 const location = require('./location');
-const category = require('./category');
 const comment = require('./comment');
 
 const app = express();
@@ -13,7 +12,6 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cors());
 
 app.use((req, res, next) => {
-    console.log(`Incoming Request: ${req.url}`);
     next();
 });
 
@@ -21,7 +19,6 @@ app.use((req, res, next) => {
 app.use('/auth', auth.router);
 // Handle request to /location/*
 app.use('/location', location.router);
-app.use('/category', category.router);
 app.use('/comment', comment.router);
 
 app.use('/data', async (req, res) => {

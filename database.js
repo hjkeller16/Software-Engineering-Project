@@ -1,15 +1,12 @@
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt-nodejs');
 const validator = require("email-validator");
-
-
 const { Pool } = require('pg');
 
 const pool = process.env.DATABASE_URL ? new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: true
 }) : null;
-
 var sequelize;
 
 if (process.env.DATABASE_URL) {
@@ -22,6 +19,7 @@ if (process.env.DATABASE_URL) {
         logging: true //false
     });
 } else {
+    //use local database
     const config = require('./config');
     // the application is executed on the local machine ... use postgres
     sequelize = new Sequelize(config.postgres.database, config.postgres.username, config.postgres.password, {
@@ -34,7 +32,7 @@ if (process.env.DATABASE_URL) {
             idle: 10000
         },
         operatorsAliases: false
-  });
+    });
 }
 
 // Create entity user
@@ -58,10 +56,6 @@ const User = sequelize.define('user', {
                     if ((!user.username && user.username !== 0) || (!user.password && user.password !== 0)) {
                         return reject(new Error('No empty values possible'));
                     }
-                    // Check if email is valid
-                    if (!validator.validate(user.email)) {
-                        return reject(new Error('Email is invalid'));
-                    }
                     // Salt password
                     bcrypt.genSalt(8, (err, result) => {
                         if (err) {
@@ -81,8 +75,6 @@ const User = sequelize.define('user', {
         }
     });
 
-
-
 // Compare hashed passwords
 User.prototype.verifyPassword = function (password) {
     return new Promise((resolve, reject) => {
@@ -94,9 +86,6 @@ User.prototype.verifyPassword = function (password) {
         });
     });
 };
-
-//correct
-//const LocationCategory = sequelize.define('locationcategory', {});
 
 // Create entity location
 const Location = sequelize.define('location', {
@@ -113,19 +102,7 @@ const Location = sequelize.define('location', {
     lng: Sequelize.FLOAT,
     image: Sequelize.BLOB('tiny'),
     avgrating: Sequelize.INTEGER
-    //productImage is a string
 });
-
-//create entity category
-/*const Category = sequelize.define('category', {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    category: Sequelize.STRING
-}); */
-//Location.belongsToMany(Category, { through: 'LocationCategory', foreignKey: 'category_id' });
 
 //create entity Comment
 const Comment = sequelize.define('comment', {
@@ -141,25 +118,11 @@ const Comment = sequelize.define('comment', {
 Location.belongsTo(User, { foreignKey: 'user_id' });
 Comment.belongsTo(User, { foreignKey: 'user_id' });
 Comment.belongsTo(Location, { foreignKey: 'location_id' });
-//Location.belongsTo(Category, { foreignKey: 'category_id' });
-
-//LocationCategory.hasMany(Location, {foreignKey: 'id'});
-//LocationCategory.hasMany(Category, {foreignKey: 'id'});
-//location.addCategory(category);
-//category.addLocation(location);
-//Location.addCategory(Category);
-//Category.addLocation(Location);
-
-
-//Category.belongsToMany(Location, { through: 'locationcategory', foreignKey: 'location_id' });
-//Location.belongsToMany(Category, { through: 'locationcategory', foreignKey: 'category_id' });
 
 // Export entities
 module.exports = {
     sequelize,
     User,
     Location,
-    // Category,
-    Comment,
-    // LocationCategory
+    Comment
 };

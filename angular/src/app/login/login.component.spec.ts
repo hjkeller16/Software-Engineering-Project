@@ -20,10 +20,14 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { SearchComponent } from '../search/search.component';
 import { Base64Pipe } from '../base64.pipe';
 import { SearchResultComponent } from '../search-result/search-result.component';
+import { AuthService } from '../auth.service';
+import { MockAuthService } from '../mock-auth.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  let authService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -40,6 +44,7 @@ describe('LoginComponent', () => {
         SearchResultComponent
       ],
       imports: [
+        RouterTestingModule,
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
@@ -74,6 +79,9 @@ describe('LoginComponent', () => {
       providers: [{
         provide: API_BASE_URL,
         useFactory: apiBaseUrlFactory
+      }, {
+        provide: AuthService,
+        useClass: MockAuthService
       }]
     })
       .compileComponents();
@@ -83,9 +91,26 @@ describe('LoginComponent', () => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    authService = TestBed.get(AuthService);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('False login should return false', async () => {
+    component.user.username = "falseUser";
+    component.user.password = "falsePassword";
+    spyOn(component, 'onLogin');
+    let button = await fixture.debugElement.nativeElement.querySelector('button');
+    await button.click();
+  });
+
+  it('Correct login should return true', async () => {
+    component.user.username = "testUser";
+    component.user.password = "testPassword";
+    spyOn(component, 'onLogin');
+    let button = await fixture.debugElement.nativeElement.querySelector('button');
+    await button.click();
   });
 });

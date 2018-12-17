@@ -7,13 +7,12 @@ const sharp = require('sharp');
 
 router.get('/', async (req, res) => {
     try {
-        auth.decodeToken(req);
+        await auth.decodeToken(req);
         await databaseConnector.sequelize.sync();
         const locations = await databaseConnector.Location.findAll({
             attributes: { exclude: ['image'] },
             raw: true
         });
-
         res.send(locations);
     } catch (err) {
         res.status(500).send({ error: err.message });
@@ -30,21 +29,26 @@ async function resizeImage(dataUri) {
 router.post('/', async (req, res) => {
     try {
         let currentuser = await auth.decodeToken(req);
-
-        if (req.body.category == "") {
+        // check that category, name, and address are filled out (mandatory fields)
+        if (!req.body.category || req.body.category == "") {
             res.status(422).send({ error: "please enter category" });
             return;
         }
-
+        if (!req.body.name || req.body.name == "") {
+            res.status(422).send({ error: "please enter name" });
+            return;
+        }
+        if (!req.body.address || req.body.address == "") {
+            res.status(422).send({ error: "please enter address" });
+            return;
+        }
         if (req.body.image) {
             req.body.image = await resizeImage(req.body.image);
         }
-
         // Connect to database
         await databaseConnector.sequelize.sync();
         // Create table
         await databaseConnector.Location.create({
-            // category_id: req.body.category,
             category: req.body.category,
             name: req.body.name,
             description: req.body.description,
@@ -63,18 +67,20 @@ router.post('/', async (req, res) => {
 
 router.post('/search', async (req, res) => {
     try {
-        const Op = seq.Op;
+        await auth.decodeToken(req);
+        await databaseConnector.sequelize.sync();const Op = seq.Op;
         const beginning = req.body.address + "%";
         const end = "%" + req.body.address;
         const middle = "%" + req.body.address + "%";
         const arraysize = req.body.categories.length;
-
         let addressLocations;
 
+        //search for locations based on text field (name and address) and category
         if (arraysize > 0) {
             addressLocations = await databaseConnector.Location.findAll({
                 attributes: { exclude: ['image'] },
                 where: {
+                    // check for locations with the entered string at the beginning, middle, or end or the location's name or address
                     [Op.or]: [
                         {
                             address: {
@@ -102,6 +108,7 @@ router.post('/search', async (req, res) => {
                             }
                         }
                     ], [Op.and]: [
+                        //check for locations with the entered categories
                         {
                             [Op.or]:
                                 [{
@@ -114,11 +121,12 @@ router.post('/search', async (req, res) => {
                 }
             });
         }
-
+        //search for locations based on text field (name and address)
         if (arraysize === 0) {
             addressLocations = await databaseConnector.Location.findAll({
                 attributes: { exclude: ['image'] },
                 where: {
+                    // check for locations with the entered string at the beginning, middle, or end or the location's name or address
                     [Op.or]: [
                         {
                             address: {
@@ -163,23 +171,13 @@ router.get('/:id', async (req, res) => {
         const location = await databaseConnector.Location.findByPrimary(req.params.id, {
             raw: true
         });
-
+        // check whether the id entered corresponds to a location in the database
         if (!location) {
             return res.send(404, {
                 error: `Location(id:${req.params.id}) does not exist`
             })
         }
-
         res.send(location);
-    } catch (err) {
-        res.status(500).send({ error: err.message });
-    }
-});
-
-router.put('/:id', async (req, res) => {
-    try {
-        //TODO: Implement editing functionality of req.params.id
-        //TODO: Implement authentification
     } catch (err) {
         res.status(500).send({ error: err.message });
     }
@@ -188,18 +186,20 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         let currentuser = await auth.decodeToken(req);
-        // Find out if user is allowed to delete location
+        await databaseConnector.sequelize.sync();
         const location = await databaseConnector.Location.find({
             where: {
                 id: req.params.id,
             },
             raw: true
         });
+        // check whether the id entered corresponds to a location in the database
         if (!location) {
             return res.send(404, {
                 error: `Location(id:${req.params.id}) does not exist`
             })
         }
+        // check if user is allowed to delete location
         if (location.user_id != currentuser.username) {
             return res.send(403, {
                 error: `User is not authorized to delete location(id:${req.params.id})`
