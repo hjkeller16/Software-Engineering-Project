@@ -109,4 +109,34 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('initialize component', () => {
+    // Test if component can be initilized and locations can be set
+    component.initializeComponent();
+    expect(component.locations).toBeDefined;
+  });
+
+  it('click on marker', () => {
+    spyOn(component, 'onMarkerClick');
+    let marker = fixture.debugElement.nativeElement.querySelector('agm-marker');
+    marker.click();
+    // Bottom sheet should open
+    expect(component.bottomSheet).toBeDefined();
+  });
+
+  it('click on map', () => {
+    spyOn(component, "onMapClick");
+    let map = fixture.debugElement.nativeElement.querySelector('agm-map');
+    map.click();
+    // Bottom sheet should open
+    expect(component.bottomSheet).toBeDefined();
+  });
+
+  it('click on search button', () => {
+    spyOn(component, "onMapClick");
+    let searchButton = fixture.debugElement.nativeElement.querySelector('#searchButton');
+    searchButton.click();
+    // Search diaglog should open
+    expect(component.dialog).toBeDefined();
+  })
 });
